@@ -1,0 +1,89 @@
+编译：
+cd /workspace/FPGA_DPU/home/cn9641/QEMU/drm_docker
+export PATH=/workspace/FPGA_DPU/home/cn9641/QEMU/tools/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu//bin/:$PATH 
+export CROSS_COMPILE="aarch64-none-linux-gnu-"
+source build/drm_configure.sh /workspace/FPGA_DPU/home/cn9641/QEMU/tools/linux-5.15.46_CL1001395 0x20000039 ARM64
+m clean
+m
+
+add gdb:
+source build/drm_configure.sh /workspace/FPGA_DPU/home/songrui.zhang/QEMU/linux-5.15.46/ 0x20000039 ARM64
+
+dp:
+source build/drm_configure.sh /workspace/FPGA_DPU/home/songrui.zhang/QEMU/linux-5.15.46/ 0x20000007 ARM64_QEMU
+
+sr:
+source build/drm_configure.sh /workspace/FPGA_DPU/home/songrui.zhang/QEMU/linux-5.15.46/ 0x40000003 ARM64_QEMU
+
+进入docker：
+docker exec -it --user=root lipei_docker /bin/bash
+docker start lipei_docker
+
+112.112 no gdb:
+docker exec -it --user=root lipei_9400_v2 /bin/bash
+
+112.112 gdb:
+docker exec -it --user=root lipei_9400_v2_gdb /bin/bash
+
+启动qemu：
+export PATH=/local/QEMU/qemu-6.0.0_CL1415578_0x20000039_dec400a/build/aarch64-softmmu/:$PATH
+cd /local/QEMU/qemu-6.0.0_CL1415578_0x20000039_dec400a
+export LD_LIBRARY_PATH=/local/QEMU/qemu-6.0.0_CL1415578_0x20000039_dec400a/vs-vp/libs
+./qemu_start.sh
+
+add gdb:
+export PATH=/local/cn9641/QEMU/qemu-6.0.0_CL1415578_0x20000039_dec400a/build/aarch64-softmmu/:$PATH
+cd /local/cn9641/QEMU/qemu-6.0.0_CL1415578_0x20000039_dec400a
+export LD_LIBRARY_PATH=/local/cn9641/QEMU/qemu-6.0.0_CL1415578_0x20000039_dec400a/vs-vp/libs
+./qemu_start.sh
+
+mount -t 9p -o trans=virtio,version=9p2000.L,msize=104857600,cache=mmap FM /mnt/host
+mount -t 9p -o trans=virtio,version=9p2000.L,msize=104857600,cache=fscache FM /mnt/host
+
+drm测试：
+mkdir -p /mnt/host
+mount -t 9p -o trans=virtio,version=9p2000.L,msize=104857600,cache=mmap FM /mnt/host
+cd /mnt/host/driver/verisilicon/
+insmod vs_drm.ko
+export PATH=/mnt/host/drm-test/build/tools:/mnt/host/libdrm/tests/modetest/.libs:$PATH
+export LD_LIBRARY_PATH=/mnt/host/libdrm/out/lib:/mnt/host/bo-helper/sdk/lib:$LD_LIBRARY_PATH
+export DRM_TEST_DIR=/mnt/host/drm-test
+export DRM_DRIVER_DIR=/mnt/host/driver
+export BO_HELPER_DIR=/mnt/host/bo-helper
+export BO_BUILD_DIR=/mnt/host/build
+export LIBDRM_DIR=/mnt/host/libdrm
+cd /mnt/host/drm-test
+drmtest -case auto_cases/0x20000039/crtc/postpq/ltm2/crtc0.feature.postpq.ltm.LTM2_mode_LTM_strength_2_gd_8_normal_1.json -reset -o dump
+
+drmtest -case auto_cases/ltm/crtc0.feature.postpq.ltm.LTM2_mode_SRE_strength_4_gd_12_normal_1_3frame.json -o dump -reset
+drmtest -case auto_cases/ltm/crtc0.feature.postpq.ltm.LTM2_mode_LTM_strength_4_gd_12_normal_1_3frame.json -o dump
+
+drmtest -case auto_cases/ltm/crtc0.feature.postpq.ltm.LTM2_mode_1_strength_4_gd_12_normal_1.json -o dump
+drmtest -case auto_cases/test/plane0.feature.format.AR30.json  -o dump
+
+gdb:
+gdb --args drmtest -case auto_cases/ltm/crtc0.feature.postpq.ltm.LTM2_mode_1_strength_4_gd_12_normal_1_1frame.json -o dump
+
+drmtest -case auto_cases/dec400a/new/plane0.feature.dec400a_NV12_DEC_TILE_32X8_A_512x512_yuvTransform0.json  -o dump
+
+
+drmtest -case auto_cases/dec400a/new/plane0.feature.dec400a_RG24_TILE_32X8_A_512x512_yuvTransform0.json -o dump
+
+python3 -u script/dtest.py -d auto_cases/rotation/ --output_dir dump --soft
+
+
+python3 script/dtest.py -g --cid 0x20000039
+
+git pull --rebase origin x86
+
+拉代码：
+~/bin/repo sync
+
+推代码：
+clang-format-12 -i -style=file xx.c
+git push origin HEAD:refs/for/x86
+
+echo 0xff > /sys/module/drm/parameters/debug
+
+
+cp -r /root/* temp/

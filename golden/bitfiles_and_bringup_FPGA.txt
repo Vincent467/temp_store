@@ -1,0 +1,310 @@
+git clone git://192.168.32.113/tools/repo -b stable
+
+
+## download bitfiles command:
+0x326:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_0x326_rc2c_0608/VS_2VU440_BP_FA_TOP_pcie.bit
+./zturn -download b /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_0x326_rc2c_0608/VS_2VU440_BP_FB_C2C.bit
+
+0x32a:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_gen6_c2c_rc2g_0524/Gen6_c2c_FA_syn.bit
+./zturn -download b /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_gen6_c2c_rc2g_0524/Gen6_c2c_FB.bit
+
+0x320:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc8000_xiaomi_rc4r_gen6_0327/gen6_FA_system_ip.bit
+
+0x332:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc8000nano_rc4u_0901/gen6_FA_system_ip.bit
+
+mount -t nfs 192.168.32.1:/IPD_GPU_fpga/ /data/dpu
+cd /data/dpu/cn9641/WorkSpaces/driver_test/DC/8000nano/DPU_3.x/build/sdk/drivers
+export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH
+sys_space_view.rb
+
+0x320:
+cd /data/dpu/cn9641/WorkSpaces/driver_test/DC/8x00/test/src/full_test/full_test
+./vivDCTestFull -c all -p case -f case/list_test.txt
+
+0x334:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_metax_rc2s_3rd_0313/VS_2VU440_BP_FA_TOP_pcie.bit
+./zturn -download b /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_metax_rc2s_3rd_0313/VS_2VU440_BP_FB_C2C.bit
+
+0x333:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc8200-fs_6_0_0_rc1k.OSx2/FA/VS_2VU440_BP_FA_TOP_pcie.bit
+
+0x323:(9200)
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9200_rc0i_0630/VS_2VU440_BP_FA_TOP_pcie.bit
+./zturn -download b /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9200_rc0i_0630/VS_2VU440_BP_FB_C2C.bit
+
+0x31b:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc8200-fs_6_0_0_rc1g.OSx2_5_6/FA/VS_2VU440_BP_FA_TOP_pcie.bit
+./zturn -download b /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc8200-fs_6_0_0_rc1g.OSx2_5_6/FB/VS_2VU440_BP_FB_TOP_pcie.bit
+
+0x20000003:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9000nano_7_0_4_rc0a_20231214/gen6_FA_system_ip.bit
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9000nano_rc0b_20240108/rc0b_20240108/gen6_FA_system_ip.bit
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9000nano_rc0c_20240117/gen6_FA_system_ip.bit
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/0x20000003_dc9000nano_7_0_4_rc0d_20240201/gen6_FA_system_ip.bit
+
+0x20000005:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_google/dc9400_gen6_c2c_rc2t_0309/Gen6_c2c_FA_syn.bit
+./zturn -download b /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_google/dc9400_gen6_c2c_rc2t_0309/Gen6_c2c_FB.bit
+
+0x2000000a:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9200_7_0_1_rc0l_renamed_0x2000000a_0512/FA/VS_2VU440_BP_FA_TOP_pcie.bit
+
+0x20000009:
+./zturn -download a /data/dpu/cn9641/bitfiles/dc8000nano_xhsc/dc8000nano_rc4v_0111/gen6_FA_system_ip.bit
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc8000nano_xhsc/dc8000nano_rc4v_0118/FA/VS_2VU440_BP_FA_TOP_pcie.bit
+
+0x331:   bar0
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc8200_5_7_2_rc1r/FA/VS_2VU440_BP_FA_TOP_pcie.bit
+
+0x316:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_c2c_gen6/dc9400_rc0v_3rd_0913/Gen6_c2c_FA_syn.bit
+./zturn -download b /IPD_HWR_FPGA/bitfiles/GEN6/DPU/dc9400_c2c_gen6/dc9400_rc0v_3rd_0913/Gen6_c2c_FB.bit
+
+0x20000014:
+./zturn -download a /IPD_HWR_FPGA/bitfiles/GEN6/DPU/0x20000014_dc9200l_rc0d_JSLT_701_20241009_clk30_30_10_add_halt_control/FA/gen6_FA_system_ip.bit
+
+./zturn -download b /IPD_HWR_FPGA/bitfiles/GEN6/DPU/0x20000014_dc9200l_rc0d_JSLT_701_20241009_clk30_30_10_add_halt_control/FB/gen6_FB_system_ip.bit
+
+0x2000001a:
+./zturn -download a /IPD_HWR_FPGA_bitfiles/GEN6/DPU/0x2000001A_dc9400_7_0_0_rc3t_gen6_C2C_20260205/FA/Gen6_c2c_FA_syn.bit
+./zturn -download b /IPD_HWR_FPGA_bitfiles/GEN6/DPU/0x2000001A_dc9400_7_0_0_rc3t_gen6_C2C_20260205/FB_sub/Gen6_c2c_FB.bit
+
+0x2000000b:
+./zturn -download a /IPD_HWR_FPGA_bitfiles/GEN6/DPU/dc9400_gen6_c2c_rc3n_0707/Gen6_c2c_FA_syn.bit
+./zturn -download b /IPD_HWR_FPGA_bitfiles/GEN6/DPU/dc9400_gen6_c2c_rc3n_0707/Gen6_c2c_FB.bit
+
+## mount bitfile disk
+mount -t nfs 192.168.32.1:/IPD_HWR_FPGA/bitfiles /IPD_HWR_FPGA/bitfiles/
+
+##scp copy
+scp -r cn9641@192.168.32.64:/workspace/share/QA/HW/... /IPD_HWR_FPGA/bitfiles/GEN6/DPU
+
+cd /data/dpu/cn9641/
+./vs_dpu_test -c "all" -p "case_9400" -f list_debug.txt -v 0xdf200000
+
+````````````	
+###drm:
+开发服务器ip： 192.168.112.112
+cd /workspace/FPGA_DPU/home/cn9641/FPGA
+
+拉代码：
+x86 tree:
+##~/bin/repo init -u ssh://cn9641@192.168.32.113:29418/dpu/drm/manifest -b master --no-repo-verify
+
+~/bin/repo init -u ssh://cn9641@192.168.112.21:29418/dpu/drm/manifest -b master --no-repo-verify
+~/bin/repo sync
+
+dp tree:
+~/bin/repo init --current-branch -u ssh://cn9641@192.168.112.21:29418/dpu/drm/manifest -b dp
+~/bin/repo sync -c -d
+
+~/bin/repo sync -c -d -m static/20240920153605.xml
+
+sr tree:
+~/bin/repo init --current-branch -u ssh://cn9641@192.168.112.21:29418/dpu/drm/manifest -b sr
+~/bin/repo sync -c -d
+
+###编译：
+cd /workspace/FPGA_DPU/home/cn9641/FPGA/drm_dev
+source build/drm_configure.sh /mnt/software/Linux/linux-6.12.42 0x2000001a PCIE_GEN6
+m clean
+m
+python3 script/dtest.py -g --cid 0x20000007
+
+#####FPGA
+mount -t nfs 192.168.32.1:/IPD_GPU_fpga/ /data/dpu
+mount -o vers=3 192.168.113.1:/FPGA_DPU /data/dpu
+
+FA:
+gen6_clock_setting.rb S2CCLK1=30 S2CCLK2=30 S2CCLK3=1 force
+mount -o vers=3 192.168.113.1:/FPGA_DPU /data/dpu
+cd /data/dpu/home/cn9641/FPGA/drm_dev
+source scripts/dev_helper.sh
+cd /data/dpu/home/cn9641/FPGA/drm_dev
+insmod driver/verisilicon/vs_drm.ko
+cd drm-test
+
+drmtest -case auto_cases/test5/SR2000_test.json -reset -o dump -c
+drmtest -case auto_cases/test5/plane0.feature.format.NV12.wb_RG24.json -reset -o dump -c
+
+
+drmtest -case auto_cases/test2/intf.feature.cmd.intf0.crtc0.swTrigger.json -clear -o dump -c
+drmtest -case auto_cases/test2/intf.feature.mux.intf0.crtc0.wb0.json -clear -o dump -c
+
+python3 script/dtest.py -d auto_cases/test1/ --output_dir dump --clean
+
+python3 script/dtest.py -d auto_cases/test1/ --output_dir dump --clear
+python3 script/dtest.py -d auto_cases/0x40000003/ --output_dir dump --soft
+
+
+mount -o vers=3 192.168.113.1:/FPGA_DPU /data/dpu
+cd /data/dpu/home/cn9641/FPGA/drm_dev
+source scripts/dev_helper.sh
+install_vs_drm
+sys_space_write.rb 0xdf70881c 0x4 60  //for 0x2000001a bar2+0x30881c
+
+
+cd scripts
+./set_clock.sh 0xdf700000
+cd ../drm-test
+
+drmtest -case auto_cases/test/connector0.feature.wbformat.AR30.json -clear -o dump -c
+drmtest -case auto_cases/test/connector0.feature.wbformat.NV12.json -reset -o dump -c
+
+echo 0xff > /sys/module/drm/parameters/debug
+dmesg -w
+
+drmtest -case auto_cases/extend_layer/plane0.feature.dma.dmaTwoROI_LINEAR.json -reset -o dump
+
+drmtest -case auto_cases/reset/single_3840x2160_scaler_frame.json -reset -o dump
+
+python3 script/dtest.py -d auto_cases/test2/ --output_dir dump --clear
+FB:
+gen6_clock_setting.rb S2CCLK1=1 S2CCLK2=30 S2CCLK3=30 force
+#clk
+./scripts/set_clock_311.sh
+sys_clock_view.rb
+
+
+
+echo 0xff > /sys/module/drm/parameters/debug
+dmesg -w
+python3 script/dtest.py -d auto_cases/test --output_dir dump_dir --clear
+
+python3 script/dtest.py -d auto_cases/ext_layer --output_dir dump_dir --soft --reinstall
+
+
+python3 setVD.py -V 0xdf100000 -B 0x10000000 -W 640 -H 480
+drmtest -case auto_cases/9000nano/crtc0.feature.postpq.r2y_AR24_YUV444_10BIT.json -reset -o dump_dir
+cd virtualDisplay
+python3 saveFB.py -B 0x18000000 -W 640 -H 480 -P test.raw -raw
+cd ..
+python3 clearFB.py -B 0x10000000 -W 1920 -H 1080
+
+###查看中断
+cat /proc/interrupts
+
+设置vdp
+cd scripts
+./gen6_3840_2160_video_on.sh
+cd ../drm-test
+
+cd drm-test
+python3 script/dtest.py -d auto_cases/test2 --output_dir dump_dir --clear
+python3 script/dtest.py -d auto_cases --output_dir dump_dir --soft --reinstall
+
+fb2bmp.rb /data/dpu/cn9641/FPGA/drm_1214/drm-test/dump_dir/test.bmp
+
+echo 0xff > /sys/module/drm/parameters/debug   default=0
+clang-format-12 -i -style=file 
+
+
+unify driver:
+编译：
+cd /data/dpu/cn9641/WorkSpaces/driver_test/DC/8000nano/DPU_3.x
+source build3x.sh 0x20000010 PCIE_GEN6
+source build3x.sh 0x320 PCIE_GEN6
+source driver_build_sample.sh
+make clean
+make install
+cd ../test
+make clean 
+make install
+
+FPGA:
+mount -t nfs 192.168.32.1:/IPD_GPU_fpga/ /data/dpu
+cd /data/dpu/cn9641/WorkSpaces/driver_test/DC/8000nano/DPU_3.x/build/sdk/drivers
+export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH
+sys_space_write.rb 0xde000000+0x308240 0x4 1
+source set_clk_gen6.sh
+source gen6_3840_2160_video_on.sh
+insmod viv_dc.ko
+cd /data/dpu/cn9641/WorkSpaces/driver_test/DC/8000nano/test/src/full_test/full_test
+
+./vivDCTestFull -c Output/layer0.format.ARGB888.800X480.linear.txt
+fb2bmp.rb /data/dpu/cn9641/WorkSpaces/driver_test/DC/8000nano/test/src/full_test/full_test/result/test1.bmp
+echo 0xff > /sys/module/drm/parameters/debug
+dmesg -w
+
+virtual display:
+sys_space_write.rb 0xde000000+0x308240 0x4 1
+source set_clk_gen6.sh
+insmod viv_dc.ko
+cd /data/dpu/cn9641/WorkSpaces/driver_test/DC/8000nano/test/src/full_test/full_test
+insmod regionMem/regionMem.ko
+python3 setVD.py -V 0xf6800000 -B 0x10000000 -W 1920 -H 1080
+ ./vivDCTestFull -c Layer/Layer1/1.format/Layer1.format.NV12.linear.txt 
+ python3 saveFB.py -B 0xdf100000 -W 1024 -H 600 -P test.bmp
+ python3 clearFB.py -B 0x10000000 -W 1920 -H 1080
+ sys_space_write.rb 0xde000000+0x308240 0x4 0
+ sys_space_write.rb 0xde000000+0x308240 0x4 1
+ 
+ 
+ python3 setVD.py -V 0xf6800000 -B 0x10000000 -W 1920 -H 1080
+ python3 saveFB.py -B 0x10000000 -W 1920 -H 1080 -P test.bmp
+ 
+ 
+ python3 setVD.py -V 0xdf100000 -B 0x10000000 -W 720 -H 480
+ ./vivDCTestFull -c Output/layer0.format.ARGB888.720X480.linear.txt
+ python3 saveFB.py -B 0x10000000 -W 720 -H 480 -P test.bmp
+ python3 clearFB.py -B 0x10000000 -W 720 -H 480
+ sys_space_write.rb 0xde000000+0x308240 0x4 0
+ sys_space_write.rb 0xde000000+0x308240 0x4 1
+ 
+ git diff:
+ git config core.filemode false
+ 
+##9000nano:
+mount -t nfs 192.168.32.1:/IPD_GPU_fpga/ /data/dpu
+cd /data/dpu/cn9641/FPGA/drm_dev1
+source scripts/dev_helper.sh
+sys_space_write.rb 0xde308240 0x4 1
+install_vs_drm
+
+cd scripts
+./set_clock_20000003.sh
+cd ../drm-test
+
+sys_space_write.rb 0xde308254 0x4 0x10000000
+sys_space_write.rb 0xde308254 0x4 0x10000001
+
+python3 saveFB.py -B 0x10000000 -W 640 -H 480 -P test2.raw -raw
+
+
+###capture 
+sed -E "s/^Write /CFG_APB_WR /; s/32'h/'h/g" vs_dc_capture_25025214.log > output.log
+
+awk '{print $NF}' zero2_YUY2_640X480_Linear_layersource_0.txt > layer_source.txt
+
+ P4 login：
+dpu_sw_dev
+LwDG2bRqX*
+
+ ##debug fs
+ echo "enable:1 mode:1 size.h:100 size.w:100 pos:0 color:0xffff" > pattern | cat pattern
+ 
+ ##生成patch
+  1.git checkout REL_DC9000_DRM_v2.2.4  回退到某个rls版本
+  2.cheery pick/add new code
+  3.git add ...   git commit ...  (not push)
+  4.git format-patch --full-index 43e77240cf0dd5dbacd673b351360c844928204e..HEAD -o ./patch/  43e...为commit起始id，HEAD表示当前本地最新的commit 
+  -o 为patch存放路径  patch名称为最新的一次commit info
+  
+  使用patch：
+	git apply --check pdma_ltm.diff
+	git apply pdma_ltm.diff
+	
+  ##scp  password:ubuser
+  scp -r ubuser@192.168.32.38:/home/staging/SW/build/drm/master/20241216163941/0x20000014_PCIE_GEN6_drm_build_out.tgz ./
+  scp -r ubuser@192.168.32.38:/home/staging/SW/build/drm/master/20241230173650/0x31b_PCIE_GEN6_drm_build_out.tgz ./
+  
+  tar -xzvf 0x31b_PCIE_GEN6_drm_build_out.tgz
+  
+  
+  ## code obfuscation
+  cd drm_project/
+  bash scripts/remove_macros.sh -s ./ -c 0x20000039
