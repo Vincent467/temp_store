@@ -1,2 +1,2 @@
-using for orange net transfer！
+using for orange net transfer!!
 
