@@ -1,0 +1,300 @@
+<title>DPST 功耗对比分析 · 明亮图片场景</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --surface-2:      #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1:       #2a78d6; /* DPST 关闭 */
+    --series-2:       #eb6834; /* DPST 开启 */
+    --good:           #006300;
+    --warn-text:      #7a4a00;
+    --critical:       #d03b3b;
+    --critical-bg:    #fbe9e9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --surface-2:      #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --series-1:       #3987e5;
+      --series-2:       #d95926;
+      --good:           #0ca30c;
+      --warn-text:      #f0c98a;
+      --critical:       #e66767;
+      --critical-bg:    #2c1414;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --surface-2:      #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+    --series-1:       #3987e5;
+    --series-2:       #d95926;
+    --good:           #0ca30c;
+    --warn-text:      #f0c98a;
+    --critical:       #e66767;
+    --critical-bg:    #2c1414;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .viz-root {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    padding: 32px 20px 60px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--text-secondary); font-size: 13.5px; margin: 0 0 28px; }
+  h2 { font-size: 15px; margin: 0 0 12px; letter-spacing: .01em; }
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 22px;
+    overflow-x: auto;
+  }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; min-width: 560px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--gridline); vertical-align: top; }
+  th { color: var(--text-muted); font-weight: 600; font-size: 12px; text-transform: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+  .tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .tile .label { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px; }
+  .tile .value { font-size: 28px; font-weight: 600; line-height: 1.1; }
+  .tile .delta { font-size: 13px; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .delta.good { color: var(--good); }
+  .delta.warn { color: var(--warn-text); }
+  .delta.critical { color: var(--critical); }
+  .tile .foot { font-size: 11.5px; color: var(--text-muted); margin-top: 8px; }
+
+  .legend { display:flex; gap:18px; font-size:12.5px; color: var(--text-secondary); margin-bottom: 14px; }
+  .legend .sw { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; position:relative; top:1px; }
+
+  .chart { display:flex; flex-direction:column; gap:22px; }
+  .metric-title { font-size:13px; color: var(--text-secondary); margin-bottom:8px; display:flex; justify-content:space-between; }
+  .metric-title b { color: var(--text-primary); font-weight:600; }
+  .bar-line { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .bar-label { width:64px; flex-shrink:0; font-size:12px; color: var(--text-muted); text-align:right; }
+  .bar-track { flex:1; background: var(--surface-2); border-radius: 4px; height: 22px; position:relative; }
+  .bar-fill { height:100%; border-radius: 4px; }
+  .bar-val { font-size:12.5px; font-weight:600; color: var(--text-primary); margin-left:8px; white-space:nowrap; font-variant-numeric: tabular-nums; }
+  .fill-1 { background: var(--series-1); }
+  .fill-2 { background: var(--series-2); }
+
+  .note { font-size: 12.5px; color: var(--text-secondary); line-height:1.7; }
+  .note b { color: var(--text-primary); }
+  ul.notes { margin: 6px 0 0; padding-left: 18px; }
+  ul.notes li { margin-bottom: 6px; }
+
+  .alert {
+    background: var(--critical-bg);
+    border: 1px solid color-mix(in srgb, var(--critical) 35%, transparent);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+  }
+  .alert h2 { color: var(--critical); display:flex; align-items:center; gap:8px; }
+  .alert .badge { font-size:11px; font-weight:700; background: var(--critical); color:#fff; padding:2px 8px; border-radius:5px; letter-spacing:.02em; }
+
+  @media (max-width: 640px) {
+    .tiles { grid-template-columns: 1fr; }
+    .bar-label { width: 52px; font-size: 11px; }
+  }
+</style>
+
+<div class="viz-root">
+  <div class="wrap">
+    <h1>DPST 开启 / 关闭 功耗对比分析（明亮图片场景 · 平稳段）</h1>
+    <p class="sub">数据来源：bright/dpst_disable_bright_image.CSV（关闭）/ bright/dpst_enable_bright_image.CSV（开启）· 2026-09-17 15:52~17:19 · HWiNFO 传感器日志 · 方法与暗图报告一致：剔除开始段热身数据 + IQR 过滤异常值</p>
+
+    <div class="alert">
+      <h2>⚠ 重要数据质量问题 <span class="badge">请谨慎解读</span></h2>
+      <p class="note" style="margin-bottom:8px">
+        与暗图测试不同，本次「关闭」和「开启」两段明亮图片日志的<b>系统后台负载明显不一致</b>，导致 CPU/整机功耗的对比<b>不能直接、完全归因于 DPST</b>：
+      </p>
+      <table style="margin-bottom:8px">
+        <thead><tr><th>指标（平稳段均值）</th><th class="num">关闭</th><th class="num">开启</th></tr></thead>
+        <tbody>
+          <tr><td>CPU 总使用率 [%]</td><td class="num" style="color:var(--critical)">17.71</td><td class="num">1.50</td></tr>
+          <tr><td>GPU D3D 使用率 [%]</td><td class="num" style="color:var(--critical)">5.50</td><td class="num">0.00</td></tr>
+          <tr><td>GPU GT 使用率 [%]</td><td class="num" style="color:var(--critical)">2.80</td><td class="num">0.00</td></tr>
+        </tbody>
+      </table>
+      <p class="note">
+        「关闭」这段测试期间 CPU 平均使用率高达 17.7%（GPU 也有渲染负载），而「开启」这段几乎完全空闲（1.5%）——
+        说明两次测试时后台很可能各自运行了不同的程序/任务，<b>并非同一 workload 下单独切换 DPST 开关</b>。
+        下文中 CPU 封装功率 −38.6% 这类差异，主要反映的是<b>两段测试的系统负载差异</b>，而不是 DPST 本身的算法开销变化；
+        与之相关的「整机功耗」「屏幕/背光估算」也会被这部分无关负载污染，实际数值可能被高估。
+      </p>
+      <p class="note" style="margin-top:8px"><b>建议：</b>重新采集一组明亮图片数据，测试时确保开启/关闭两段除 DPST 状态外，其余负载（CPU/GPU 使用率、后台程序）保持一致，才能得到可信的对比结论。以下数据仅供参考。</p>
+    </div>
+
+    <div class="card">
+      <h2>一、平稳段截取说明</h2>
+      <p class="note">
+        采样间隔 2 秒。两段日志开头都存在放电功率快速衰减的热身过程：<b>关闭</b>日志从 −18.4W 衰减、波动，约第 <b>160</b> 个点
+        （约 5.3 分钟后）收敛到 −12.0~−12.7W 的稳定区间；<b>开启</b>日志从 −12.3W 出现衰减和一次尖峰（-15.5W），约第 <b>140</b> 个点
+        （约 4.7 分钟后）收敛到 −11.2~−11.5W 区间。分析中丢弃各自的热身段，并对剩余数据做 1.5×IQR 过滤剔除零星尖峰。
+      </p>
+      <table style="margin-top:12px">
+        <thead>
+          <tr><th>日志</th><th class="num">总行数</th><th class="num">丢弃热身段</th><th class="num">保留平稳段</th><th class="num">占比</th><th class="num">IQR 剔除（整机功耗）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>DPST 关闭</td><td class="num">1236</td><td class="num">前 160 行（~5.3min）</td><td class="num">1076 行</td><td class="num">87.1%</td><td class="num">114 个点</td></tr>
+          <tr><td>DPST 开启</td><td class="num">1256</td><td class="num">前 140 行（~4.7min）</td><td class="num">1116 行</td><td class="num">88.9%</td><td class="num">131 个点</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>二、DPST 开启 vs 关闭 · 关键指标（平稳段，含负载污染）</h2>
+      <div class="tiles">
+        <div class="tile">
+          <div class="label">整机功耗（电池放电）</div>
+          <div class="value">12.25 → 11.43 W</div>
+          <div class="delta good">↓ 0.82 W（−6.7%）</div>
+          <div class="foot">受两段负载不一致影响，数值偏高，仅供参考</div>
+        </div>
+        <div class="tile">
+          <div class="label">屏幕/背光功耗（估算）</div>
+          <div class="value">10.75 → 10.51 W</div>
+          <div class="delta good">↓ 0.24 W（−2.2%）</div>
+          <div class="foot">= 整机功耗 − CPU 封装功率；明亮画面本身背光可调节空间小</div>
+        </div>
+        <div class="tile">
+          <div class="label">CPU 封装功率</div>
+          <div class="value">1.50 → 0.92 W</div>
+          <div class="delta critical">↓ 0.58 W（−38.6%）</div>
+          <div class="foot">⚠ 主因是两段测试 CPU 使用率不同（17.7% vs 1.5%），非 DPST 效果</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>三、功耗对比图</h2>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--series-1)"></span>DPST 关闭</span>
+        <span><span class="sw" style="background:var(--series-2)"></span>DPST 开启</span>
+      </div>
+      <div class="chart">
+
+        <div class="metric-row">
+          <div class="metric-title"><span>整机功耗（电池放电功率绝对值）</span><b>−6.7%</b></div>
+          <div class="bar-line">
+            <div class="bar-label">关闭</div>
+            <div class="bar-track"><div class="bar-fill fill-1" style="width:100%"></div></div>
+            <div class="bar-val">12.25 W</div>
+          </div>
+          <div class="bar-line">
+            <div class="bar-label">开启</div>
+            <div class="bar-track"><div class="bar-fill fill-2" style="width:93.3%"></div></div>
+            <div class="bar-val">11.43 W</div>
+          </div>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-title"><span>屏幕/背光功耗（估算：整机 − CPU 封装）</span><b>−2.2%</b></div>
+          <div class="bar-line">
+            <div class="bar-label">关闭</div>
+            <div class="bar-track"><div class="bar-fill fill-1" style="width:100%"></div></div>
+            <div class="bar-val">10.75 W</div>
+          </div>
+          <div class="bar-line">
+            <div class="bar-label">开启</div>
+            <div class="bar-track"><div class="bar-fill fill-2" style="width:97.8%"></div></div>
+            <div class="bar-val">10.51 W</div>
+          </div>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-title"><span>CPU 封装功率 <span style="color:var(--critical)">（受负载差异污染，非纯 DPST 效应）</span></span><b style="color:var(--critical)">−38.6%</b></div>
+          <div class="bar-line">
+            <div class="bar-label">关闭</div>
+            <div class="bar-track"><div class="bar-fill fill-1" style="width:100%"></div></div>
+            <div class="bar-val">1.495 W</div>
+          </div>
+          <div class="bar-line">
+            <div class="bar-label">开启</div>
+            <div class="bar-track"><div class="bar-fill fill-2" style="width:61.4%"></div></div>
+            <div class="bar-val">0.918 W</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>四、原始数据对照表（平稳段 + IQR 过滤后均值）</h2>
+      <table>
+        <thead>
+          <tr><th>指标</th><th class="num">关闭 (mean)</th><th class="num">开启 (mean)</th><th class="num">Δ (开启−关闭)</th><th class="num">Δ%</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>整机功耗 = |充电速度| [W]</td><td class="num">12.249</td><td class="num">11.430</td><td class="num" style="color:var(--good)">−0.819</td><td class="num" style="color:var(--good)">−6.69%</td></tr>
+          <tr><td>CPU 封装功率 [W]</td><td class="num">1.495</td><td class="num">0.918</td><td class="num" style="color:var(--critical)">−0.578</td><td class="num" style="color:var(--critical)">−38.64%</td></tr>
+          <tr><td>屏幕/背光功耗估算 [W]</td><td class="num">10.754</td><td class="num">10.513</td><td class="num" style="color:var(--good)">−0.241</td><td class="num" style="color:var(--good)">−2.24%</td></tr>
+          <tr><td>IA 核心功率 [W]</td><td class="num">0.793</td><td class="num">0.498</td><td class="num" style="color:var(--critical)">−0.294</td><td class="num" style="color:var(--critical)">−37.12%</td></tr>
+          <tr><td>DRAM 总功率 [W]</td><td class="num">0.693</td><td class="num">0.600</td><td class="num" style="color:var(--warn-text)">−0.093</td><td class="num" style="color:var(--warn-text)">−13.49%</td></tr>
+          <tr><td>System Agent 功率 [W]</td><td class="num">0.396</td><td class="num">0.199</td><td class="num" style="color:var(--critical)">−0.197</td><td class="num" style="color:var(--critical)">−49.68%</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:10px">IA/DRAM/System Agent 全部大幅下降，方向和幅度都与 CPU 使用率骤降（17.7%→1.5%）高度吻合，进一步印证这些差异来自<b>系统负载不同</b>，而非 DPST 本身。</p>
+    </div>
+
+    <div class="card">
+      <h2>五、明亮图片 vs 暗图 · 背光节能效果对比</h2>
+      <table>
+        <thead>
+          <tr><th>场景</th><th class="num">整机功耗降幅</th><th class="num">屏幕/背光估算降幅</th><th>可信度</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>暗图（dark_image）</td><td class="num" style="color:var(--good)">−16.8%</td><td class="num" style="color:var(--good)">−18.5%</td><td>两段测试 CPU 侧指标差异 &lt;1%，负载一致，结果可信</td></tr>
+          <tr><td>明亮图片（bright_image）</td><td class="num">−6.7%</td><td class="num">−2.2%</td><td style="color:var(--critical)">两段测试负载不一致，结果仅供参考，需重新测试验证</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:10px">
+        方向上符合预期：明亮画面本身需要较高背光才能正常显示，DPST 通过降低背光 + 提升局部对比度来省电的空间远小于暗图场景，
+        因此背光节省幅度（估算 −2.2%）明显小于暗图（−18.5%）。但由于本次明亮图片测试存在负载污染问题，−2.2% 这个具体数字的置信度较低，
+        真实的 DPST 背光节省效果需要在负载可控的重新测试中确认。
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>六、方法与结论</h2>
+      <div class="note">
+        <ul class="notes">
+          <li><b>平稳段截取 + IQR 过滤</b>方法与暗图报告一致：先剔除开头热身段，再对剩余数据做 1.5×IQR 异常值过滤后取均值。</li>
+          <li>数据集依然没有独立的背光/面板功率传感器，"屏幕/背光功耗"仍为「整机功耗 − CPU 封装功率」的推算值。</li>
+          <li><b>本次明亮图片测试最大的问题是两段日志系统负载不一致</b>（CPU 使用率 17.7% vs 1.5%，GPU 使用率 5.5%/2.8% vs 0%），使 CPU 封装功率、整机功耗的对比混入了与 DPST 无关的负载变化，不能视为 DPST 的真实节能效果。</li>
+          <li>「系统总功率 [W]」（PSys 域）在本平台数据中依然存在小于 CPU 封装功率的异常，未采用该列代表整机功耗。</li>
+          <li><b>建议</b>：重新采集明亮图片场景数据，测试时保持关闭/开启两段的后台任务、CPU/GPU 负载一致（如测试前关闭无关程序、只在切换 DPST 开关前后各静置观察），才能得到可与暗图场景直接比较的、可信的背光节能结论。</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
