@@ -1,0 +1,123 @@
+
+32.147:
+(1)docker 外部编译driver
+export PATH=/mnt/data/dpu/cn9638/QEMU/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/bin/:$PATH 
+export BUILD__ARCH="arm_64"
+export CROSS_COMPILE="aarch64-none-linux-gnu-"
+export VS_DRM_CONFIG_PCIE=0
+source build/drm_configure.sh /mnt/data/dpu/cn9638/QEMU/linux-5.15.46/ 0x40000003 ARM64
+（2）进入docker:
+docker exec -it --user=root lipei_20.04 /bin/bash
+
+docker exec -it --user=root pei_dc9400_v1 /bin/bash 
+
+##for BYD:
+docker exec -it --user=root lipei_docker /bin/bash
+
+112.112:
+(1)docker 外部编译driver
+cd /workspace/FPGA_DPU/home/cn9641/QEMU/drm_docker
+export PATH=/workspace/FPGA_DPU/home/cn9641/QEMU/tools/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/bin/:$PATH 
+export BUILD__ARCH="arm_64"
+export CROSS_COMPILE="aarch64-none-linux-gnu-"
+export VS_DRM_CONFIG_PCLE=0
+source build/drm_configure.sh /workspace/FPGA_DPU/home/cn9641/kernel/QEMU/QEMU_build/linux-5.15.46 0x40000003 ARM64_QEMU
+
+BYD:
+cd /workspace/FPGA_DPU/home/cn9641/QEMU/drm_docker
+export PATH=/workspace/FPGA_DPU/home/cn9641/QEMU/tools/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu//bin/:$PATH 
+export CROSS_COMPILE="aarch64-none-linux-gnu-"
+source build/drm_configure.sh /workspace/FPGA_DPU/home/cn9641/QEMU/tools/linux-5.15.46_CL1001395 0x20000039 ARM64
+m clean
+m
+
+(2)enter docker
+docker exec -it --user=root workspace_pei /bin/bash
+docker exec -it --user=root pei_dc9400_v1 /bin/bash 
+docker exec -it --user=root lipei_docker /bin/bash
+（3）启动qemu：
+dc9400(1):
+export PATH=/media/qemu_env/qemu-6.0.0_CL949367_dc9400/build/aarch64-softmmu/:$PATH
+cd /media/qemu_env/qemu-6.0.0_CL949367_dc9400/
+./qemu_start.sh
+/local/kernel/QEMU/QEMU_build/linux-5.15.46/output/virt64/Image
+dc9400(2):
+export PATH=/local/QEMU/qemu/qemu-6.0.0_CL949367_0x20000014/build/aarch64-softmmu/:$PATH
+cd /local/QEMU/qemu/qemu-6.0.0_CL949367_0x20000014
+./qemu_start.sh
+
+9000SR:
+export PATH=/media/qemu_env/qemu-6.0.0_CL949367_dc9000sr/build/aarch64-softmmu/:$PATH
+cd /media/qemu_env/qemu-6.0.0_CL949367_dc9000sr
+./qemu_start.sh
+
+BYD:
+export PATH=/local/QEMU/qemu-6.0.0_CL1415578_0x20000039_dec400a/build/aarch64-softmmu/:$PATH
+cd /local/QEMU/qemu-6.0.0_CL1415578_0x20000039_dec400a
+./qemu_start.sh
+
+设置软链接：
+ln -s /local/QEMU/cmodel/0x334/C945689_R945587.so cmodel.so
+
+1.2非docker：
+cd drm
+export PATH=/data/dpu/cn9640/QEMU/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/bin/:$PATH
+export CROSS_COMPILE=aarch64-none-linux-gnu-
+source build/drm_configure.sh /data/dpu/cn9640/QEMU/linux-5.12.10/ 0x334 ARM64
+m clean
+m
+cd drm-test && python3 script/dtest.py -g
+cd ..
+
+
+cp -r /data/dpu/cn9640/QEMU/qemu-6.0.0/vs-vp/ ./
+export PATH=/data/dpu/cn9640/QEMU/qemu-6.0.0/build/aarch64-softmmu/:$PATH
+source qemu_start.sh
+
+
+
+2.DRM测试：
+
+mount -t 9p -o trans=virtio,version=9p2000.L,msize=104857600,cache=fscache FM /mnt/host
+mount -t 9p -o trans=virtio,version=9p2000.L,msize=104857600,cache=mmap FM /mnt/host
+
+mkdir -p /mnt/host
+mount -t 9p -o trans=virtio,version=9p2000.L,msize=104857600,cache=fscache FM /mnt/host
+cd /mnt/host/driver/verisilicon/
+insmod vs_drm.ko
+export PATH=/mnt/host/drm-test/build/tools:/mnt/host/libdrm/tests/modetest/.libs:$PATH
+export LD_LIBRARY_PATH=/mnt/host/libdrm/out/lib:/mnt/host/bo-helper/sdk/lib:$LD_LIBRARY_PATH
+export DRM_TEST_DIR=/mnt/host/drm-test
+export DRM_DRIVER_DIR=/mnt/host/driver
+export BO_HELPER_DIR=/mnt/host/bo-helper
+export BO_BUILD_DIR=/mnt/host/build
+export LIBDRM_DIR=/mnt/host/libdrm
+cd /mnt/host/drm-test
+
+python3 script/dtest.py -d case/dc9400/allpipe --output_dir dump --soft
+
+mkdir -p /mnt/host
+mount -t 9p -o trans=virtio,version=9p2000.L,msize=104857600,cache=mmap FM /mnt/host
+cd /mnt/host
+cd driver/verisilicon/
+insmod vs_drm.ko
+cd /mnt/host
+export PATH=$PATH:/mnt/host/libdrm/tests/modetests/.libs:/mnt/host/drm-test/build/tools
+export LD_LIBRARY_PATH=/mnt/host/bo-helper/sdk/lib:/mnt/host/libdrm/out/lib
+cd drm-test
+
+drmtest -case auto_cases/test/multiFrame.3frame.scaler.output_3840x2160.json -reset -o dump_dir
+run single case:
+
+run all cases:
+cd drm-test
+export DRM_TEST_DIR=/mnt/host/drm-test
+export DRM_DRIVER_DIR=/mnt/host/driver
+python3 script/dtest.py -d auto_cases/test2/ --output_dir dump_dir --soft
+
+export DRM_TEST_DIR=/mnt/host/drm-test
+export DRM_DRIVER_DIR=/mnt/host/driver
+python3 script/dtest.py -d auto_cases/test2 --output_dir dump_dir_cursor --soft
+
+
+python3 script/dtest.py -f auto_cases/dc9400/cursor.plane4.crtc0.connector0.json --output_dir dump_dir --soft --reinstall
