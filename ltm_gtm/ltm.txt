@@ -1,0 +1,168 @@
+#ifndef __DC_LTM_HPP__
+#define __DC_LTM_HPP__
+
+
+#define HW_ToneAdjLut_SIZE         129
+#define HW_LTM_LUMA_COEF_NUM       5
+#define HW_LTM_FREQ_COEF_NUM       6
+#define HW_LTM_CD_COEF_NUM         4
+#define HW_LTM_CD_THRESH_NUM       4
+#define HW_MAX_W_GRID     8
+#define HW_MAX_H_GRID     8
+#define HW_CURVE_DEPTH     17
+#define HW_MAX_GRID_NUM     (HW_MAX_W_GRID*HW_MAX_H_GRID)
+#define HW_LTM_AFFINE_LUT_SIZE     (HW_MAX_H_GRID*HW_MAX_W_GRID*HW_CURVE_DEPTH)
+
+
+
+struct HW_LTM_Registers
+{
+    HW_LTM_Registers();
+    uint32_t WdmaCfg;
+    uint64_t hist_addr;
+
+    //ltm enable params
+    bool  ltm_ds_enable;
+    bool  ltm_cd_enable;
+    bool  ltm_fd_enable;
+    bool  ltm_grid_enable;
+    bool  ltm_dth_enable;
+    bool  ltm_tone_adjust_enable;
+
+    bool  ltm_hist_enable;
+    bool  ltm_hist_overlap_enable;
+    bool  color_protect_enable;
+
+
+    //ltm core params
+    uint32_t LtmGridXScale;
+    uint32_t LtmGridYScale;
+    uint32_t gridnum_h;
+    uint32_t gridnum_w;
+    uint16_t ltm_af_lut[HW_LTM_AFFINE_LUT_SIZE];
+    uint16_t ltm_luma_coef[HW_LTM_LUMA_COEF_NUM];
+
+    uint16_t ltm_freq_decomp_coef[HW_LTM_FREQ_COEF_NUM];
+
+    uint32_t ltm_dith_tab_r[4];
+    uint32_t ltm_dith_tab_g[4];
+    uint32_t ltm_dith_tab_b[4];
+
+    uint32_t LtmDSHorNorm;
+    uint32_t LtmDSVerNorm;
+    uint32_t roi_x_start;
+    uint32_t roi_y_start;
+    uint32_t roi_x_end;
+    uint32_t roi_y_end;
+    uint32_t roi_x_len;
+    uint32_t roi_y_len;
+    uint32_t ds_width;
+    uint32_t ds_height;
+
+    uint32_t ltm_cd_freqdecom_coef[HW_LTM_CD_COEF_NUM];
+    uint32_t ltm_cdTresh[HW_LTM_CD_THRESH_NUM];
+    uint32_t ContentDetectionSlope[2];
+    uint32_t cd_min_wgt;
+
+    uint32_t HistGridXScale;
+    uint32_t HistGridYScale;
+    uint32_t HistGridDepth;
+    uint32_t hist_overlap_ratio;
+
+    uint8_t non_roi_mapping_way;
+
+    uint32_t ToneAdjLut[HW_ToneAdjLut_SIZE];
+
+    
+    bool ad_txt_jud_en;
+    bool ltm_wopr_blending_enable;
+    bool ltm_tex_blending_enable;
+    bool ltm_sd_blending_enable;
+    bool ltm_luma_blending_enable;
+
+    //SRE:sunlight readable enhancement core params
+    uint8_t ltm_wopr_thr = 0;
+
+    uint8_t ltm_sd_r_thr;
+    uint8_t ltm_sd_g_thr;
+    uint8_t ltm_sd_b_thr;
+    uint8_t ltm_sd_delta_minmax_thr;
+    uint8_t ltm_sd_delta_rg_thr;
+
+    uint32_t block_ratio_hr;
+    uint32_t block_ratio_lr;
+
+    uint16_t tex_diff_lut[33];
+
+
+};
+
+struct HW_LTM_ReadOut
+{
+    U32 m_LtmLumaHistogram[HW_MAX_GRID_NUM * 64] = { 0 };
+
+    U32 m_sum_txt;
+    U08 m_avg_wopr[HW_MAX_GRID_NUM] = { 0 }; //u8*64
+    U08 m_avg_texture[HW_MAX_GRID_NUM] = { 0 }; //u8*64
+    U08 m_avg_sd[HW_MAX_GRID_NUM] = { 0 }; //u8*64
+    U08 m_avg_luma[HW_MAX_GRID_NUM] = { 0 }; //u8*64
+};
+
+struct Algo_LTM_params
+{
+    //default
+    uint16_t input_height;
+    uint16_t input_width;
+    uint16_t out_height;
+    uint16_t out_width;
+
+    uint32_t module_enable;         //!< module enable
+    uint32_t frame_index;           //!< frame index
+    LogDataDumpControl dumpCtrl;    //!< log and data dump control
+
+    // registers
+    HW_LTM_Registers reg_params;
+};
+
+class Algo_LTM : public DC_Algo
+{
+public:
+    Algo_LTM() {};
+    Algo_LTM(uint16_t in_bitwidth, uint16_t out_bitwidth);
+    ~Algo_LTM();
+
+    virtual void loadParams(void *params);
+    virtual void loadParams(const char* fileName, uint32_t frame_idx);
+    virtual void initAlgorithm();
+    virtual void DoAlgorithm(uint16_t debug_enable = 0);
+    virtual void dumpParams(const char* fileName, uint32_t frame_idx);
+    virtual void dvWriteRegister(uint32_t Address, uint32_t Data);
+    //virtual void resetLutIndices();
+    virtual void dumpRegister(const char* fileName, uint32_t frame_idx);
+
+    //virtual uint32_t dvReadHistData(uint16_t X, uint16_t Y);
+    //virtual uint8_t dvReadAvgWopr(uint16_t gridIdx);
+    //virtual uint8_t dvReadAvgSd(uint16_t gridIdx);
+    //virtual uint8_t dvReadAvgLuma(uint16_t gridIdx);
+    //virtual uint32_t dvReadRegister(uint32_t Address);
+
+    virtual void dumpOutputStatus(void *readout);
+
+private:
+    /*the algorithm private method*/
+    void init_params();
+    void Process_Frame(uint16_t debug_enable);
+
+private:
+
+    HW_LTM_ReadOut m_Ltm_ReadParams;
+
+    U01 m_LtmFirstFrame;
+    HW_LTM_Registers reg_params;
+
+    //uint32_t index_aj = 0;
+    //uint32_t index_af = 0;
+    //uint32_t idx = 0;
+};
+
+#endif // !__DC_LTM_HPP__
