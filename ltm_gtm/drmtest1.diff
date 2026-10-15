@@ -1,0 +1,114 @@
+diff --git a/include/dpu_algorithm.h b/include/dpu_algorithm.h
+index 4a0427ef..c76b4c3b 100644
+--- a/include/dpu_algorithm.h
++++ b/include/dpu_algorithm.h
+@@ -60,7 +60,9 @@ struct pq_helper_funcs {
+ 				     void *hw_config);
+ 	dtest_status (*dpu_algo_gtm_cabc)(uint32_t fr, bool temporal_smooth,
+ 					  uint32_t Strength, uint32_t layerWidth,
+-					  uint32_t layerHeight, void *hw_config);
++					  uint32_t layerHeight, void *ReadParams,
++					  uint32_t *histogram, void *cabcOut,
++					  void *hw_config);
+ 	dtest_status (*dpu_algo_hdr)(void *algo_config, void *hw_config);
+ 	dtest_status (*dpu_algo_regamma)(uint32_t mode, uint32_t in_bit, uint32_t out_bit,
+ 					 uint32_t size, char *lut_file_r, char *lut_file_g,
+diff --git a/script/dtest/dc9400/crtc/feature/postpq/gtm.py b/script/dtest/dc9400/crtc/feature/postpq/gtm.py
+index 68cb5421..0ddb3ce5 100755
+--- a/script/dtest/dc9400/crtc/feature/postpq/gtm.py
++++ b/script/dtest/dc9400/crtc/feature/postpq/gtm.py
+@@ -80,7 +80,38 @@ def __get_case_normal_2(crtc_id:int):
+     return DTestUnit(plane, conn, __get_name(1, name_string))
+ 
+ 
++def __get_case_cabc_1(crtc_id:int):
++    def __get_property():
++        p_gtm = OrderedDict()
++        p_gtm["gtm_mode"] = "GTM_CABC"
++        p_gtm["temporal_smooth"] = 1
++        p_gtm["Strength"] = 4
++        p_gtm["width"] = 1920
++        p_gtm["height"] = 1280
++
++        return OrderedDict([('GTM', p_gtm)])
++
++    def __get_golden():
++        # Fill golden
++        #return OrderedDict([('md5sum', '1234567')])
++        return OrderedDict()
++
++    crtc = Crtc(crtc_id, __get_property())
++
++    plane = [Plane(0, crtc, 'AR24', 1920, 1280, 60, resource = "imgseq2_f_0_ARGB8888_1920x1280.bmp"),\
++    Plane(0, crtc, 'AR24', 1920, 1280, 60, resource = "imgseq2_f_0_ARGB8888_1920x1280.bmp"),\
++    Plane(0, crtc, 'AR24', 1920, 1280, 60, resource = "imgseq2_f_0_ARGB8888_1920x1280.bmp")]
++
++    conn = [Connector(0, crtc, 'AR30', 1920, 1280, 60, golden=__get_golden())]
++
++    name_string = "{}_mode_{}_strength_{}_cabc_1".format('GTM', 1, 4)
++    frame = [DTestUnit([plane[0]], conn, __get_name(1, name_string), frameID = 0),\
++    DTestUnit([plane[1]], conn, __get_name(1, name_string), frameID = 1),\
++    DTestUnit([plane[2]], conn, __get_name(1, name_string), frameID = 2)]
++    return DTestFrameUnit(frame, __get_name(1, name_string))
++
+ @dtest_unit_group('dc9400')
+ def __gen(chip_info):
+     return [ __get_case_normal_1(1) ] + \
+-           [ __get_case_normal_2(1) ]
+\ No newline at end of file
++           [ __get_case_normal_2(1) ] + \
++           [ __get_case_cabc_1(1) ]
+\ No newline at end of file
+diff --git a/src/map_funcs/prop_map_funcs.c b/src/map_funcs/prop_map_funcs.c
+index 4b3d04ed..f1f2ecf6 100644
+--- a/src/map_funcs/prop_map_funcs.c
++++ b/src/map_funcs/prop_map_funcs.c
+@@ -1046,14 +1046,47 @@ uint64_t MAPAPI map_drm_gtm(cJSON *obj, struct device *dev)
+ 		return 0;
+ 
+ 	if (cabc_cap) {
++		struct drm_vs_ltm_hw_readout read_params = { 0 };
++		struct drm_vs_gtm_cabc_out cabc_out = { 0 };
++		uint32_t histogram[VS_GTM_HIST_BIN_NUM] = { 0 };
++		struct bo *gtm_hist_bo = NULL;
++		uint32_t *hist_arr = NULL;
++		uint32_t i = 0;
++		int32_t fb_pitch_alignment = dev->resources->crtcs->info.pitch_alignment;
++
+ 		if (!dev->dpu_algorithm->funcs->dpu_algo_gtm_cabc) {
+ 			printf("Not found the GTM CABC algo function!\n");
+ 			return 0;
+ 		}
+ 
++		/* create the hist bo for gtm cabc histogram WDMA */
++		if (dev->ltm_hist_bo1 == NULL) {
++			gtm_hist_bo = bo_create_dumb(dev->fd, VS_GTM_HIST_BIN_NUM, 32, 32, 0, 0, 0,
++						     fb_pitch_alignment);
++			if (gtm_hist_bo == NULL)
++				return 0;
++			dev->ltm_hist_bo1 = gtm_hist_bo;
++		} else if (fr > 0) {
++			/* read last frame readout, the gtm hist bin is u32 */
++			memcpy(&read_params, &dev->ltm_read_params, sizeof(read_params));
++			if (!bo_map(dev->ltm_hist_bo1, (void **)&hist_arr)) {
++				for (i = 0; i < VS_GTM_HIST_BIN_NUM; i++)
++					histogram[i] = hist_arr[i];
++				bo_unmap(dev->ltm_hist_bo1);
++			}
++		}
++
+ 		dev->dpu_algorithm->funcs->dpu_algo_gtm_cabc(fr, temporal_smooth, strength,
+-							     layer_width, layer_height, &gtm);
++							     layer_width, layer_height, &read_params,
++							     histogram, &cabc_out, &gtm);
++		printf("[%s] gtm cabc duty: %f, backlight reduce coff: %f\n", __func__,
++		       cabc_out.cabc_duty, cabc_out.backlight_reduce_coff);
+ 		gtm.gtm_mode = gtm_mode;
++
++		/* set hist get handle for histogram WDMA */
++		gtm.ltm_hist_get.enable = true;
++		gtm.ltm_hist_get.fd = dev->fd;
++		gtm.ltm_hist_get.hist_bo_handle = dev->ltm_hist_bo1->handle;
+ 	} else {
+ 		if (!dev->dpu_algorithm->funcs->dpu_algo_gtm) {
+ 			printf("Not found the GTM algo function!\n");

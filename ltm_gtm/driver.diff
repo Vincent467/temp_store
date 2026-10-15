@@ -169,7 +169,7 @@ index e1966379..f4727647 100644
  
  VS_DC_BLOB_PROPERTY_PROTO(gtm_proto, "GTM", struct drm_vs_gtm, gtm_check, NULL, gtm_config_hw);
 diff --git a/verisilicon/9x00/vs_dc.c b/verisilicon/9x00/vs_dc.c
-index ff0d31f5..00ba113e 100644
+index 9d19bd79..35430f0c 100644
 --- a/verisilicon/9x00/vs_dc.c
 +++ b/verisilicon/9x00/vs_dc.c
 @@ -619,8 +619,9 @@ static irqreturn_t dc_isr(int irq, void *data)
@@ -202,10 +202,10 @@ index ff0d31f5..00ba113e 100644
  
  	hw_id = display_info->id;
 diff --git a/verisilicon/9x00/vs_dc_hw.c b/verisilicon/9x00/vs_dc_hw.c
-index 066ec98e..35acc997 100644
+index 135bef7b..3722ae35 100644
 --- a/verisilicon/9x00/vs_dc_hw.c
 +++ b/verisilicon/9x00/vs_dc_hw.c
-@@ -4573,6 +4573,33 @@ void dc_hw_get_display_ltm2_data(struct dc_hw *hw, u8 hw_id,
+@@ -4557,6 +4557,33 @@ void dc_hw_get_display_ltm2_data(struct dc_hw *hw, u8 hw_id,
  	display = (struct dc_hw_display *)vs_dc_hw_get_display(hw, hw_id);
  	ltm2_mode = display->ltm2_mode;
  
@@ -239,7 +239,7 @@ index 066ec98e..35acc997 100644
  	if (ltm2_mode == VS_LTM_LTM)
  		return;
  
-@@ -7740,7 +7767,8 @@ static void display_commit(struct dc_hw *hw, u8 display_id)
+@@ -7729,7 +7756,8 @@ static void display_commit(struct dc_hw *hw, u8 display_id)
  			display_set_ltm_cd_get(hw, hw_id, &display->ltm_cd_get);
  		if (display->ltm_hist_get.dirty)
  			display_set_ltm_hist_get(hw, hw_id, &display->ltm_hist_get);
