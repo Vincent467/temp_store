@@ -1,0 +1,276 @@
+diff --git a/include/uapi/drm/vs_drm_api.h b/include/uapi/drm/vs_drm_api.h
+index f244e02b..0071f3f7 100644
+--- a/include/uapi/drm/vs_drm_api.h
++++ b/include/uapi/drm/vs_drm_api.h
+@@ -74,6 +74,7 @@ typedef uint64_t __u64;
+ #define VS_LTM2_MAX_W_GRID 8
+ #define VS_LTM2_MAX_H_GRID 8
+ #define VS_LTM2_MAX_GRID_NUM (VS_LTM2_MAX_W_GRID * VS_LTM2_MAX_H_GRID)
++#define VS_GTM_HIST_BIN_NUM 64 /* gtm cabc histogram bin numbers */
+ 
+ #define VS_SHARPNESS_CSC_COEF_NUM 9
+ #define VS_SHARPNESS_CSC_OFFSET_NUM 3
+@@ -1141,6 +1142,9 @@ struct drm_vs_ltm_hw_readout {
+ 	__u8 avg_wopr[VS_LTM2_MAX_GRID_NUM];
+ 	__u8 avg_sd[VS_LTM2_MAX_GRID_NUM];
+ 	__u8 avg_luma[VS_LTM2_MAX_GRID_NUM];
++	/* used for gtm cabc */
++	__u32 wopr_sum; /* u25, the sum of white point detection */
++	__u32 sd_sum;   /* u25, the sum of skin detection */
+ 	bool read_done;
+ };
+ 
+@@ -1185,9 +1189,24 @@ struct drm_vs_gtm {
+ 	struct drm_vs_ltm_dither gtm_dither;
+ 	struct drm_vs_ltm_luma_ave gtm_luma_set;
+ 	struct drm_vs_ltm_ds gtm_ds;
++	/* used for gtm cabc, the reg config reuse ltm v2 */
++	struct drm_vs_ltm_af_luts gtm_af_luts;
++	struct drm_vs_ltm_grid grid_size;
++	struct drm_vs_ltm_hist_set gtm_hist_set;
++	struct drm_vs_ltm_af_slice af_slice;
++	struct drm_vs_ltm_sre_wopr sre_wopr;
++	struct drm_vs_ltm_sd gtm_sd;
++	struct drm_vs_ltm_hist_get ltm_hist_get;
++	bool color_protect_enable;
+ 	enum drm_vs_gtm_mode gtm_mode;
+ };
+ 
++/* the gtm cabc output for backlight control */
++struct drm_vs_gtm_cabc_out {
++	double cabc_duty;
++	double backlight_reduce_coff;
++};
++
+ struct drm_vs_blend {
+ 	enum drm_vs_blend_mode color_mode;
+ 	enum drm_vs_blend_mode alpha_mode;
+diff --git a/verisilicon/9x00/postprocess/vs_dc_ltm.c b/verisilicon/9x00/postprocess/vs_dc_ltm.c
+index e1966379..f4727647 100644
+--- a/verisilicon/9x00/postprocess/vs_dc_ltm.c
++++ b/verisilicon/9x00/postprocess/vs_dc_ltm.c
+@@ -108,6 +108,24 @@ static int gtm_check(const struct dc_hw *hw, u8 hw_id, const void *data, u32 siz
+ 		if (!ltm_tone_adj_check(hw, hw_id, &gtm->tone_adj, 0, NULL))
+ 			return -EINVAL;
+ 	}
++	if (gtm->gtm_mode == VS_GTM_CABC) {
++		if (!hw->info->gtm_cabc) {
++			pr_err("%s The GTM is not support cabc mode.\n", __func__);
++			return -EOPNOTSUPP;
++		}
++		if (!gtm->grid_size.width || gtm->grid_size.width > VS_LTM2_MAX_W_GRID ||
++		    !gtm->grid_size.height || gtm->grid_size.height > VS_LTM2_MAX_H_GRID) {
++			pr_err("%s The GTM grid width/height %d/%d not meet the limit.\n", __func__,
++			       gtm->grid_size.width, gtm->grid_size.height);
++			return -EINVAL;
++		}
++		if (gtm->gtm_af_luts.enable &&
++		    gtm->gtm_af_luts.entry_cnt != VS_LTM_AFFINE_OUT_SCALE_SIZE) {
++			pr_err("%s The GTM affine lut entry cnt %d not meet the limit.\n", __func__,
++			       gtm->gtm_af_luts.entry_cnt);
++			return -EINVAL;
++		}
++	}
+ 	return 0;
+ }
+ 
+@@ -1617,6 +1635,65 @@ static bool ltm2_hw_config(struct dc_hw *hw, u8 hw_id, bool enable, const void *
+ 	return true;
+ }
+ 
++static bool gtm_cabc_hw_config(struct dc_hw *hw, u8 hw_id, bool enable, const void *data)
++{
++	const struct drm_vs_gtm *gtm = data;
++	struct dc_hw_display *display =
++		(struct dc_hw_display *)vs_dc_hw_get_display(hw, hw_id);
++
++	if (display)
++		display->gtm_mode = enable ? VS_GTM_CABC : VS_GTM;
++
++	/* LTM total enable in shadow panel config */
++	ltm_enable_config_hw(hw, hw_id, enable, NULL);
++
++#ifdef DCREG_SH_PANEL0_LTM2_CONFIG_Address
++	u32 config = 0;
++
++	if (enable) {
++		VS_GET_PANEL01_CONFIG(hw, hw_id, config, ltm2_config);
++		config = VS_SET_FIELD(config, DCREG_SH_PANEL0_LTM2_CONFIG, COLOR_PROTECT,
++				      gtm->color_protect_enable);
++		dc_write(hw, VS_SET_PANEL01_FIELD(DCREG_SH_PANEL, hw_id, LTM2_CONFIG_Address),
++			 config);
++		VS_SET_PANEL01_CONFIG(hw, hw_id, config, ltm2_config);
++
++		/* luma coef, luma blending */
++		ltm2_luma_config_hw(hw, hw_id, gtm->gtm_luma.enable, &gtm->gtm_luma);
++
++		/* grid width/height and hist grid depth */
++		ltm2_grid_config_hw(hw, hw_id, gtm->grid_size.enable, &gtm->grid_size);
++
++		/* slice affine grid and non roi mapping way */
++		ltm2_af_slice_config_hw(hw, hw_id, gtm->af_slice.enable, &gtm->af_slice);
++
++		/* gtm affine lut, 17 entries */
++		ltm2_af_lut_config_hw(hw, hw_id, gtm->gtm_af_luts.enable, &gtm->gtm_af_luts);
++
++		/* dither table */
++		ltm2_dither_config_hw(hw, hw_id, gtm->gtm_dither.dither_enable, &gtm->gtm_dither);
++
++		/* hist enable, hist grid scale and block ratio lr */
++		ltm2_local_hist_set_config_hw(hw, hw_id, gtm->gtm_hist_set.enable,
++					      &gtm->gtm_hist_set);
++
++		/* roi config */
++		ltm2_ds_config_hw(hw, hw_id, gtm->gtm_ds.enable, &gtm->gtm_ds);
++
++		/* wopr blending and threshold */
++		ltm2_sre_wopr_config_hw(hw, hw_id, gtm->sre_wopr.blending_enable, &gtm->sre_wopr);
++
++		/* sd blending and thresholds */
++		ltm2_sre_sd_config_hw(hw, hw_id, gtm->gtm_sd.blending_enable, &gtm->gtm_sd);
++
++		/* local histogram WDMA */
++		ltm2_local_hist_get_config_hw(hw, hw_id, gtm->ltm_hist_get.enable,
++					      &gtm->ltm_hist_get);
++	}
++#endif
++	return true;
++}
++
+ static bool ltm_config_hw(struct dc_hw *hw, u8 hw_id, bool enable, const void *data)
+ {
+ 	u8 ltm2_mask = hw->info->ltm2_mask;
+@@ -1629,7 +1706,7 @@ static bool ltm_config_hw(struct dc_hw *hw, u8 hw_id, bool enable, const void *d
+ 	return true;
+ }
+ 
+-static bool gtm_config_hw(struct dc_hw *hw, u8 hw_id, bool enable, const void *data)
++static bool gtm_hw_config(struct dc_hw *hw, u8 hw_id, bool enable, const void *data)
+ {
+ 	u32 config = 0;
+ 	const struct drm_vs_gtm *gtm = data;
+@@ -1661,6 +1738,18 @@ static bool gtm_config_hw(struct dc_hw *hw, u8 hw_id, bool enable, const void *d
+ 	return true;
+ }
+ 
++static bool gtm_config_hw(struct dc_hw *hw, u8 hw_id, bool enable, const void *data)
++{
++	const struct drm_vs_gtm *gtm = data;
++
++	if (gtm->gtm_mode == VS_GTM_CABC)
++		gtm_cabc_hw_config(hw, hw_id, enable, gtm);
++	else
++		gtm_hw_config(hw, hw_id, enable, gtm);
++
++	return true;
++}
++
+ VS_DC_BLOB_PROPERTY_PROTO(ltm_proto, "LTM", struct drm_vs_ltm, ltm_check, NULL, ltm_config_hw);
+ 
+ VS_DC_BLOB_PROPERTY_PROTO(gtm_proto, "GTM", struct drm_vs_gtm, gtm_check, NULL, gtm_config_hw);
+diff --git a/verisilicon/9x00/vs_dc.c b/verisilicon/9x00/vs_dc.c
+index ff0d31f5..00ba113e 100644
+--- a/verisilicon/9x00/vs_dc.c
++++ b/verisilicon/9x00/vs_dc.c
+@@ -619,8 +619,9 @@ static irqreturn_t dc_isr(int irq, void *data)
+ 			}
+ #endif
+ #ifdef CONFIG_VERISILICON_LTM
+-			if (dc->hw.info->ltm2_mask) {
+-				if (dc->hw.display[i].ltm2_mode != VS_LTM_LTM)
++			if (dc->hw.info->ltm2_mask || dc->hw.info->gtm_cabc) {
++				if (dc->hw.display[i].ltm2_mode != VS_LTM_LTM ||
++				    dc->hw.display[i].gtm_mode == VS_GTM_CABC)
+ 					schedule_work(&dc->crtc[i]->ltm_isr_work);
+ 			}
+ #endif
+@@ -995,14 +996,14 @@ void vs_dc_handle_ltm_isr_work(struct work_struct *isr_work)
+ 	int i = 0;
+ #endif
+ 
+-	if (!ltm2_mask)
++	if (!ltm2_mask && !dc->hw.info->gtm_cabc)
+ 		return;
+ 
+ 	display_info = (struct vs_display_info *)&dc->hw.info->displays[vs_crtc->id];
+ 	if (!display_info)
+ 		return;
+ 
+-	if (!display_info->ltm)
++	if (!display_info->ltm && !dc->hw.info->gtm_cabc)
+ 		return;
+ 
+ 	hw_id = display_info->id;
+diff --git a/verisilicon/9x00/vs_dc_hw.c b/verisilicon/9x00/vs_dc_hw.c
+index 066ec98e..35acc997 100644
+--- a/verisilicon/9x00/vs_dc_hw.c
++++ b/verisilicon/9x00/vs_dc_hw.c
+@@ -4573,6 +4573,33 @@ void dc_hw_get_display_ltm2_data(struct dc_hw *hw, u8 hw_id,
+ 	display = (struct dc_hw_display *)vs_dc_hw_get_display(hw, hw_id);
+ 	ltm2_mode = display->ltm2_mode;
+ 
++	if (display->gtm_mode == VS_GTM_CABC) {
++		/* gtm cabc readout, wopr/sd sum are u25, avg luma is 64 * u8 */
++		ltm_readout->read_done = false;
++
++		ltm_readout->sd_sum = dc_read_immediate(
++			hw, VS_SET_PANEL01_FIELD(DCREG_PANEL, hw_id,
++						 LTM2_SD_RATIO_DATA_Address)) &
++				      0x1FFFFFF;
++
++		for (entry_cnt = 0; entry_cnt < VS_LTM2_MAX_GRID_NUM; entry_cnt += 4) {
++			value = dc_read_immediate(hw, VS_SET_PANEL01_FIELD(DCREG_PANEL, hw_id,
++									   LTM2_AVG_LUMA_DATA_Address));
++			ltm_readout->avg_luma[entry_cnt] = value & 0xFF;
++			ltm_readout->avg_luma[entry_cnt + 1] = (value >> 8) & 0xFF;
++			ltm_readout->avg_luma[entry_cnt + 2] = (value >> 16) & 0xFF;
++			ltm_readout->avg_luma[entry_cnt + 3] = (value >> 24) & 0xFF;
++		}
++
++		ltm_readout->wopr_sum = dc_read_immediate(
++			hw, VS_SET_PANEL01_FIELD(DCREG_PANEL, hw_id,
++						 LTM2_AVG_WOPR_DATA_Address)) &
++				       0x1FFFFFF;
++
++		ltm_readout->read_done = true;
++		return;
++	}
++
+ 	if (ltm2_mode == VS_LTM_LTM)
+ 		return;
+ 
+@@ -7740,7 +7767,8 @@ static void display_commit(struct dc_hw *hw, u8 display_id)
+ 			display_set_ltm_cd_get(hw, hw_id, &display->ltm_cd_get);
+ 		if (display->ltm_hist_get.dirty)
+ 			display_set_ltm_hist_get(hw, hw_id, &display->ltm_hist_get);
+-		if (display->ltm2_mode == VS_LTM_SRE || display->ltm2_mode == VS_LTM_FOSS)
++		if (display->ltm2_mode == VS_LTM_SRE || display->ltm2_mode == VS_LTM_FOSS ||
++		    display->gtm_mode == VS_GTM_CABC)
+ 			ltm_set_read_done(hw, hw_id, i);
+ #endif
+ 
+diff --git a/verisilicon/9x00/vs_dc_hw.h b/verisilicon/9x00/vs_dc_hw.h
+index b62f0eba..4c18dd86 100644
+--- a/verisilicon/9x00/vs_dc_hw.h
++++ b/verisilicon/9x00/vs_dc_hw.h
+@@ -1370,6 +1370,7 @@ struct dc_hw_display {
+ #endif
+ #ifdef CONFIG_VERISILICON_LTM
+ 	enum drm_vs_ltm_mode ltm2_mode;
++	u8 gtm_mode;
+ #endif
+ #ifdef CONFIG_VERISILICON_REG_DUMP
+ 	bool reg_dump_enable;
+diff --git a/verisilicon/vs_crtc.c b/verisilicon/vs_crtc.c
+index dc832210..bcf8403c 100644
+--- a/verisilicon/vs_crtc.c
++++ b/verisilicon/vs_crtc.c
+@@ -1071,7 +1071,7 @@ struct vs_crtc *vs_crtc_create(const struct dc_hw_display *display, struct drm_d
+ 		drm_object_attach_property(&crtc->base.base, crtc->ltm_hist_get_prop, 0);
+ 	}
+ 
+-	if (display_info->ltm && info->ltm2_mask) {
++	if ((display_info->ltm && info->ltm2_mask) || info->gtm_cabc) {
+ 		crtc->ltm_hw_readout = drm_property_create(
+ 			drm_dev, DRM_MODE_PROP_IMMUTABLE | DRM_MODE_PROP_BLOB, "LTM_HW_READOUT", 0);
+ 		if (!crtc->ltm_hw_readout)
