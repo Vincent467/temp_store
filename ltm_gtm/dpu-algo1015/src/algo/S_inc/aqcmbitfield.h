@@ -1,0 +1,141 @@
+#ifndef __AQCMBITFIELD_H
+#define __AQCMBITFIELD_H
+
+/* Signed values. */
+typedef char        S01;
+typedef char        S02;
+typedef char        S03;
+typedef char        S04;
+typedef char        S05;
+typedef char        S06;
+typedef char        S07;
+typedef char        S08;
+typedef short int    S09;
+typedef short int    S10;
+typedef short int    S11;
+typedef short int    S12;
+typedef short int    S13;
+typedef short int    S14;
+typedef short int    S15;
+typedef short int    S16;
+typedef int            S17;
+typedef int            S18;
+typedef int         S19;
+typedef int         S20;
+typedef int         S21;
+typedef int         S22;
+typedef int         S23;
+typedef int         S24;
+typedef int         S25;
+typedef int         S26;
+typedef int         S27;
+typedef int         S28;
+typedef int         S29;
+typedef int         S30;
+typedef int         S31;
+typedef int         S32;
+typedef long long     S33;
+typedef long long     S34;
+typedef long long     S35;
+typedef long long     S36;
+typedef long long     S37;
+typedef long long     S38;
+typedef long long     S39;
+typedef long long     S40;
+typedef long long     S41;
+typedef long long     S42;
+typedef long long     S43;
+typedef long long     S44;
+typedef long long     S45;
+typedef long long     S46;
+typedef long long     S47;
+typedef long long     S48;
+typedef long long     S49;
+typedef long long     S50;
+typedef long long     S51;
+typedef long long     S52;
+typedef long long     S53;
+typedef long long     S54;
+typedef long long     S55;
+typedef long long     S56;
+typedef long long     S57;
+typedef long long     S58;
+typedef long long     S59;
+typedef long long     S60;
+typedef long long     S61;
+typedef long long     S62;
+typedef long long     S63;
+typedef long long     S64;
+
+/* Unsigned values. */
+typedef unsigned char        U01;
+typedef unsigned char        U02;
+typedef unsigned char        U03;
+typedef unsigned char        U04;
+typedef unsigned char        U05;
+typedef unsigned char        U06;
+typedef unsigned char        U07;
+typedef unsigned char        U08;
+typedef unsigned short int    U09;
+typedef unsigned short int    U10;
+typedef unsigned short int    U11;
+typedef unsigned short int    U12;
+typedef unsigned short int    U13;
+typedef unsigned short int    U14;
+typedef unsigned short int    U15;
+typedef unsigned short int    U16;
+typedef unsigned int        U17;
+typedef unsigned int        U18;
+typedef unsigned int        U19;
+typedef unsigned int        U20;
+typedef unsigned int        U21;
+typedef unsigned int        U22;
+typedef unsigned int        U23;
+typedef unsigned int        U24;
+typedef unsigned int        U25;
+typedef unsigned int        U26;
+typedef unsigned int        U27;
+typedef unsigned int        U28;
+typedef unsigned int        U29;
+typedef unsigned int        U30;
+typedef unsigned int        U31;
+typedef unsigned int        U32;
+typedef unsigned long long    U33;
+typedef unsigned long long    U34;
+typedef unsigned long long    U35;
+typedef unsigned long long    U36;
+typedef unsigned long long    U37;
+typedef unsigned long long    U38;
+typedef unsigned long long    U39;
+typedef unsigned long long    U40;
+typedef unsigned long long    U41;
+typedef unsigned long long    U42;
+typedef unsigned long long    U43;
+typedef unsigned long long    U44;
+typedef unsigned long long    U45;
+typedef unsigned long long    U46;
+typedef unsigned long long    U47;
+typedef unsigned long long    U48;
+typedef unsigned long long    U49;
+typedef unsigned long long    U50;
+typedef unsigned long long    U51;
+typedef unsigned long long    U52;
+typedef unsigned long long    U53;
+typedef unsigned long long    U54;
+typedef unsigned long long    U55;
+typedef unsigned long long    U56;
+typedef unsigned long long    U57;
+typedef unsigned long long    U58;
+typedef unsigned long long    U59;
+typedef unsigned long long    U60;
+typedef unsigned long long    U61;
+typedef unsigned long long    U62;
+typedef unsigned long long    U63;
+typedef unsigned long long    U64;
+
+
+
+#endif    /* __AQCMBITFIELD_HPP */
+
+
+

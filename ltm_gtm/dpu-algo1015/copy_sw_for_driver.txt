@@ -1,0 +1,51 @@
+copy_sw_for_driver start:
+args.arch:dc9000l_0005
+args.src_path:./algo_sources
+args.dst_path:./
+
+****delete old files
+delete old files done!
+
+****copy algo files
+
+****copy sw files
+copy sw files done!
+
+****copy S_basic files
+copy S_basic files done!
+
+****copy S_inc files
+copy S_inc files done!
+
+****copy common files
+copy common files done!
+
+****generate sw_def.hpp
+generate sw_def.hpp done!
+
+****generate sw_modules.hpp
+generate sw_modules.hpp done!
+
+****copy algo done!
+
+****copy confusion_algo files
+
+****copy sw files
+copy sw files done!
+
+****copy S_basic files
+copy S_basic files done!
+
+****copy S_inc files
+copy S_inc files done!
+
+****copy common files
+copy common files done!
+
+****generate sw_def.hpp
+generate sw_def.hpp done!
+
+****generate sw_modules.hpp
+generate sw_modules.hpp done!
+
+****copy confusion_algo done!

@@ -1,0 +1,36 @@
+diff --git a/mapper/LTM/ltm_v1/mapLTM.c b/mapper/LTM/ltm_v1/mapLTM.c
+index e3b8999..d7a34dd 100644
+--- a/mapper/LTM/ltm_v1/mapLTM.c
++++ b/mapper/LTM/ltm_v1/mapLTM.c
+@@ -106,8 +106,7 @@ dtest_status dpu_algo_api_ltm_sre(uint32_t fr, bool temporal_smooth,
+ 
+   /*ltm_sre_af_lut*/
+   ltm_set_sre_af_lut(fr, temporal_smooth, luma_luma_intensity, gridWidth,
+-                     gridHeight, layerWidth, layerHeight, ReadParam->avg_wopr,
+-                     ReadParam->avg_sd, ReadParam->avg_luma, cdf_crv_last,
++                     gridHeight,ReadParam->avg_sd, ReadParam->avg_luma, cdf_crv_last,
+                      sensitivity, iir_max_wgt, ltm->ltm_af_luts.ltm_af_lut);
+ 
+   ltm->ltm_af_luts.enable = 1;
+@@ -385,7 +384,7 @@ dtest_status dpu_algo_api_ltm_foss(
+   foss_set_af_luts(fr, temporal_smooth, Strength, layerWidth, layerHeight,
+                    gridWidth, gridHeight, hist_buf, ReadParam->avg_luma,
+                    ReadParam->avg_sd, ReadParam->sum_txt, cdf_crv_last,
+-                   sensitivity, iir_max_wgt, spatial_kernal, foss_Strength,
++                   sensitivity, iir_max_wgt, foss_Strength,
+                    foss_uniform_blend_strength, ltm->ltm_af_luts.ltm_af_lut);
+ 
+   ltm->ltm_af_luts.enable = 1;
+@@ -580,9 +579,9 @@ dtest_status dpu_algo_api_ltm(uint32_t fr, uint32_t mode, bool temporal_smooth,
+ 
+   /*ltm_af_lut*/
+   ltm->ltm_af_luts.enable = ltm_set_af_luts(
+-      fr, temporal_smooth, Strength, layerWidth, layerHeight, gridWidth,
+-      gridHeight, hist_buf, cdf_crv_last, sensitivity, iir_max_wgt,
+-      spatial_kernal, ltm->ltm_af_luts.ltm_af_lut);
++      fr, temporal_smooth, Strength, gridWidth, gridHeight,
++      hist_buf, cdf_crv_last, sensitivity, iir_max_wgt,
++      ltm->ltm_af_luts.ltm_af_lut);
+ 
+   ltm->ltm_af_luts.entry_cnt = 1088;
+ 
