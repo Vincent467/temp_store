@@ -1,0 +1,5 @@
+V0(no longer maintained): 12bit in, 24bit out, used for Google. 
+V1: Add FP16 input.
+V2(no longer maintained): 12bit in, 12bit out, used for dc9x00L series.
+V3: come from V1, The new project will be developed based on this version.(2025.11.03)
+V4: come from V3, add FP16 TO S25, remove FP16 TO U24, modify CCM to adapt to S25, extend EOTF/DEMULTIPLY/TONE MAPPING to S25.(2026.08.19)
