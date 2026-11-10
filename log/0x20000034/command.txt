@@ -1,0 +1,46 @@
+root@ubuser-Dell-Pro-Slim-QCS1250:/data/dpu/home/cn9641/FPGA/drm_dev/drm-test# drmtest -case auto_cases/mode_switch/crtc0.feature.postpq.mode_switch.json -clear -o dump -c
+[ 1847.496111] [src/drmtest_helper.c:178]INFO Remap connetor id 0 to 407
+[ 1847.496119] [src/drmtest_helper.c:145]INFO Remap plane id 0 to 130
+[ 1847.496121] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1847.496123] [src/drmtest_helper.c:178]INFO Remap connetor id 0 to 407
+[ 1847.496125] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1847.496126] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1847.496127] [src/case_builder.c:291]INFO Total property num = 0
+setting mode 640x480-60Hz on connectors 0, crtc 32
+CRTC 32 has no SCALING_FILTER property
+testing 640x480@AR24 on plane 130, crtc 32
+[ 1847.609492] [src/buffers.c:3545]INFO Plane resource is not specified, will use default pattern fill
+[ 1848.044929] [src/drmtest_helper.c:178]INFO Remap connetor id 0 to 407
+[ 1848.044970] [src/drmtest_helper.c:145]INFO Remap plane id 0 to 130
+[ 1848.044979] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1848.044988] [src/drmtest_helper.c:178]INFO Remap connetor id 0 to 407
+[ 1848.044996] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1848.045003] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1848.045014] [src/case_builder.c:291]INFO Total property num = 0
+setting mode 1920x1080-60Hz on connectors 0, crtc 32
+CRTC 32 has no SCALING_FILTER property
+testing 1920x1080@AR24 on plane 130, crtc 32
+[ 1848.567925] [src/buffers.c:951]INFO Scusses save bmp result.
+[ 1848.752909] [src/buffers.c:3545]INFO Plane resource is not specified, will use default pattern fill
+[ 1848.884827] [src/drmtest_helper.c:178]INFO Remap connetor id 0 to 407
+[ 1848.884855] [src/drmtest_helper.c:145]INFO Remap plane id 0 to 130
+[ 1848.884860] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1848.884865] [src/drmtest_helper.c:178]INFO Remap connetor id 0 to 407
+[ 1848.884869] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1848.884873] [src/drmtest_helper.c:211]INFO Remap crtc id 0 to 32
+[ 1848.884879] [src/case_builder.c:291]INFO Total property num = 0
+setting mode 640x480-60Hz on connectors 0, crtc 32
+CRTC 32 has no SCALING_FILTER property
+testing 640x480@AR24 on plane 130, crtc 32
+[ 1848.997303] [src/buffers.c:3545]INFO Plane resource is not specified, will use default pattern fill
+Pass: the wb0 result: e5746c284713bcac41c29018f6027726 match the golden: e5746c284713bcac41c29018f6027726!
+[ 1850.075454] [src/buffers.c:951]INFO Scusses save bmp result.
+Fail: the wb0 result: 2a3c477ed750e00c4782cc4228fda215 cannot match the golden: a88ccec6a596e5faf35b1c48c39b3144!
+[ 1852.622474] [src/viv_dc_functions.c:2906]ERROR bo_dump fail
+[ 1852.622489] [tools/drmtest.c:324]ERROR CHECK STATUS(-1): Failure
+Disabling frame0 all the properties.
+Disabling frame1 all the properties.
+Disabling frame2 all the properties.
+Disabling frame0 all the planes and crtcs.
+Disabling frame1 all the planes and crtcs.
+Disabling frame2 all the planes and crtcs.
