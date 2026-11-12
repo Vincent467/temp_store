@@ -1,0 +1,746 @@
+[  160.218279] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (4)
+[  160.218293] vs-drm 0000:01:00.0: [drm:drm_atomic_print_new_state [drm]] checking 00000000b2f47235
+[  160.218303] vs-drm 0000:01:00.0: [drm] plane[130]: Layer0
+[  160.218304] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  160.218304] vs-drm 0000:01:00.0: [drm]       fb=485
+[  160.218305] vs-drm 0000:01:00.0: [drm]               allocated by = drmtest
+[  160.218306] vs-drm 0000:01:00.0: [drm]               refcount=2
+[  160.218306] vs-drm 0000:01:00.0: [drm]               format=AR24 little-endian (0x34325241)
+[  160.218307] vs-drm 0000:01:00.0: [drm]               modifier=0xb00000000000000
+[  160.218308] vs-drm 0000:01:00.0: [drm]               size=640x480
+[  160.218309] vs-drm 0000:01:00.0: [drm]               layers:
+[  160.218309] vs-drm 0000:01:00.0: [drm]                       size[0]=640x480
+[  160.218310] vs-drm 0000:01:00.0: [drm]                       pitch[0]=2560
+[  160.218311] vs-drm 0000:01:00.0: [drm]                       offset[0]=0
+[  160.218311] vs-drm 0000:01:00.0: [drm]                       obj[0]:
+[  160.218312] vs-drm 0000:01:00.0: [drm]                               name=0
+[  160.218312] vs-drm 0000:01:00.0: [drm]                               refcount=2
+[  160.218313] vs-drm 0000:01:00.0: [drm]                               start=0010012c
+[  160.218314] vs-drm 0000:01:00.0: [drm]                               size=1228800
+[  160.218314] vs-drm 0000:01:00.0: [drm]                               imported=no
+[  160.218315] vs-drm 0000:01:00.0: [drm]       crtc-pos=640x480+0+0
+[  160.218316] vs-drm 0000:01:00.0: [drm]       src-pos=640.000000x480.000000+0.000000+0.000000
+[  160.218317] vs-drm 0000:01:00.0: [drm]       rotation=1
+[  160.218318] vs-drm 0000:01:00.0: [drm]       normalized-zpos=0
+[  160.218318] vs-drm 0000:01:00.0: [drm]       color-encoding=ITU-R BT.2020 YCbCr
+[  160.218319] vs-drm 0000:01:00.0: [drm]       color-range=YCbCr limited range
+[  160.218319] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  160.218320] vs-drm 0000:01:00.0: [drm] crtc[32]: Out_ctrl0
+[  160.218321] vs-drm 0000:01:00.0: [drm]       enable=1
+[  160.218321] vs-drm 0000:01:00.0: [drm]       active=1
+[  160.218322] vs-drm 0000:01:00.0: [drm]       self_refresh_active=0
+[  160.218322] vs-drm 0000:01:00.0: [drm]       planes_changed=0
+[  160.218323] vs-drm 0000:01:00.0: [drm]       mode_changed=0
+[  160.218323] vs-drm 0000:01:00.0: [drm]       active_changed=0
+[  160.218324] vs-drm 0000:01:00.0: [drm]       connectors_changed=0
+[  160.218324] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  160.218325] vs-drm 0000:01:00.0: [drm]       plane_mask=1
+[  160.218325] vs-drm 0000:01:00.0: [drm]       connector_mask=1
+[  160.218326] vs-drm 0000:01:00.0: [drm]       encoder_mask=0
+[  160.218326] vs-drm 0000:01:00.0: [drm]       mode: "640x480": 60 25175 640 656 752 800 480 490 492 525 0x40 0xa
+[  160.218328] vs-drm 0000:01:00.0: [drm] connector[407]: Writeback-1
+[  160.218328] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  160.218329] vs-drm 0000:01:00.0: [drm]       self_refresh_aware=0
+[  160.218329] vs-drm 0000:01:00.0: [drm]       max_requested_bpc=0
+[  160.218330] vs-drm 0000:01:00.0: [drm]       colorspace=Default
+[  160.218330] vs-drm 0000:01:00.0: [drm]       fb=484
+[  160.218331] vs-drm 0000:01:00.0: [drm:drm_atomic_check_only [drm]] checking 00000000b2f47235
+[  160.218342] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] mode changed
+[  160.218349] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] enable changed
+[  160.218354] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] active changed
+[  160.218361] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] Updating routing for [CONNECTOR:407:Writeback-1]
+[  160.218366] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CONNECTOR:407:Writeback-1] keeps [ENCODER:402:Virtual-402], now on [CRTC:32:Out_ctrl0]
+[  160.218370] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] needs all connectors, enable: y, active: y
+[  160.218375] vs-drm 0000:01:00.0: [drm:drm_atomic_add_affected_connectors [drm]] Adding all current connectors for [CRTC:32:Out_ctrl0] to 00000000b2f47235
+[  160.218385] vs-drm 0000:01:00.0: [drm:drm_atomic_add_affected_planes [drm]] Adding all current planes for [CRTC:32:Out_ctrl0] to 00000000b2f47235
+[  160.218395] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000b2f47235
+[  160.218405] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000b2f47235
+[  160.218420] [drm:drm_rect_debug_print [drm_kms_helper]] src: 640.000000x480.000000+0.000000+0.000000
+[  160.218426] [drm:drm_rect_debug_print [drm_kms_helper]] dst: 640x480+0+0
+[  160.218432] [drm:drm_rect_debug_print [drm_kms_helper]] clip rect: 640x480+0+0
+[  160.218437] [drm:drm_rect_debug_print [drm_kms_helper]] after clip src: 640.000000x480.000000+0.000000+0.000000
+[  160.218442] [drm:drm_rect_debug_print [drm_kms_helper]] after clip dst: 640x480+0+0
+[  160.218448] vs-drm 0000:01:00.0: [drm:drm_atomic_commit [drm]] committing 00000000b2f47235
+[  160.218460] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: hwmode: htotal 800, vtotal 525, vdisplay 480
+[  160.218475] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: clock 25175 kHz framedur 16683217 linedur 31777
+[  160.218488] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] modeset on [ENCODER:402:Virtual-402]
+[  160.218493] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_enables [drm_kms_helper]] enabling [CRTC:32:Out_ctrl0]
+[  160.218499] mode->h_total: 800, mode->v_total: 525
+[  160.218509] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_on_config [drm]] crtc 0, vblank enabled 0, inmodeset 1
+[  160.218721] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 160.212218 -> 160.212218 [e 0 us, 1 rep]
+[  160.218749] vs-drm 0000:01:00.0: [drm:drm_vblank_enable [drm]] enabling vblank on crtc 0, ret: 0
+[  160.218763] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 160.212260 -> 160.212260 [e 0 us, 0 rep]
+[  160.218776] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 42071, framedur_ns = 16683217)
+[  160.218789] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=1, diff=0, hw=0 hw_last=0
+[  160.218802] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_enables [drm_kms_helper]] enabling [ENCODER:402:Virtual-402]
+[  160.219054] _vs_drm_atomic_helper_wait_for_flip_done
+[  160.219299] display id: 0, frame start
+[  160.219304] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 160.212799 -> 160.214229 [e 0 us, 0 rep]
+[  160.219333] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 2011739, framedur_ns = 16683217)
+[  160.219355] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Redundant vblirq ignored
+[  160.219375] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=1, diff=0, hw=0 hw_last=0
+[  160.219396] vs_crtc_handle_vblank
+[  160.219396] vs_crtc_handle_flip_done_while_hw_done 1
+[  160.219397] vs_crtc_handle_flip_done_while_hw_done 2
+[  160.219472] _vs_drm_atomic_helper_wait_for_flip_done commit end
+[  160.219486] vs-drm 0000:01:00.0: [drm:drm_atomic_state_default_clear [drm]] Clearing atomic state 00000000b2f47235
+[  160.219503] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (3)
+[  160.219524] vs-drm 0000:01:00.0: [drm:__drm_atomic_state_free [drm]] Freeing atomic state 00000000b2f47235
+[  160.219541] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_WAIT_VBLANK
+[  160.219560] vs-drm 0000:01:00.0: [drm:drm_wait_vblank_ioctl [drm]] event on vblank count 2, current 1, crtc 0
+[  160.294765] i915 0000:00:02.0: [drm:intel_dp_detect [i915]] [CONNECTOR:241:DP-1]
+[  160.310728] i915 0000:00:02.0: [drm:intel_runtime_resume [i915]] Resuming device
+[  160.310924] i915 0000:00:02.0: [drm:bxt_disable_dc9 [i915]] Disabling DC9
+[  160.311316] i915 0000:00:02.0: [drm:gen9_set_dc_state.part.0 [i915]] Setting DC state from 08 to 00
+[  160.311686] i915 0000:00:02.0: [drm:gen9_set_dc_state.part.0 [i915]] Setting DC state from 00 to 00
+[  160.312072] i915 0000:00:02.0: [drm:icl_combo_phys_init [i915]] Initializing combo PHY A (Voltage/Process Info : 0.85V dot0 (low-voltage))
+[  160.312477] i915 0000:00:02.0: [drm:icl_combo_phys_init [i915]] Initializing combo PHY B (Voltage/Process Info : 0.85V dot0 (low-voltage))
+[  160.312866] i915 0000:00:02.0: [drm:icl_combo_phys_init [i915]] Initializing combo PHY C (Voltage/Process Info : 0.85V dot0 (low-voltage))
+[  160.313268] i915 0000:00:02.0: [drm:icl_combo_phys_init [i915]] Initializing combo PHY D (Voltage/Process Info : 0.85V dot0 (low-voltage))
+[  160.313674] i915 0000:00:02.0: [drm:icl_combo_phys_init [i915]] Initializing combo PHY E (Voltage/Process Info : 0.85V dot0 (low-voltage))
+[  160.314073] i915 0000:00:02.0: [drm:intel_power_well_enable [i915]] enabling PW_1
+[  160.314476] i915 0000:00:02.0: [drm:intel_cdclk_dump_config [i915]] Current CDCLK 19200 kHz, VCO 0 kHz, ref 38400 kHz, bypass 19200 kHz, voltage level 0
+[  160.314885] i915 0000:00:02.0: [drm:intel_cdclk_init_hw [i915]] Sanitizing cdclk programmed by pre-os
+[  160.315287] i915 0000:00:02.0: [drm:gen9_dbuf_slices_update [i915]] Updating dbuf slices to 0x1
+[  160.317049] i915 0000:00:02.0: [drm:skl_enable_dc6 [i915]] Enabling DC6
+[  160.317352] i915 0000:00:02.0: [drm:gen9_set_dc_state.part.0 [i915]] Setting DC state from 00 to 02
+[  160.321430] i915 0000:00:02.0: [drm:guc_enable_communication [i915]] GT0: GUC: communication enabled
+[  160.322533] i915 0000:00:02.0: [drm:intel_runtime_resume [i915]] Device resumed
+[  160.322779] i915 0000:00:02.0: [drm:intel_power_well_enable [i915]] enabling always-on
+[  160.330514] i915 0000:00:02.0: [drm:intel_hdmi_detect [i915]] [CONNECTOR:254:HDMI-A-1]
+[  160.338508] i915 0000:00:02.0: [drm:intel_hdmi_detect [i915]] [CONNECTOR:260:HDMI-A-2]
+[  160.346544] i915 0000:00:02.0: [drm:intel_dp_detect [i915]] [CONNECTOR:264:DP-2]
+[  160.354508] i915 0000:00:02.0: [drm:intel_hdmi_detect [i915]] [CONNECTOR:272:HDMI-A-3]
+[  160.362537] i915 0000:00:02.0: [drm:intel_dp_detect [i915]] [CONNECTOR:241:DP-1]
+[  160.370533] i915 0000:00:02.0: [drm:intel_hdmi_detect [i915]] [CONNECTOR:254:HDMI-A-1]
+[  160.378509] i915 0000:00:02.0: [drm:intel_hdmi_detect [i915]] [CONNECTOR:260:HDMI-A-2]
+[  160.386509] i915 0000:00:02.0: [drm:intel_dp_detect [i915]] [CONNECTOR:264:DP-2]
+[  160.394533] i915 0000:00:02.0: [drm:intel_hdmi_detect [i915]] [CONNECTOR:272:HDMI-A-3]
+[  160.402544] i915 0000:00:02.0: [drm:intel_power_well_disable [i915]] disabling always-on
+[  160.626353] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 484 (2)
+[  160.639498] display id: 0, frame start
+[  160.639524] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 160.633011 -> 160.634441 [e 0 us, 0 rep]
+[  160.639664] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 422223227, framedur_ns = 16683217)
+[  160.639767] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=1, diff=25, hw=1 hw_last=0
+[  160.639864] vs-drm 0000:01:00.0: [drm:drm_handle_vblank [drm]] vblank event on 2, current 26
+[  160.639970] vs_crtc_handle_vblank
+[  160.639973] vs_crtc_handle_flip_done_while_hw_done 1
+[  160.640194] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_GETPROPBLOB
+[  160.640348] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 131 (2)
+[  160.640308] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  160.640461] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_GETPROPBLOB
+[  160.640567] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 131 (2)
+[  160.640673] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_GET_CAP
+[  160.640794] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATEPROPBLOB
+[  160.640916] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATE_DUMB
+[  160.645702] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GEM_QUERY
+[  160.645719] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  160.973437] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ADDFB2
+[  160.973458] vs-drm 0000:01:00.0: [drm:drm_mode_addfb2 [drm]] [FB:487]
+[  160.973484] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATE_DUMB
+[  160.974805] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GEM_QUERY
+[  160.974822] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  161.059301] display id: 0, frame start
+[  161.059307] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 161.052801 -> 161.054231 [e 0 us, 0 rep]
+[  161.059336] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 419790278, framedur_ns = 16683217)
+[  161.059358] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=26, diff=25, hw=2 hw_last=1
+[  161.059379] vs_crtc_handle_vblank
+[  161.059379] vs_crtc_handle_flip_done_while_hw_done 1
+[  161.383790] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ADDFB2
+[  161.383811] vs-drm 0000:01:00.0: [drm:drm_mode_addfb2 [drm]] [FB:488]
+[  161.383832] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GET_FEATURE_CAP
+[  161.383851] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest", pid=3017, ret=-22
+[  161.383882] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ATOMIC
+[  161.383897] vs-drm 0000:01:00.0: [drm:drm_atomic_state_init [drm]] Allocated atomic state 00000000b2f47235
+[  161.383911] [drm:drm_mode_object_get [drm]] OBJ ID: 483 (2)
+[  161.383929] vs-drm 0000:01:00.0: [drm:drm_atomic_get_crtc_state [drm]] Added [CRTC:32:Out_ctrl0] 0000000023b19bea state to 00000000b2f47235
+[  161.383939] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 483 (3)
+[  161.383955] [drm:drm_mode_object_get [drm]] OBJ ID: 486 (3)
+[  161.383970] vs-drm 0000:01:00.0: [drm:drm_atomic_set_mode_prop_for_crtc [drm]] Set [MODE:1920x1080] for [CRTC:32:Out_ctrl0] state 0000000023b19bea
+[  161.383980] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 486 (4)
+[  161.383995] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 486 (3)
+[  161.384010] [drm:drm_mode_object_get [drm]] OBJ ID: 485 (2)
+[  161.384024] vs-drm 0000:01:00.0: [drm:drm_atomic_get_plane_state [drm]] Added [PLANE:130:Layer0] 00000000e8781f1a state to 00000000b2f47235
+[  161.384035] vs-drm 0000:01:00.0: [drm:drm_atomic_set_fb_for_plane [drm]] Set [FB:488] for [PLANE:130:Layer0] state 00000000e8781f1a
+[  161.384045] [drm:drm_mode_object_get [drm]] OBJ ID: 488 (3)
+[  161.384059] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 485 (3)
+[  161.384072] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 488 (4)
+[  161.384086] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 488 (3)
+[  161.384101] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (3)
+[  161.384114] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (4)
+[  161.384127] vs-drm 0000:01:00.0: [drm:drm_atomic_get_connector_state [drm]] Added [CONNECTOR:407:Writeback-1] 000000001114d3f9 state to 00000000b2f47235
+[  161.384137] [drm:drm_mode_object_get [drm]] OBJ ID: 487 (3)
+[  161.384150] vs-drm 0000:01:00.0: [drm:drm_atomic_set_property [drm]] Set [FB:487] for connector state 000000001114d3f9
+[  161.384160] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 487 (4)
+[  161.384174] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 487 (3)
+[  161.384187] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (5)
+[  161.384201] vs-drm 0000:01:00.0: [drm:drm_atomic_print_new_state [drm]] checking 00000000b2f47235
+[  161.384211] vs-drm 0000:01:00.0: [drm] plane[130]: Layer0
+[  161.384212] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  161.384212] vs-drm 0000:01:00.0: [drm]       fb=488
+[  161.384213] vs-drm 0000:01:00.0: [drm]               allocated by = drmtest
+[  161.384214] vs-drm 0000:01:00.0: [drm]               refcount=2
+[  161.384214] vs-drm 0000:01:00.0: [drm]               format=AR24 little-endian (0x34325241)
+[  161.384215] vs-drm 0000:01:00.0: [drm]               modifier=0xb00000000000000
+[  161.384216] vs-drm 0000:01:00.0: [drm]               size=1920x1080
+[  161.384217] vs-drm 0000:01:00.0: [drm]               layers:
+[  161.384217] vs-drm 0000:01:00.0: [drm]                       size[0]=1920x1080
+[  161.384218] vs-drm 0000:01:00.0: [drm]                       pitch[0]=7680
+[  161.384219] vs-drm 0000:01:00.0: [drm]                       offset[0]=0
+[  161.384219] vs-drm 0000:01:00.0: [drm]                       obj[0]:
+[  161.384220] vs-drm 0000:01:00.0: [drm]                               name=0
+[  161.384220] vs-drm 0000:01:00.0: [drm]                               refcount=2
+[  161.384221] vs-drm 0000:01:00.0: [drm]                               start=00100a41
+[  161.384221] vs-drm 0000:01:00.0: [drm]                               size=8294400
+[  161.384222] vs-drm 0000:01:00.0: [drm]                               imported=no
+[  161.384223] vs-drm 0000:01:00.0: [drm]       crtc-pos=1920x1080+0+0
+[  161.384223] vs-drm 0000:01:00.0: [drm]       src-pos=1920.000000x1080.000000+0.000000+0.000000
+[  161.384225] vs-drm 0000:01:00.0: [drm]       rotation=1
+[  161.384225] vs-drm 0000:01:00.0: [drm]       normalized-zpos=0
+[  161.384226] vs-drm 0000:01:00.0: [drm]       color-encoding=ITU-R BT.2020 YCbCr
+[  161.384227] vs-drm 0000:01:00.0: [drm]       color-range=YCbCr limited range
+[  161.384227] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  161.384228] vs-drm 0000:01:00.0: [drm] crtc[32]: Out_ctrl0
+[  161.384228] vs-drm 0000:01:00.0: [drm]       enable=1
+[  161.384229] vs-drm 0000:01:00.0: [drm]       active=1
+[  161.384229] vs-drm 0000:01:00.0: [drm]       self_refresh_active=0
+[  161.384230] vs-drm 0000:01:00.0: [drm]       planes_changed=0
+[  161.384230] vs-drm 0000:01:00.0: [drm]       mode_changed=0
+[  161.384231] vs-drm 0000:01:00.0: [drm]       active_changed=0
+[  161.384231] vs-drm 0000:01:00.0: [drm]       connectors_changed=0
+[  161.384232] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  161.384232] vs-drm 0000:01:00.0: [drm]       plane_mask=1
+[  161.384233] vs-drm 0000:01:00.0: [drm]       connector_mask=1
+[  161.384233] vs-drm 0000:01:00.0: [drm]       encoder_mask=1
+[  161.384234] vs-drm 0000:01:00.0: [drm]       mode: "1920x1080": 60 173106 1920 2048 2248 2576 1080 1083 1088 1120 0x0 0x6
+[  161.384235] vs-drm 0000:01:00.0: [drm] connector[407]: Writeback-1
+[  161.384236] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  161.384236] vs-drm 0000:01:00.0: [drm]       self_refresh_aware=0
+[  161.384237] vs-drm 0000:01:00.0: [drm]       max_requested_bpc=0
+[  161.384237] vs-drm 0000:01:00.0: [drm]       colorspace=Default
+[  161.384238] vs-drm 0000:01:00.0: [drm]       fb=487
+[  161.384238] vs-drm 0000:01:00.0: [drm:drm_atomic_check_only [drm]] checking 00000000b2f47235
+[  161.384249] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] mode changed
+[  161.384261] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] Updating routing for [CONNECTOR:407:Writeback-1]
+[  161.384266] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CONNECTOR:407:Writeback-1] keeps [ENCODER:402:Virtual-402], now on [CRTC:32:Out_ctrl0]
+[  161.384271] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] needs all connectors, enable: y, active: y
+[  161.384276] vs-drm 0000:01:00.0: [drm:drm_atomic_add_affected_connectors [drm]] Adding all current connectors for [CRTC:32:Out_ctrl0] to 00000000b2f47235
+[  161.384286] vs-drm 0000:01:00.0: [drm:drm_atomic_add_affected_planes [drm]] Adding all current planes for [CRTC:32:Out_ctrl0] to 00000000b2f47235
+[  161.384297] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000b2f47235
+[  161.384307] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000b2f47235
+[  161.384322] [drm:drm_rect_debug_print [drm_kms_helper]] src: 1920.000000x1080.000000+0.000000+0.000000
+[  161.384328] [drm:drm_rect_debug_print [drm_kms_helper]] dst: 1920x1080+0+0
+[  161.384334] [drm:drm_rect_debug_print [drm_kms_helper]] clip rect: 1920x1080+0+0
+[  161.384339] [drm:drm_rect_debug_print [drm_kms_helper]] after clip src: 1920.000000x1080.000000+0.000000+0.000000
+[  161.384344] [drm:drm_rect_debug_print [drm_kms_helper]] after clip dst: 1920x1080+0+0
+[  161.384350] vs-drm 0000:01:00.0: [drm:drm_atomic_commit [drm]] committing 00000000b2f47235
+[  161.384363] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] disabling [ENCODER:402:Virtual-402]
+[  161.384368] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] disabling [CRTC:32:Out_ctrl0]
+[  161.384373] mode->h_total: 800, mode->v_total: 525
+[  161.471614] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 161.465099 -> 161.466529 [e 0 us, 0 rep]
+[  161.471740] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 412297975, framedur_ns = 16683217)
+[  161.471825] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=51, diff=25, hw=3 hw_last=2
+[  161.471904] vs_crtc_handle_vblank
+[  161.471913] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_off [drm]] crtc 0, vblank enabled 1, inmodeset 0
+[  161.471993] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 161.465489 -> 161.465489 [e 4 us, 0 rep]
+[  161.472070] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = -1039740, framedur_ns = 16683217)
+[  161.472143] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=76, diff=0, hw=3 hw_last=3
+[  161.472413] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: hwmode: htotal 2576, vtotal 1120, vdisplay 1080
+[  161.472526] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: clock 173106 kHz framedur 16666782 linedur 14881
+[  161.472611] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] modeset on [ENCODER:402:Virtual-402]
+[  161.472652] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_enables [drm_kms_helper]] enabling [CRTC:32:Out_ctrl0]
+[  161.472687] mode->h_total: 2576, mode->v_total: 1120
+[  161.472705] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_on_config [drm]] crtc 0, vblank enabled 0, inmodeset 1
+[  161.472789] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 161.466285 -> 161.466285 [e 1 us, 0 rep]
+[  161.472884] vs-drm 0000:01:00.0: [drm:drm_vblank_enable [drm]] enabling vblank on crtc 0, ret: 0
+[  161.472958] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 161.466454 -> 161.466454 [e 0 us, 0 rep]
+[  161.473033] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 169542, framedur_ns = 16666782)
+[  161.473105] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=77, diff=0, hw=3 hw_last=3
+[  161.473177] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_enables [drm_kms_helper]] enabling [ENCODER:402:Virtual-402]
+[  161.473430] _vs_drm_atomic_helper_wait_for_flip_done
+[  161.473433] _vs_drm_atomic_helper_wait_for_flip_done commit end
+[  161.473439] vs-drm 0000:01:00.0: [drm:drm_atomic_state_default_clear [drm]] Clearing atomic state 00000000b2f47235
+[  161.473507] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (4)
+[  161.473615] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (3)
+[  161.473715] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 483 (2)
+[  161.473814] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 485 (2)
+[  161.473906] vs-drm 0000:01:00.0: [drm:__drm_atomic_state_free [drm]] Freeing atomic state 00000000b2f47235
+[  161.473999] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_WAIT_VBLANK
+[  161.474111] vs-drm 0000:01:00.0: [drm:drm_wait_vblank_ioctl [drm]] event on vblank count 78, current 77, crtc 0
+[  161.479353] display id: 0, frame start
+[  161.479374] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-40)@ 161.472864 -> 161.473459 [e 0 us, 0 rep]
+[  161.479507] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 7174302, framedur_ns = 16666782)
+[  161.479609] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Redundant vblirq ignored
+[  161.479701] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=77, diff=0, hw=3 hw_last=3
+[  161.479796] vs_crtc_handle_vblank
+[  161.479799] vs_crtc_handle_flip_done_while_hw_done 1
+[  164.351291] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 487 (2)
+[  164.364682] display id: 0, frame start
+[  164.364710] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-40)@ 164.358196 -> 164.358791 [e 0 us, 0 rep]
+[  164.364849] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 2892506308, framedur_ns = 16666782)
+[  164.364951] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=77, diff=174, hw=4 hw_last=3
+[  164.365049] vs-drm 0000:01:00.0: [drm:drm_handle_vblank [drm]] vblank event on 78, current 251
+[  164.365156] vs_crtc_handle_vblank
+[  164.365159] vs_crtc_handle_flip_done_while_hw_done 1
+[  164.365379] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_GETPROPBLOB
+[  164.365405] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  164.365536] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 131 (2)
+[  164.365649] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_GETPROPBLOB
+[  164.365752] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 131 (2)
+[  164.365862] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_GET_CAP
+[  164.365981] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATEPROPBLOB
+[  164.366111] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATE_DUMB
+[  164.369648] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GEM_QUERY
+[  164.369790] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  164.420944] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ADDFB2
+[  164.420966] vs-drm 0000:01:00.0: [drm:drm_mode_addfb2 [drm]] [FB:490]
+[  164.420994] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATE_DUMB
+[  164.421831] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GEM_QUERY
+[  164.421854] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  164.480965] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ADDFB2
+[  164.480986] vs-drm 0000:01:00.0: [drm:drm_mode_addfb2 [drm]] [FB:491]
+[  164.481007] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GET_FEATURE_CAP
+[  164.481027] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest", pid=3017, ret=-22
+[  164.481051] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ATOMIC
+[  164.481070] vs-drm 0000:01:00.0: [drm:drm_atomic_state_init [drm]] Allocated atomic state 0000000054a47be0
+[  164.481086] [drm:drm_mode_object_get [drm]] OBJ ID: 486 (2)
+[  164.481108] vs-drm 0000:01:00.0: [drm:drm_atomic_get_crtc_state [drm]] Added [CRTC:32:Out_ctrl0] 000000007618e777 state to 0000000054a47be0
+[  164.481118] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 486 (3)
+[  164.481134] [drm:drm_mode_object_get [drm]] OBJ ID: 489 (3)
+[  164.481149] vs-drm 0000:01:00.0: [drm:drm_atomic_set_mode_prop_for_crtc [drm]] Set [MODE:640x480] for [CRTC:32:Out_ctrl0] state 000000007618e777
+[  164.481160] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 489 (4)
+[  164.481176] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 489 (3)
+[  164.481192] [drm:drm_mode_object_get [drm]] OBJ ID: 488 (2)
+[  164.481207] vs-drm 0000:01:00.0: [drm:drm_atomic_get_plane_state [drm]] Added [PLANE:130:Layer0] 000000000c4a058d state to 0000000054a47be0
+[  164.481218] vs-drm 0000:01:00.0: [drm:drm_atomic_set_fb_for_plane [drm]] Set [FB:491] for [PLANE:130:Layer0] state 000000000c4a058d
+[  164.481228] [drm:drm_mode_object_get [drm]] OBJ ID: 491 (3)
+[  164.481243] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 488 (3)
+[  164.481258] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 491 (4)
+[  164.481272] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 491 (3)
+[  164.481288] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (3)
+[  164.481302] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (4)
+[  164.481316] vs-drm 0000:01:00.0: [drm:drm_atomic_get_connector_state [drm]] Added [CONNECTOR:407:Writeback-1] 00000000849782a5 state to 0000000054a47be0
+[  164.481326] [drm:drm_mode_object_get [drm]] OBJ ID: 490 (3)
+[  164.481340] vs-drm 0000:01:00.0: [drm:drm_atomic_set_property [drm]] Set [FB:490] for connector state 00000000849782a5
+[  164.481351] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 490 (4)
+[  164.481365] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 490 (3)
+[  164.481379] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (5)
+[  164.481393] vs-drm 0000:01:00.0: [drm:drm_atomic_print_new_state [drm]] checking 0000000054a47be0
+[  164.481403] vs-drm 0000:01:00.0: [drm] plane[130]: Layer0
+[  164.481404] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  164.481404] vs-drm 0000:01:00.0: [drm]       fb=491
+[  164.481405] vs-drm 0000:01:00.0: [drm]               allocated by = drmtest
+[  164.481406] vs-drm 0000:01:00.0: [drm]               refcount=2
+[  164.481406] vs-drm 0000:01:00.0: [drm]               format=AR24 little-endian (0x34325241)
+[  164.481407] vs-drm 0000:01:00.0: [drm]               modifier=0xb00000000000000
+[  164.481408] vs-drm 0000:01:00.0: [drm]               size=640x480
+[  164.481409] vs-drm 0000:01:00.0: [drm]               layers:
+[  164.481409] vs-drm 0000:01:00.0: [drm]                       size[0]=640x480
+[  164.481410] vs-drm 0000:01:00.0: [drm]                       pitch[0]=2560
+[  164.481411] vs-drm 0000:01:00.0: [drm]                       offset[0]=0
+[  164.481411] vs-drm 0000:01:00.0: [drm]                       obj[0]:
+[  164.481412] vs-drm 0000:01:00.0: [drm]                               name=0
+[  164.481412] vs-drm 0000:01:00.0: [drm]                               refcount=2
+[  164.481413] vs-drm 0000:01:00.0: [drm]                               start=00101356
+[  164.481414] vs-drm 0000:01:00.0: [drm]                               size=1228800
+[  164.481414] vs-drm 0000:01:00.0: [drm]                               imported=no
+[  164.481415] vs-drm 0000:01:00.0: [drm]       crtc-pos=640x480+0+0
+[  164.481416] vs-drm 0000:01:00.0: [drm]       src-pos=640.000000x480.000000+0.000000+0.000000
+[  164.481417] vs-drm 0000:01:00.0: [drm]       rotation=1
+[  164.481418] vs-drm 0000:01:00.0: [drm]       normalized-zpos=0
+[  164.481418] vs-drm 0000:01:00.0: [drm]       color-encoding=ITU-R BT.2020 YCbCr
+[  164.481419] vs-drm 0000:01:00.0: [drm]       color-range=YCbCr limited range
+[  164.481419] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  164.481420] vs-drm 0000:01:00.0: [drm] crtc[32]: Out_ctrl0
+[  164.481421] vs-drm 0000:01:00.0: [drm]       enable=1
+[  164.481421] vs-drm 0000:01:00.0: [drm]       active=1
+[  164.481422] vs-drm 0000:01:00.0: [drm]       self_refresh_active=0
+[  164.481422] vs-drm 0000:01:00.0: [drm]       planes_changed=0
+[  164.481423] vs-drm 0000:01:00.0: [drm]       mode_changed=0
+[  164.481423] vs-drm 0000:01:00.0: [drm]       active_changed=0
+[  164.481424] vs-drm 0000:01:00.0: [drm]       connectors_changed=0
+[  164.481424] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  164.481425] vs-drm 0000:01:00.0: [drm]       plane_mask=1
+[  164.481425] vs-drm 0000:01:00.0: [drm]       connector_mask=1
+[  164.481426] vs-drm 0000:01:00.0: [drm]       encoder_mask=1
+[  164.481426] vs-drm 0000:01:00.0: [drm]       mode: "640x480": 60 25175 640 656 752 800 480 490 492 525 0x40 0xa
+[  164.481428] vs-drm 0000:01:00.0: [drm] connector[407]: Writeback-1
+[  164.481428] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  164.481429] vs-drm 0000:01:00.0: [drm]       self_refresh_aware=0
+[  164.481429] vs-drm 0000:01:00.0: [drm]       max_requested_bpc=0
+[  164.481430] vs-drm 0000:01:00.0: [drm]       colorspace=Default
+[  164.481430] vs-drm 0000:01:00.0: [drm]       fb=490
+[  164.481431] vs-drm 0000:01:00.0: [drm:drm_atomic_check_only [drm]] checking 0000000054a47be0
+[  164.481442] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] mode changed
+[  164.481453] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] Updating routing for [CONNECTOR:407:Writeback-1]
+[  164.481458] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CONNECTOR:407:Writeback-1] keeps [ENCODER:402:Virtual-402], now on [CRTC:32:Out_ctrl0]
+[  164.481463] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] needs all connectors, enable: y, active: y
+[  164.481468] vs-drm 0000:01:00.0: [drm:drm_atomic_add_affected_connectors [drm]] Adding all current connectors for [CRTC:32:Out_ctrl0] to 0000000054a47be0
+[  164.481478] vs-drm 0000:01:00.0: [drm:drm_atomic_add_affected_planes [drm]] Adding all current planes for [CRTC:32:Out_ctrl0] to 0000000054a47be0
+[  164.481489] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 0000000054a47be0
+[  164.481499] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 0000000054a47be0
+[  164.481515] [drm:drm_rect_debug_print [drm_kms_helper]] src: 640.000000x480.000000+0.000000+0.000000
+[  164.481521] [drm:drm_rect_debug_print [drm_kms_helper]] dst: 640x480+0+0
+[  164.481527] [drm:drm_rect_debug_print [drm_kms_helper]] clip rect: 640x480+0+0
+[  164.481532] [drm:drm_rect_debug_print [drm_kms_helper]] after clip src: 640.000000x480.000000+0.000000+0.000000
+[  164.481538] [drm:drm_rect_debug_print [drm_kms_helper]] after clip dst: 640x480+0+0
+[  164.481543] vs-drm 0000:01:00.0: [drm:drm_atomic_commit [drm]] committing 0000000054a47be0
+[  164.481556] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] disabling [ENCODER:402:Virtual-402]
+[  164.481561] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] disabling [CRTC:32:Out_ctrl0]
+[  164.481567] mode->h_total: 2576, mode->v_total: 1120
+[  165.483793] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_RMFB
+[  165.483825] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 485 (2)
+[  165.483842] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 485 (1)
+[  165.483873] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_RMFB
+[  165.483892] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest", pid=3046, ret=-2
+[  165.483909] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_DESTROY_DUMB
+[  165.484164] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_RMFB
+[  165.484181] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 484 (2)
+[  165.484196] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 484 (1)
+[  165.484212] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_DESTROY_DUMB
+[  167.242093] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-40)@ 167.235578 -> 167.236173 [e 0 us, 0 rep]
+[  167.242218] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 2877381963, framedur_ns = 16666782)
+[  167.242302] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=251, diff=173, hw=5 hw_last=4
+[  167.242382] vs_crtc_handle_vblank
+[  167.242392] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_off [drm]] crtc 0, vblank enabled 1, inmodeset 0
+[  167.242473] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 167.235970 -> 167.235970 [e 4 us, 0 rep]
+[  167.242558] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = -203364, framedur_ns = 16666782)
+[  167.242644] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=424, diff=0, hw=5 hw_last=5
+[  167.242980] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: hwmode: htotal 800, vtotal 525, vdisplay 480
+[  167.243092] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: clock 25175 kHz framedur 16683217 linedur 31777
+[  167.243176] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] modeset on [ENCODER:402:Virtual-402]
+[  167.243216] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_enables [drm_kms_helper]] enabling [CRTC:32:Out_ctrl0]
+[  167.243250] mode->h_total: 800, mode->v_total: 525
+[  167.243267] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_on_config [drm]] crtc 0, vblank enabled 0, inmodeset 1
+[  167.243354] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 167.236850 -> 167.236850 [e 1 us, 0 rep]
+[  167.243452] vs-drm 0000:01:00.0: [drm:drm_vblank_enable [drm]] enabling vblank on crtc 0, ret: 0
+[  167.243529] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 167.237026 -> 167.237026 [e 0 us, 0 rep]
+[  167.243607] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 175224, framedur_ns = 16683217)
+[  167.243684] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=425, diff=0, hw=5 hw_last=5
+[  167.243760] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_enables [drm_kms_helper]] enabling [ENCODER:402:Virtual-402]
+[  167.244014] _vs_drm_atomic_helper_wait_for_flip_done
+[  167.244017] _vs_drm_atomic_helper_wait_for_flip_done commit end
+[  167.244024] vs-drm 0000:01:00.0: [drm:drm_atomic_state_default_clear [drm]] Clearing atomic state 0000000054a47be0
+[  167.244092] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (4)
+[  167.244201] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (3)
+[  167.244300] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 486 (2)
+[  167.244398] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 488 (2)
+[  167.244495] vs-drm 0000:01:00.0: [drm:__drm_atomic_state_free [drm]] Freeing atomic state 0000000054a47be0
+[  167.244590] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_WAIT_VBLANK
+[  167.244705] vs-drm 0000:01:00.0: [drm:drm_wait_vblank_ioctl [drm]] event on vblank count 426, current 425, crtc 0
+[  167.249653] display id: 0, frame start
+[  167.249672] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 167.243163 -> 167.244593 [e 0 us, 0 rep]
+[  167.249805] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 7742125, framedur_ns = 16683217)
+[  167.249907] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Redundant vblirq ignored
+[  167.250000] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=425, diff=0, hw=5 hw_last=5
+[  167.250095] vs_crtc_handle_vblank
+[  167.250098] vs_crtc_handle_flip_done_while_hw_done 1
+[  167.656635] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 490 (2)
+[  167.669830] display id: 0, frame start
+[  167.669857] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 167.663344 -> 167.664774 [e 0 us, 0 rep]
+[  167.669996] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 427923216, framedur_ns = 16683217)
+[  167.670097] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=425, diff=26, hw=6 hw_last=5
+[  167.670194] vs-drm 0000:01:00.0: [drm:drm_handle_vblank [drm]] vblank event on 426, current 451
+[  167.670300] vs_crtc_handle_vblank
+[  167.670303] vs_crtc_handle_flip_done_while_hw_done 1
+[  167.670583] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  168.089695] display id: 0, frame start
+[  168.089719] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 168.083206 -> 168.084636 [e 0 us, 0 rep]
+[  168.089844] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 419862100, framedur_ns = 16683217)
+[  168.089936] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=451, diff=25, hw=7 hw_last=6
+[  168.090022] vs_crtc_handle_vblank
+[  168.090024] vs_crtc_handle_flip_done_while_hw_done 1
+[  168.142943] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_RMFB
+[  168.142975] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 488 (2)
+[  168.142992] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 488 (1)
+[  168.143012] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_RMFB
+[  168.143034] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest", pid=3046, ret=-2
+[  168.143054] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_DESTROY_DUMB
+[  168.143477] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_RMFB
+[  168.143495] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 487 (2)
+[  168.143510] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 487 (1)
+[  168.143526] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3046, dev=0xe201, auth=1, DRM_IOCTL_MODE_DESTROY_DUMB
+[  168.220843] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATE_DUMB
+[  168.223231] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GEM_QUERY
+[  168.223336] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  168.286189] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ADDFB2
+[  168.286211] vs-drm 0000:01:00.0: [drm:drm_mode_addfb2 [drm]] [FB:484]
+[  168.286236] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ATOMIC
+[  168.286256] vs-drm 0000:01:00.0: [drm:drm_atomic_state_init [drm]] Allocated atomic state 00000000437e800b
+[  168.286272] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (3)
+[  168.286292] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (4)
+[  168.286308] vs-drm 0000:01:00.0: [drm:drm_atomic_get_connector_state [drm]] Added [CONNECTOR:407:Writeback-1] 000000008a0a9d32 state to 00000000437e800b
+[  168.286319] [drm:drm_mode_object_get [drm]] OBJ ID: 489 (2)
+[  168.286335] vs-drm 0000:01:00.0: [drm:drm_atomic_get_crtc_state [drm]] Added [CRTC:32:Out_ctrl0] 0000000071d74c36 state to 00000000437e800b
+[  168.286345] [drm:drm_mode_object_get [drm]] OBJ ID: 484 (3)
+[  168.286360] vs-drm 0000:01:00.0: [drm:drm_atomic_set_property [drm]] Set [FB:484] for connector state 000000008a0a9d32
+[  168.286371] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 484 (4)
+[  168.286387] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 484 (3)
+[  168.286402] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (5)
+[  168.286417] vs-drm 0000:01:00.0: [drm:drm_atomic_print_new_state [drm]] checking 00000000437e800b
+[  168.286427] vs-drm 0000:01:00.0: [drm] crtc[32]: Out_ctrl0
+[  168.286428] vs-drm 0000:01:00.0: [drm]       enable=1
+[  168.286429] vs-drm 0000:01:00.0: [drm]       active=1
+[  168.286429] vs-drm 0000:01:00.0: [drm]       self_refresh_active=0
+[  168.286430] vs-drm 0000:01:00.0: [drm]       planes_changed=0
+[  168.286431] vs-drm 0000:01:00.0: [drm]       mode_changed=0
+[  168.286431] vs-drm 0000:01:00.0: [drm]       active_changed=0
+[  168.286432] vs-drm 0000:01:00.0: [drm]       connectors_changed=0
+[  168.286432] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  168.286433] vs-drm 0000:01:00.0: [drm]       plane_mask=1
+[  168.286433] vs-drm 0000:01:00.0: [drm]       connector_mask=1
+[  168.286434] vs-drm 0000:01:00.0: [drm]       encoder_mask=1
+[  168.286434] vs-drm 0000:01:00.0: [drm]       mode: "640x480": 60 25175 640 656 752 800 480 490 492 525 0x40 0xa
+[  168.286436] vs-drm 0000:01:00.0: [drm] connector[407]: Writeback-1
+[  168.286436] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  168.286437] vs-drm 0000:01:00.0: [drm]       self_refresh_aware=0
+[  168.286438] vs-drm 0000:01:00.0: [drm]       max_requested_bpc=0
+[  168.286438] vs-drm 0000:01:00.0: [drm]       colorspace=Default
+[  168.286439] vs-drm 0000:01:00.0: [drm]       fb=484
+[  168.286439] vs-drm 0000:01:00.0: [drm:drm_atomic_check_only [drm]] checking 00000000437e800b
+[  168.286453] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] Updating routing for [CONNECTOR:407:Writeback-1]
+[  168.286461] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CONNECTOR:407:Writeback-1] keeps [ENCODER:402:Virtual-402], now on [CRTC:32:Out_ctrl0]
+[  168.286466] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000437e800b
+[  168.286476] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000437e800b
+[  168.286491] vs-drm 0000:01:00.0: [drm:drm_atomic_commit [drm]] committing 00000000437e800b
+[  168.286506] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 168.280003 -> 168.280003 [e 4 us, 0 rep]
+[  168.286521] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 168.280018 -> 168.280018 [e 0 us, 0 rep]
+[  168.286559] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: hwmode: htotal 800, vtotal 525, vdisplay 480
+[  168.286572] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: clock 25175 kHz framedur 16683217 linedur 31777
+[  168.501941] _vs_drm_atomic_helper_wait_for_flip_done
+[  168.509840] display id: 0, frame start
+[  168.509866] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 168.503353 -> 168.504783 [e 0 us, 0 rep]
+[  168.510004] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 420146969, framedur_ns = 16683217)
+[  168.510106] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=476, diff=25, hw=8 hw_last=7
+[  168.510203] vs_crtc_handle_vblank
+[  168.510206] vs_crtc_handle_flip_done_while_hw_done 1
+[  168.510208] vs_crtc_handle_flip_done_while_hw_done 2
+[  168.510317] _vs_drm_atomic_helper_wait_for_flip_done commit end
+[  168.510338] vs-drm 0000:01:00.0: [drm:drm_atomic_state_default_clear [drm]] Clearing atomic state 00000000437e800b
+[  168.510428] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (4)
+[  168.510589] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (3)
+[  168.510691] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 489 (3)
+[  168.510785] vs-drm 0000:01:00.0: [drm:__drm_atomic_state_free [drm]] Freeing atomic state 00000000437e800b
+[  168.510884] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_WAIT_VBLANK
+[  168.510998] vs-drm 0000:01:00.0: [drm:drm_wait_vblank_ioctl [drm]] event on vblank count 502, current 501, crtc 0
+[  168.916682] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 484 (2)
+[  168.929859] display id: 0, frame start
+[  168.929886] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 168.923372 -> 168.924802 [e 0 us, 0 rep]
+[  168.930025] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 420019536, framedur_ns = 16683217)
+[  168.930128] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=501, diff=25, hw=9 hw_last=8
+[  168.930225] vs-drm 0000:01:00.0: [drm:drm_handle_vblank [drm]] vblank event on 502, current 526
+[  168.930331] vs_crtc_handle_vblank
+[  168.930334] vs_crtc_handle_flip_done_while_hw_done 1
+[  168.930553] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATE_DUMB
+[  168.936376] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GEM_QUERY
+[  168.936519] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  169.253132] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ADDFB2
+[  169.253154] vs-drm 0000:01:00.0: [drm:drm_mode_addfb2 [drm]] [FB:485]
+[  169.253179] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ATOMIC
+[  169.253198] vs-drm 0000:01:00.0: [drm:drm_atomic_state_init [drm]] Allocated atomic state 00000000437e800b
+[  169.253212] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (3)
+[  169.253229] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (4)
+[  169.253244] vs-drm 0000:01:00.0: [drm:drm_atomic_get_connector_state [drm]] Added [CONNECTOR:407:Writeback-1] 00000000eced2868 state to 00000000437e800b
+[  169.253255] [drm:drm_mode_object_get [drm]] OBJ ID: 489 (2)
+[  169.253271] vs-drm 0000:01:00.0: [drm:drm_atomic_get_crtc_state [drm]] Added [CRTC:32:Out_ctrl0] 000000007618e777 state to 00000000437e800b
+[  169.253281] [drm:drm_mode_object_get [drm]] OBJ ID: 485 (3)
+[  169.253296] vs-drm 0000:01:00.0: [drm:drm_atomic_set_property [drm]] Set [FB:485] for connector state 00000000eced2868
+[  169.253307] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 485 (4)
+[  169.253322] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 485 (3)
+[  169.253337] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (5)
+[  169.253352] vs-drm 0000:01:00.0: [drm:drm_atomic_print_new_state [drm]] checking 00000000437e800b
+[  169.253363] vs-drm 0000:01:00.0: [drm] crtc[32]: Out_ctrl0
+[  169.253363] vs-drm 0000:01:00.0: [drm]       enable=1
+[  169.253364] vs-drm 0000:01:00.0: [drm]       active=1
+[  169.253364] vs-drm 0000:01:00.0: [drm]       self_refresh_active=0
+[  169.253365] vs-drm 0000:01:00.0: [drm]       planes_changed=0
+[  169.253365] vs-drm 0000:01:00.0: [drm]       mode_changed=0
+[  169.253366] vs-drm 0000:01:00.0: [drm]       active_changed=0
+[  169.253366] vs-drm 0000:01:00.0: [drm]       connectors_changed=0
+[  169.253367] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  169.253367] vs-drm 0000:01:00.0: [drm]       plane_mask=1
+[  169.253368] vs-drm 0000:01:00.0: [drm]       connector_mask=1
+[  169.253368] vs-drm 0000:01:00.0: [drm]       encoder_mask=1
+[  169.253369] vs-drm 0000:01:00.0: [drm]       mode: "640x480": 60 25175 640 656 752 800 480 490 492 525 0x40 0xa
+[  169.253371] vs-drm 0000:01:00.0: [drm] connector[407]: Writeback-1
+[  169.253371] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  169.253372] vs-drm 0000:01:00.0: [drm]       self_refresh_aware=0
+[  169.253372] vs-drm 0000:01:00.0: [drm]       max_requested_bpc=0
+[  169.253373] vs-drm 0000:01:00.0: [drm]       colorspace=Default
+[  169.253373] vs-drm 0000:01:00.0: [drm]       fb=485
+[  169.253374] vs-drm 0000:01:00.0: [drm:drm_atomic_check_only [drm]] checking 00000000437e800b
+[  169.253387] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] Updating routing for [CONNECTOR:407:Writeback-1]
+[  169.253395] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CONNECTOR:407:Writeback-1] keeps [ENCODER:402:Virtual-402], now on [CRTC:32:Out_ctrl0]
+[  169.253400] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000437e800b
+[  169.253410] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000437e800b
+[  169.253425] vs-drm 0000:01:00.0: [drm:drm_atomic_commit [drm]] committing 00000000437e800b
+[  169.253438] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 169.246935 -> 169.246935 [e 1 us, 0 rep]
+[  169.253453] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 169.246950 -> 169.246950 [e 0 us, 0 rep]
+[  169.253467] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: hwmode: htotal 800, vtotal 525, vdisplay 480
+[  169.253480] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: clock 25175 kHz framedur 16683217 linedur 31777
+[  169.342001] _vs_drm_atomic_helper_wait_for_flip_done
+[  169.349844] display id: 0, frame start
+[  169.349871] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 169.343357 -> 169.344787 [e 0 us, 0 rep]
+[  169.350011] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 419985084, framedur_ns = 16683217)
+[  169.350113] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=526, diff=25, hw=10 hw_last=9
+[  169.350211] vs_crtc_handle_vblank
+[  169.350213] vs_crtc_handle_flip_done_while_hw_done 1
+[  169.350216] vs_crtc_handle_flip_done_while_hw_done 2
+[  169.350324] _vs_drm_atomic_helper_wait_for_flip_done commit end
+[  169.350347] vs-drm 0000:01:00.0: [drm:drm_atomic_state_default_clear [drm]] Clearing atomic state 00000000437e800b
+[  169.350442] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (4)
+[  169.350595] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (3)
+[  169.350698] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 489 (3)
+[  169.350796] vs-drm 0000:01:00.0: [drm:__drm_atomic_state_free [drm]] Freeing atomic state 00000000437e800b
+[  169.350892] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_WAIT_VBLANK
+[  169.351006] vs-drm 0000:01:00.0: [drm:drm_wait_vblank_ioctl [drm]] event on vblank count 552, current 551, crtc 0
+[  169.756691] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 485 (2)
+[  169.769847] display id: 0, frame start
+[  169.769874] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 169.763360 -> 169.764790 [e 0 us, 0 rep]
+[  169.770012] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 420002587, framedur_ns = 16683217)
+[  169.770114] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=551, diff=25, hw=11 hw_last=10
+[  169.770212] vs-drm 0000:01:00.0: [drm:drm_handle_vblank [drm]] vblank event on 552, current 576
+[  169.770319] vs_crtc_handle_vblank
+[  169.770322] vs_crtc_handle_flip_done_while_hw_done 1
+[  169.770482] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_RMFB
+[  169.770675] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 490 (2)
+[  169.770780] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 490 (1)
+[  169.770887] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_DESTROY_DUMB
+[  169.771400] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_CREATE_DUMB
+[  169.773156] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, VS_GEM_QUERY
+[  169.773296] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_MAP_DUMB
+[  169.823426] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ADDFB2
+[  169.823447] vs-drm 0000:01:00.0: [drm:drm_mode_addfb2 [drm]] [FB:487]
+[  169.823472] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ATOMIC
+[  169.823491] vs-drm 0000:01:00.0: [drm:drm_atomic_state_init [drm]] Allocated atomic state 00000000437e800b
+[  169.823508] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (3)
+[  169.823528] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (4)
+[  169.823547] vs-drm 0000:01:00.0: [drm:drm_atomic_get_connector_state [drm]] Added [CONNECTOR:407:Writeback-1] 000000008a0a9d32 state to 00000000437e800b
+[  169.823560] [drm:drm_mode_object_get [drm]] OBJ ID: 489 (2)
+[  169.823579] vs-drm 0000:01:00.0: [drm:drm_atomic_get_crtc_state [drm]] Added [CRTC:32:Out_ctrl0] 000000007fc9856d state to 00000000437e800b
+[  169.823592] [drm:drm_mode_object_get [drm]] OBJ ID: 487 (3)
+[  169.823610] vs-drm 0000:01:00.0: [drm:drm_atomic_set_property [drm]] Set [FB:487] for connector state 000000008a0a9d32
+[  169.823623] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 487 (4)
+[  169.823642] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 487 (3)
+[  169.823661] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (5)
+[  169.823680] vs-drm 0000:01:00.0: [drm:drm_atomic_print_new_state [drm]] checking 00000000437e800b
+[  169.823693] vs-drm 0000:01:00.0: [drm] crtc[32]: Out_ctrl0
+[  169.823694] vs-drm 0000:01:00.0: [drm]       enable=1
+[  169.823694] vs-drm 0000:01:00.0: [drm]       active=1
+[  169.823695] vs-drm 0000:01:00.0: [drm]       self_refresh_active=0
+[  169.823696] vs-drm 0000:01:00.0: [drm]       planes_changed=0
+[  169.823696] vs-drm 0000:01:00.0: [drm]       mode_changed=0
+[  169.823697] vs-drm 0000:01:00.0: [drm]       active_changed=0
+[  169.823697] vs-drm 0000:01:00.0: [drm]       connectors_changed=0
+[  169.823698] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  169.823698] vs-drm 0000:01:00.0: [drm]       plane_mask=1
+[  169.823699] vs-drm 0000:01:00.0: [drm]       connector_mask=1
+[  169.823699] vs-drm 0000:01:00.0: [drm]       encoder_mask=1
+[  169.823700] vs-drm 0000:01:00.0: [drm]       mode: "640x480": 60 25175 640 656 752 800 480 490 492 525 0x40 0xa
+[  169.823701] vs-drm 0000:01:00.0: [drm] connector[407]: Writeback-1
+[  169.823702] vs-drm 0000:01:00.0: [drm]       crtc=Out_ctrl0
+[  169.823702] vs-drm 0000:01:00.0: [drm]       self_refresh_aware=0
+[  169.823703] vs-drm 0000:01:00.0: [drm]       max_requested_bpc=0
+[  169.823703] vs-drm 0000:01:00.0: [drm]       colorspace=Default
+[  169.823704] vs-drm 0000:01:00.0: [drm]       fb=487
+[  169.823705] vs-drm 0000:01:00.0: [drm:drm_atomic_check_only [drm]] checking 00000000437e800b
+[  169.823718] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] Updating routing for [CONNECTOR:407:Writeback-1]
+[  169.823726] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CONNECTOR:407:Writeback-1] keeps [ENCODER:402:Virtual-402], now on [CRTC:32:Out_ctrl0]
+[  169.823731] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000437e800b
+[  169.823741] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000437e800b
+[  169.823756] vs-drm 0000:01:00.0: [drm:drm_atomic_commit [drm]] committing 00000000437e800b
+[  169.823769] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 169.817266 -> 169.817266 [e 1 us, 0 rep]
+[  169.823784] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 169.817281 -> 169.817281 [e 0 us, 0 rep]
+[  169.823797] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: hwmode: htotal 800, vtotal 525, vdisplay 480
+[  169.823810] vs-drm 0000:01:00.0: [drm:drm_calc_timestamping_constants [drm]] crtc 32: clock 25175 kHz framedur 16683217 linedur 31777
+[  170.182004] _vs_drm_atomic_helper_wait_for_flip_done
+[  170.189725] display id: 0, frame start
+[  170.189748] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 170.183236 -> 170.184666 [e 0 us, 0 rep]
+[  170.189884] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 419875941, framedur_ns = 16683217)
+[  170.189986] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=576, diff=25, hw=12 hw_last=11
+[  170.190083] vs_crtc_handle_vblank
+[  170.190086] vs_crtc_handle_flip_done_while_hw_done 1
+[  170.190088] vs_crtc_handle_flip_done_while_hw_done 2
+[  170.190174] _vs_drm_atomic_helper_wait_for_flip_done commit end
+[  170.190194] vs-drm 0000:01:00.0: [drm:drm_atomic_state_default_clear [drm]] Clearing atomic state 00000000437e800b
+[  170.190289] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (4)
+[  170.190406] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (3)
+[  170.190540] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 489 (3)
+[  170.190639] vs-drm 0000:01:00.0: [drm:__drm_atomic_state_free [drm]] Freeing atomic state 00000000437e800b
+[  170.190735] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_WAIT_VBLANK
+[  170.190849] vs-drm 0000:01:00.0: [drm:drm_wait_vblank_ioctl [drm]] event on vblank count 602, current 601, crtc 0
+[  170.596653] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 487 (2)
+[  170.609721] display id: 0, frame start
+[  170.609746] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 170.603233 -> 170.604663 [e 0 us, 0 rep]
+[  170.609890] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 419996828, framedur_ns = 16683217)
+[  170.609992] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=601, diff=25, hw=13 hw_last=12
+[  170.610089] vs-drm 0000:01:00.0: [drm:drm_handle_vblank [drm]] vblank event on 602, current 626
+[  170.610193] vs_crtc_handle_vblank
+[  170.610195] vs_crtc_handle_flip_done_while_hw_done 1
+[  170.610358] vs-drm 0000:01:00.0: [drm:drm_ioctl [drm]] comm="drmtest" pid=3017, dev=0xe201, auth=1, DRM_IOCTL_MODE_ATOMIC
+[  170.610539] vs-drm 0000:01:00.0: [drm:drm_atomic_state_init [drm]] Allocated atomic state 00000000437e800b
+[  170.610618] [drm:drm_mode_object_get [drm]] OBJ ID: 489 (2)
+[  170.610727] vs-drm 0000:01:00.0: [drm:drm_atomic_get_crtc_state [drm]] Added [CRTC:32:Out_ctrl0] 000000007618e777 state to 00000000437e800b
+[  170.610790] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 489 (3)
+[  170.610893] vs-drm 0000:01:00.0: [drm:drm_atomic_set_mode_prop_for_crtc [drm]] Set [NOMODE] for [CRTC:32:Out_ctrl0] state 000000007618e777
+[  170.610969] [drm:drm_mode_object_get [drm]] OBJ ID: 491 (2)
+[  170.611064] vs-drm 0000:01:00.0: [drm:drm_atomic_get_plane_state [drm]] Added [PLANE:130:Layer0] 00000000af225b8f state to 00000000437e800b
+[  170.611126] vs-drm 0000:01:00.0: [drm:drm_atomic_set_crtc_for_plane [drm]] Link [PLANE:130:Layer0] state 00000000af225b8f to [NOCRTC]
+[  170.611192] vs-drm 0000:01:00.0: [drm:drm_atomic_set_fb_for_plane [drm]] Set [NOFB] for [PLANE:130:Layer0] state 00000000af225b8f
+[  170.611254] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 491 (3)
+[  170.611355] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (3)
+[  170.611445] [drm:drm_mode_object_get [drm]] OBJ ID: 407 (4)
+[  170.611534] vs-drm 0000:01:00.0: [drm:drm_atomic_get_connector_state [drm]] Added [CONNECTOR:407:Writeback-1] 00000000eced2868 state to 00000000437e800b
+[  170.611594] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (5)
+[  170.611684] vs-drm 0000:01:00.0: [drm:drm_atomic_set_crtc_for_connector [drm]] Link [CONNECTOR:407:Writeback-1] state 00000000eced2868 to [NOCRTC]
+[  170.611748] [drm:drm_mode_object_put.part.0 [drm]] OBJ ID: 407 (4)
+[  170.611839] vs-drm 0000:01:00.0: [drm:drm_atomic_print_new_state [drm]] checking 00000000437e800b
+[  170.611901] vs-drm 0000:01:00.0: [drm] plane[130]: Layer0
+[  170.611906] vs-drm 0000:01:00.0: [drm]       crtc=(null)
+[  170.611909] vs-drm 0000:01:00.0: [drm]       fb=0
+[  170.611913] vs-drm 0000:01:00.0: [drm]       crtc-pos=0x0+0+0
+[  170.611918] vs-drm 0000:01:00.0: [drm]       src-pos=0.000000x0.000000+0.000000+0.000000
+[  170.611925] vs-drm 0000:01:00.0: [drm]       rotation=1
+[  170.611929] vs-drm 0000:01:00.0: [drm]       normalized-zpos=0
+[  170.611933] vs-drm 0000:01:00.0: [drm]       color-encoding=ITU-R BT.2020 YCbCr
+[  170.611936] vs-drm 0000:01:00.0: [drm]       color-range=YCbCr limited range
+[  170.611940] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  170.611944] vs-drm 0000:01:00.0: [drm] crtc[32]: Out_ctrl0
+[  170.611948] vs-drm 0000:01:00.0: [drm]       enable=0
+[  170.611951] vs-drm 0000:01:00.0: [drm]       active=0
+[  170.611954] vs-drm 0000:01:00.0: [drm]       self_refresh_active=0
+[  170.611957] vs-drm 0000:01:00.0: [drm]       planes_changed=0
+[  170.611960] vs-drm 0000:01:00.0: [drm]       mode_changed=0
+[  170.611963] vs-drm 0000:01:00.0: [drm]       active_changed=0
+[  170.611966] vs-drm 0000:01:00.0: [drm]       connectors_changed=0
+[  170.611969] vs-drm 0000:01:00.0: [drm]       color_mgmt_changed=0
+[  170.611972] vs-drm 0000:01:00.0: [drm]       plane_mask=0
+[  170.611975] vs-drm 0000:01:00.0: [drm]       connector_mask=0
+[  170.611978] vs-drm 0000:01:00.0: [drm]       encoder_mask=1
+[  170.611982] vs-drm 0000:01:00.0: [drm]       mode: "": 0 0 0 0 0 0 0 0 0 0 0x0 0x0
+[  170.611989] vs-drm 0000:01:00.0: [drm] connector[407]: Writeback-1
+[  170.611993] vs-drm 0000:01:00.0: [drm]       crtc=(null)
+[  170.611996] vs-drm 0000:01:00.0: [drm]       self_refresh_aware=0
+[  170.611999] vs-drm 0000:01:00.0: [drm]       max_requested_bpc=0
+[  170.612002] vs-drm 0000:01:00.0: [drm]       colorspace=Default
+[  170.612007] vs-drm 0000:01:00.0: [drm:drm_atomic_check_only [drm]] checking 00000000437e800b
+[  170.612068] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] mode changed
+[  170.612103] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] enable changed
+[  170.612132] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] active changed
+[  170.612160] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] Updating routing for [CONNECTOR:407:Writeback-1]
+[  170.612189] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] Disabling [CONNECTOR:407:Writeback-1]
+[  170.612217] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_check_modeset [drm_kms_helper]] [CRTC:32:Out_ctrl0] needs all connectors, enable: n, active: n
+[  170.612246] vs-drm 0000:01:00.0: [drm:drm_atomic_add_affected_connectors [drm]] Adding all current connectors for [CRTC:32:Out_ctrl0] to 00000000437e800b
+[  170.612311] vs-drm 0000:01:00.0: [drm:drm_atomic_add_affected_planes [drm]] Adding all current planes for [CRTC:32:Out_ctrl0] to 00000000437e800b
+[  170.612375] vs-drm 0000:01:00.0: [drm:drm_atomic_add_encoder_bridges [drm]] Adding all bridges for [encoder:402:Virtual-402] to 00000000437e800b
+[  170.612441] vs-drm 0000:01:00.0: [drm:drm_atomic_commit [drm]] committing 00000000437e800b
+[  170.612510] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] disabling [ENCODER:402:Virtual-402]
+[  170.612543] vs-drm 0000:01:00.0: [drm:drm_atomic_helper_commit_modeset_disables [drm_kms_helper]] disabling [CRTC:32:Out_ctrl0]
+[  170.612574] mode->h_total: 800, mode->v_total: 525
+[  171.022020] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,-45)@ 171.015504 -> 171.016934 [e 0 us, 0 rep]
+[  171.022147] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 0: Calculating number of vblanks. diff_ns = 412271359, framedur_ns = 16683217)
+[  171.022234] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] updating vblank count on crtc 0: current=626, diff=25, hw=14 hw_last=13
+[  171.022317] vs_crtc_handle_vblank
+[  171.022326] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_off [drm]] crtc 0, vblank enabled 1, inmodeset 0
+[  171.022411] vs-drm 0000:01:00.0: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal [drm]] crtc 0 : v p(0,0)@ 171.015907 -> 171.015907 [e 4 us, 0 rep]
+[  171.022493] vs-drm 0000:01:00.0: [drm:drm_update_vblank_count [drm]] crtc 

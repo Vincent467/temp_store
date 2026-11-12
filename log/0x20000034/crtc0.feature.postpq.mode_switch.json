@@ -1,0 +1,109 @@
+{
+  "frame": {
+    "0": {
+      "plane": {
+        "0": {
+          "crtc": 0,
+          "format": "AR24",
+          "resource": "defaultPattern",
+          "decType": "NONE",
+          "tileMode": "LINEAR",
+          "width": 640,
+          "height": 480,
+          "refresh": 60,
+          "crtcX": 0,
+          "crtcY": 0,
+          "crtcWidth": 640,
+          "crtcHeight": 480
+        }
+      },
+      "connector": {
+        "0": {
+          "crtc": 0,
+          "format": "AR30",
+          "tileMode": "LINEAR",
+          "width": 640,
+          "height": 480,
+          "refresh": 60,
+          "golden": {
+            "md5sum": "e5746c284713bcac41c29018f6027726",
+            "crc": "not_support"
+          }
+        }
+      },
+      "crtc": {
+        "0": {}
+      }
+    },
+    "1": {
+      "plane": {
+        "0": {
+          "crtc": 0,
+          "format": "AR24",
+          "resource": "defaultPattern",
+          "decType": "NONE",
+          "tileMode": "LINEAR",
+          "width": 1920,
+          "height": 1080,
+          "refresh": 60,
+          "crtcX": 0,
+          "crtcY": 0,
+          "crtcWidth": 1920,
+          "crtcHeight": 1080
+        }
+      },
+      "connector": {
+        "0": {
+          "crtc": 0,
+          "format": "AR30",
+          "tileMode": "LINEAR",
+          "width": 1920,
+          "height": 1080,
+          "refresh": 60,
+          "golden": {
+            "md5sum": "a88ccec6a596e5faf35b1c48c39b3144",
+            "crc": "not_support"
+          }
+        }
+      },
+      "crtc": {
+        "0": {}
+      }
+    },
+    "2": {
+      "plane": {
+        "0": {
+          "crtc": 0,
+          "format": "AR24",
+          "resource": "defaultPattern",
+          "decType": "NONE",
+          "tileMode": "LINEAR",
+          "width": 640,
+          "height": 480,
+          "refresh": 60,
+          "crtcX": 0,
+          "crtcY": 0,
+          "crtcWidth": 640,
+          "crtcHeight": 480
+        }
+      },
+      "connector": {
+        "0": {
+          "crtc": 0,
+          "format": "AR30",
+          "tileMode": "LINEAR",
+          "width": 640,
+          "height": 480,
+          "refresh": 60,
+          "golden": {
+            "md5sum": "e5746c284713bcac41c29018f6027726",
+            "crc": "not_support"
+          }
+        }
+      },
+      "crtc": {
+        "0": {}
+      }
+    }
+  }
+}
