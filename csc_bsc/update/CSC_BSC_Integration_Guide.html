@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="CSC 与 BSC C 接口集成说明：矩阵生成、融合推导、调用示例、定点格式与范围验证。">
+<title>CSC / BSC 算法与接口集成说明</title>
+<style>
+:root{--bg:#f4f6f8;--paper:#fff;--ink:#172635;--muted:#526577;--line:#dce4eb;--accent:#126b5d;--soft:#eaf5f1;--code:#142330;--codeink:#e6eef4;--blue:#254d78;--amber:#805214}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;font-size:15px;line-height:1.8}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}button{font:inherit;cursor:pointer}code,pre,.mono{font-family:Consolas,"Cascadia Code",monospace}code{font-size:.91em;background:#edf2f6;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{background:var(--code);color:var(--codeink);border-radius:10px;padding:20px 23px;overflow:auto;line-height:1.65;font-size:13px;tab-size:4}pre code{background:none;padding:0;color:inherit;font-size:inherit;overflow-wrap:normal}p{margin:12px 0}strong{font-weight:650}h1,h2,h3{line-height:1.35;letter-spacing:-.02em}h1{font-size:38px;margin:16px 0}h2{font-size:25px;margin:0 0 20px}h3{font-size:18px;margin:27px 0 12px}ul,ol{padding-left:23px}li{margin:7px 0}.layout{display:grid;grid-template-columns:240px minmax(0,1fr);max-width:1420px;margin:0 auto}.sidebar{position:sticky;top:0;height:100vh;padding:32px 23px;border-right:1px solid var(--line);overflow:auto}.brand{font-size:13px;letter-spacing:.12em;font-weight:700;color:var(--accent)}.nav-title{font-size:12px;color:var(--muted);margin:30px 0 10px}.sidebar a{display:flex;gap:12px;padding:9px 0;color:var(--muted);font-size:13px}.sidebar a span{font-family:Consolas,monospace;color:#91a0ac}.sidebar a:hover{color:var(--accent)}.sidebar .nav-note{font-size:12px;color:var(--muted);border-top:1px solid var(--line);margin-top:25px;padding-top:18px}.main{min-width:0;padding:38px 52px 60px}.hero{padding:10px 0 30px}.eyebrow{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.12em}.lede{font-size:17px;color:var(--muted);max-width:800px}.meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:23px 0}.tag{border:1px solid var(--line);background:white;border-radius:30px;padding:3px 12px;font-size:12px;color:var(--muted)}.tag.green{color:var(--accent);background:var(--soft);border-color:#c8e3d9}.actions{display:flex;gap:9px;margin-left:auto}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:6px 13px;border-radius:6px;font-size:12px}.btn:hover{border-color:var(--accent);color:var(--accent)}.section{background:var(--paper);border:1px solid var(--line);border-radius:13px;margin-bottom:23px;padding:30px 32px;scroll-margin-top:20px}.section-no{display:inline-block;font-size:12px;color:var(--accent);font-family:Consolas,monospace;margin-right:11px;vertical-align:middle}.callout{border-left:3px solid var(--accent);background:var(--soft);padding:14px 18px;border-radius:0 7px 7px 0;margin:18px 0}.callout p{margin:3px 0}.note{background:#f5f8fc;border-left-color:#3f6c9a}.amber{background:#faf4e9;border-left-color:#b48c47}.subtle{font-size:13px;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}.card{padding:17px 19px;border:1px solid var(--line);border-radius:8px}.card strong{display:block;font-size:23px;color:var(--accent);line-height:1.4}.card span{font-size:12px;color:var(--muted)}.table-wrap{width:100%;overflow-x:auto;margin:17px 0}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#eef3f7;color:#344c61;font-weight:650}tbody tr:last-child td{border-bottom:0}td code{font-size:12px}caption{text-align:left;font-size:12px;color:var(--muted);margin-bottom:8px}.formula{padding:18px 22px;background:#f4f8f6;border:1px solid #d8e9e1;border-radius:8px;font-family:Consolas,"Microsoft YaHei",monospace;line-height:1.95;overflow-x:auto;white-space:normal;margin:16px 0}.formula .result{color:var(--accent);font-weight:700}.flow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:16px 0}.node{border:1px solid #bfd7cd;background:#f1f8f4;border-radius:7px;padding:10px 13px;text-align:center;font-size:13px}.node small{display:block;color:var(--muted);font-size:11px}.node.output{background:var(--accent);color:#fff;border-color:var(--accent)}.node.output small{color:#c8e4da}.arrow{color:#7b919b}.code-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px}.code-header h3{margin:0}.pill{font-size:11px;color:var(--blue);background:#eaf1fa;border-radius:5px;padding:2px 7px}.foot{font-size:12px;color:var(--muted);padding:0 6px}.anchor{color:inherit}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid2 .card strong{font-size:16px}details{border:1px solid var(--line);border-radius:8px;margin:16px 0;padding:12px 16px}summary{cursor:pointer;font-weight:600;color:var(--blue)}.nowrap{white-space:nowrap}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:1080px){.layout{grid-template-columns:205px minmax(0,1fr)}.main{padding:30px 25px}.section{padding:25px 23px}h1{font-size:32px}}
+@media(max-width:760px){.layout{display:block}.sidebar{position:static;height:auto;padding:18px 21px;border:0;border-bottom:1px solid var(--line)}.sidebar nav{display:flex;flex-wrap:wrap;gap:0 18px}.sidebar a{padding:4px 0;font-size:12px}.sidebar .nav-title,.sidebar .nav-note{display:none}.brand{margin-bottom:10px}.main{padding:22px 14px}.section{padding:24px 18px}.cards{grid-template-columns:1fr}.card strong{font-size:21px}.grid2{grid-template-columns:1fr}.actions{margin-left:0}h1{font-size:29px}h2{font-size:22px}pre{padding:17px;font-size:12px}.table-wrap table{min-width:550px}}
+@media print{@page{size:A4;margin:15mm 13mm}body{background:#fff;font-size:10pt;line-height:1.65;color:#111}.layout{display:block;max-width:none}.sidebar,.actions,.btn{display:none!important}.main{padding:0}.hero{padding:0 0 10mm}h1{font-size:25pt}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}.section{border:0;border-top:1px solid #bbb;border-radius:0;padding:7mm 0;margin:0}.cards,.grid2{break-inside:avoid}.card{padding:3mm}.callout,.formula,.flow{break-inside:avoid}pre{font-size:8pt;line-height:1.5;background:#f5f5f5!important;color:#111!important;border:1px solid #ddd;white-space:pre-wrap;overflow-wrap:anywhere;overflow:visible}.table-wrap{overflow:visible}table{font-size:8.5pt}thead{display:table-header-group}tr{break-inside:avoid}th,td{padding:2mm}a{color:inherit;text-decoration:none}.tag{font-size:8pt}.foot{margin-top:6mm}details{display:block}details>*{display:block!important}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar" aria-label="文档目录">
+  <div class="brand">CSC / BSC · C API</div>
+  <div class="nav-title">算法与接口集成说明</div>
+  <nav>
+    <a href="#overview"><span>01</span>交付内容与调用流程</a>
+    <a href="#hw-mode"><span>★</span>硬件模式：必须 Programmable</a>
+    <a href="#conventions"><span>02</span>数据与符号约定</a>
+    <a href="#csc"><span>03</span>CSC 参数生成原理</a>
+    <a href="#bsc"><span>04</span>BSC 融合与简单推导</a>
+    <a href="#api"><span>05</span>接口定义与返回值</a>
+    <a href="#fixed"><span>06</span>定点格式与像素运算</a>
+    <a href="#example"><span>07</span>完整调用示例</a>
+    <a href="#verification"><span>08</span>范围验证结果</a>
+    <a href="#integration"><span>09</span>接入要点</a>
+  </nav>
+  <div class="nav-note">独立 HTML · 可离线阅读<br>无外部脚本、字体或公式服务依赖<br>更新：2026-11-09</div>
+</aside>
+<main class="main">
+<header class="hero">
+  <div class="eyebrow">图像处理 / C 接口交付文档</div>
+  <h1>CSC / BSC<br>算法与接口集成说明</h1>
+  <p class="lede">本文接口均为软算法接口，用于计算硬件 R2Y 模块所需的矩阵与前后偏移寄存器值，将颜色空间转换和亮度、对比度、饱和度调整融合为一组参数。接口本身不配置硬件寄存器。</p>
+  <div class="meta"><span class="tag green">单次矩阵运算</span><span class="tag">C99 / C++ 可调用</span><span class="tag">S7.N + S(N+1)</span><span class="tag">2026-11-09</span><div class="actions"><button class="btn" type="button" onclick="window.print()">打印 / 保存 PDF</button></div></div>
+  <div class="callout amber"><p><strong>硬件接入重点：要让这些接口计算的矩阵与 offset 生效，硬件 R2Y_MODE 寄存器必须设置为 Programmable 模式。</strong>硬件其他模式使用内置参数，不会按本接口计算的自定义系数完成处理。这个硬件模式独立于 <code>User Config.R2Y_Mode</code>，不可混为同一个配置。</p></div>
+</header>
+
+<section class="section" id="overview">
+  <h2><span class="section-no">01</span>交付内容与调用流程</h2>
+  <p><strong>基础算法由 CSC、CSC_BSC 两组 C 接口组成，R2Y_Config 提供统一配置封装。</strong>参数在色域、范围模式或 B/C/S 调整值变化时重新计算；逐像素处理时只应用最终生成的一组矩阵与 offset。</p>
+  <div class="table-wrap"><table><thead><tr><th>文件</th><th>职责</th><th>公开接口</th></tr></thead><tbody>
+    <tr><td><code>CSC.c</code> / <code>CSC.h</code></td><td>生成 RGB↔YUV 浮点 CSC 参数</td><td><code>initparams_CSC</code></td></tr>
+    <tr><td><code>CSC_BSC.c</code> / <code>CSC_BSC.h</code></td><td>将 B/C/S 融合到 CSC，并执行参数定点化</td><td><code>CSC_BSC_Coeff</code><br><code>CSC_ParamsToFixed</code></td></tr>
+    <tr><td><code>R2Y_Config.c</code> / <code>R2Y_Config.h</code></td><td>提供 R2Y 基础配置与包含 BSC 的完整配置</td><td><code>Set_R2Y_Config</code><br><code>Set_R2Y_BSC_Config</code></td></tr>
+    <tr><td>本 HTML 文档</td><td>算法、推导、调用示例和已验证范围</td><td>可独立转发、离线阅读</td></tr>
+  </tbody></table></div>
+  <div class="flow" aria-label="参数生成流程"><div class="node">CSC 参数<small>initparams_CSC / 单位矩阵</small></div><span class="arrow">→</span><div class="node">BSC 融合<small>CSC_BSC_Coeff</small></div><span class="arrow">→</span><div class="node">定点化<small>CSC_ParamsToFixed</small></div><span class="arrow">→</span><div class="node output">硬件参数<small>matrix + pre + post</small></div></div>
+  <div class="grid2"><div class="card"><strong>Enable · RGB → YUV</strong><span>传入 CSC 生成的 R2Y 参数；输出同时包含 B/C/S 调整的 R2Y 参数。</span></div><div class="card"><strong>Disable · RGB → RGB</strong><span>传入单位矩阵与零 offset；内部固定使用 BT709 F2F 做 R2Y→S→Y2R，保留 B/C/S。</span></div></div>
+  <p class="subtle">Python / NumPy 仅用于参考和测试，运行时 C 接口不依赖 Python。基础 CSC、BSC 融合和定点化计算不读写文件；统一封装仅在 Programmable CSV 路径中读取系数文件。各次调用使用局部变量和只读常量，无可变全局状态；多线程调用应使用各自的输出缓冲区。</p>
+  <h3 id="hw-mode">1.1 软算法选择模式与硬件寄存器模式分开配置</h3>
+  <div class="table-wrap"><table><thead><tr><th>配置位置</th><th>作用</th><th>与硬件 Programmable 的关系</th></tr></thead><tbody>
+    <tr><td><code>R2Y_User_Config.R2Y_Mode</code></td><td>选择软算法输入来源：L2L/L2F/F2L/F2F 自动生成基础 CSC；R2Y_Mode_PROGRAMMABLE 从 CSV 读取自定义参数。</td><td>用于参数计算，不要求为了硬件使用自定义系数而设成 Programmable。</td></tr>
+    <tr><td><code>R2Y_SW_Config.RGBToYUVMode</code></td><td>BSC_enable=0 时复制 User 的 R2Y_Mode；BSC_enable=1 时写为 R2Y_Mode_PROGRAMMABLE，供硬件选择接口生成的融合系数。</td><td><strong>这是接口输出字段。</strong>不要为了设置硬件模式而反向修改 User.R2Y_Mode。</td></tr>
+    <tr><td><strong>硬件 <code>R2Y_MODE</code> 寄存器</strong></td><td>决定硬件使用内置参数还是软件计算并写入的矩阵、offset。</td><td><strong>只要需要应用本接口输出的参数，就必须单独写成硬件定义的 Programmable 编码。</strong></td></tr>
+  </tbody></table></div>
+  <p>例如 User Config 选择 <code>R2Y_Mode_F2L</code>，软算法自动生成 R2Y 并融合 BSC 后，驱动应将生成的矩阵和 offset 写入对应寄存器，同时将硬件 <code>R2Y_MODE</code> 配置成 Programmable。<strong>不要为了设置硬件模式而把 User Config 改成 R2Y_Mode_PROGRAMMABLE</strong>，否则软算法会切换为 CSV 输入路径。</p>
+  <pre><code>软算法侧：User.R2Y_Mode = R2Y_Mode_F2L（或其他计算模式 / CSV 模式）
+          Set_R2Y_BSC_Config(&amp;User, &amp;SW)
+
+驱动侧：  将 SW 的矩阵、CoeffP、CoeffD 写入硬件系数寄存器
+          将硬件 R2Y_MODE 写为“硬件定义的 Programmable 编码”
+          按硬件规定完成更新与生效流程</code></pre>
+  <p>以上是配置职责说明，不规定寄存器写入先后、地址或更新时序。软算法输入使用原枚举 <code>R2Y_Mode_PROGRAMMABLE=0</code>，驱动应依据对应模块的寄存器定义选择硬件 Programmable 编码。</p>
+  <p><code>R2Y_Enable=0</code> 表示软算法输出 RGB→RGB 的 BSC 参数，并不意味着可以直接关闭硬件矩阵处理。若仍要通过硬件执行这些 BSC 参数，同样需要让硬件应用这组系数，并将硬件 R2Y_MODE 设为 Programmable。</p>
+  <div class="callout note"><p>这项要求属于调用方/驱动的硬件接入约定；接口不自动写寄存器。BSC_enable=1 时接口只把 R2Y_SW_Config.RGBToYUVMode 写为 R2Y_Mode_PROGRAMMABLE，不修改 User.R2Y_Mode，也不代替驱动完成硬件寄存器写入。</p></div>
+</section>
+
+<section class="section" id="conventions">
+  <h2><span class="section-no">02</span>数据与符号约定</h2>
+  <h3>2.1 统一采用“减去 preoffset”</h3>
+  <div class="formula"><strong>列向量：</strong> output = M · (input − p) + q<br><strong>逐分量：</strong> out[r] = Σ<sub>c=0..2</sub> M[r][c] · (in[c] − preoffset[c]) + postoffset[r]</div>
+  <p>其中 <code>p=preoffset</code>、<code>q=postoffset</code>。矩阵按行存储；行对应输出通道，列对应输入通道。RGB 顺序为 R/G/B，YUV 顺序为 Y/U/V。对按行存储像素的数组，等价形式为 <code>output = (input − p) · Mᵀ + q</code>。</p>
+  <div class="callout"><p><strong>preoffset 是“需要减去的值”。</strong>例如 Y2R 的 U/V preoffset 为 <code>+0.5</code>，应用时减去色度中心。BSC 融合后返回 <code>new_preoffset = −Kb</code>，所以 <code>input − (−Kb) = input + Kb</code>；这里的负号是亮度增加的实现方式。</p></div>
+  <h3>2.2 浮点参数使用归一化单位</h3>
+  <p>对于 N 位整数样本，统一使用 <strong>P = 2<sup>N</sup></strong>：<code>x = X / P</code>。10 位取 1024，12 位取 4096。浮点矩阵、offset、Kb 不随 N 变化；将浮点 offset 转为整数码值单位时再乘 P。</p>
+  <div class="table-wrap"><table><thead><tr><th>项目</th><th>归一化定义</th><th>10 位对应码值</th><th>12 位对应码值</th></tr></thead><tbody>
+    <tr><td>Limited RGB/Y 黑电平</td><td>16/256 = 0.0625</td><td>64</td><td>256</td></tr>
+    <tr><td>Limited RGB/Y 白电平</td><td>235/256 = 0.91796875</td><td>940</td><td>3760</td></tr>
+    <tr><td>Limited RGB/Y 幅度</td><td>219/256</td><td>876</td><td>3504</td></tr>
+    <tr><td>Limited U/V 幅度</td><td>224/256</td><td>896</td><td>3584</td></tr>
+    <tr><td>U/V 中心</td><td>128/256 = 0.5</td><td>512</td><td>2048</td></tr>
+    <tr><td>Limited U/V 名义端点</td><td>16/256 ～ 240/256</td><td>64 ～ 960</td><td>256 ～ 3840</td></tr>
+  </tbody></table></div>
+  <p class="subtle">Full 的数学幅度取 1。整数最大码值 P−1 归一化后为 1−1/P，而非精确的 1；调用者应使用 P 归一化，避免与 P−1 混用。本文沿用接口中的 YUV 名称；CSC 不包含传递函数、色度重采样或图像格式打包。</p>
+</section>
+
+<section class="section" id="csc">
+  <h2><span class="section-no">03</span>CSC 参数生成原理</h2>
+  <h3>3.1 从色度坐标推导基础矩阵</h3>
+  <p><code>CSC.c</code> 内置 R/G/B 三基色和白点的 xy 坐标，先转换为 Y=1 的 XYZ，再求三基色的缩放权重。</p>
+  <div class="formula">v(x,y) = [x/y, 1, (1−x−y)/y]ᵀ<br>P<sub>rgb</sub> = [v<sub>R</sub> &nbsp; v<sub>G</sub> &nbsp; v<sub>B</sub>]<br>[k<sub>R</sub>, k<sub>G</sub>, k<sub>B</sub>]ᵀ = P<sub>rgb</sub><sup>−1</sup> · v<sub>W</sub></div>
+  <p>基础 R2Y 矩阵 M<sub>0</sub> 的三行为：</p>
+  <pre><code>Y : [ kR,                     kG,                     kB                     ]
+U : [ kR / (2*(kB-1)),        kG / (2*(kB-1)),        0.5                    ]
+V : [ 0.5,                    kG / (2*(kR-1)),        kB / (2*(kR-1))        ]</code></pre>
+  <p>基础 Y2R 矩阵为 M<sub>0</sub><sup>−1</sup>。此时 U/V 是以零为中心的差分量，<code>postoffset</code> 或 <code>preoffset</code> 负责引入或移除 0.5 的数字色度中心。</p>
+  <div class="callout note"><p>系数由源码内的 xy 坐标和白点推导，未直接硬编码常见的标准系数表。尤其 <code>CSC_BT601</code> 使用下表中的坐标；接收团队若要与其他固定系数表逐位匹配，应以本接口的实际输出进行比对。</p></div>
+  <details open><summary>内置色域参数</summary><div class="table-wrap"><table><thead><tr><th>色域</th><th>R (x,y)</th><th>G (x,y)</th><th>B (x,y)</th><th>W (x,y)</th></tr></thead><tbody>
+    <tr><td>BT601</td><td>(0.67,0.33)</td><td>(0.21,0.71)</td><td>(0.14,0.08)</td><td>(0.3101,0.3162)</td></tr>
+    <tr><td>BT709</td><td>(0.64,0.33)</td><td>(0.30,0.60)</td><td>(0.15,0.06)</td><td>(0.3127,0.3290)</td></tr>
+    <tr><td>BT2020</td><td>(0.708,0.292)</td><td>(0.170,0.797)</td><td>(0.131,0.046)</td><td>(0.3127,0.3290)</td></tr>
+    <tr><td>P3_D65</td><td>(0.68,0.32)</td><td>(0.265,0.69)</td><td>(0.15,0.06)</td><td>(0.3127,0.3290)</td></tr>
+  </tbody></table></div></details>
+  <h3>3.2 将输入、输出范围并入矩阵</h3>
+  <p>令 D<sub>in</sub>、D<sub>out</sub> 为输入、输出通道的幅度对角矩阵：</p>
+  <div class="formula"><span class="result">M = D<sub>out</sub> · M<sub>0</sub> · D<sub>in</sub><sup>−1</sup></span><br>M[r][c] = M<sub>0</sub>[r][c] · s<sub>out</sub>[r] / s<sub>in</sub>[c]</div>
+  <div class="table-wrap"><table><thead><tr><th>通道类型</th><th>Full 幅度</th><th>Limited 幅度</th><th>输入 pre / 输出 post 的基准值</th></tr></thead><tbody>
+    <tr><td>RGB</td><td>(1,1,1)</td><td>(219/256,219/256,219/256)</td><td>Full：(0,0,0)<br>Limited：(16/256,16/256,16/256)</td></tr>
+    <tr><td>YUV</td><td>(1,1,1)</td><td>(219/256,224/256,224/256)</td><td>Full：(0,0.5,0.5)<br>Limited：(16/256,0.5,0.5)</td></tr>
+  </tbody></table></div>
+  <p>输入范围按<strong>列</strong>缩放，输出范围按<strong>行</strong>缩放。<code>mode</code> 的第一个字母描述输入，第二个描述输出；例如 R2Y F2L 表示 Full RGB → Limited YUV。</p>
+</section>
+
+<section class="section" id="bsc">
+  <h2><span class="section-no">04</span>如何基于 CSC 融合 BSC</h2>
+  <h3>4.1 调整顺序与参数含义</h3>
+  <div class="flow" aria-label="BSC 运算顺序"><div class="node">RGB</div><span class="arrow">→</span><div class="node">+ b<small>Brightness</small></div><span class="arrow">→</span><div class="node">× C<small>Contrast</small></div><span class="arrow">→</span><div class="node">R2Y<small>M,p,q</small></div><span class="arrow">→</span><div class="node">× S<small>仅 U/V</small></div><span class="arrow">→</span><div class="node output">YUV<small>Enable 输出</small></div><span class="arrow">或 →</span><div class="node">Y2R<small>Disable 输出 RGB</small></div></div>
+  <div class="table-wrap"><table><thead><tr><th>符号</th><th>定义</th><th>允许范围</th><th>不调整时</th></tr></thead><tbody>
+    <tr><td>b</td><td>(Kb1,Kb2,Kb3)ᵀ，分别加到 R/G/B</td><td>每项 [−0.5,0.5]</td><td>(0,0,0)</td></tr>
+    <tr><td>C</td><td>diag(Kc1,Kc2,Kc3)，分别乘 R/G/B</td><td>每项 [0,2]</td><td>I</td></tr>
+    <tr><td>S</td><td>diag(1,Ks1,Ks2)，Y 保持 1，U/V 分别乘 Ks1/Ks2</td><td>Ks 每项 [0.5,1.25]</td><td>I</td></tr>
+  </tbody></table></div>
+  <p>本实现的 Contrast 为对亮度调整后的值直接乘增益，处理顺序为 <code>C·(x+b)</code>，未引入额外的中灰枢轴。B、C 以及 R2Y 与 S 之间均不做裁剪。</p>
+  <div class="callout amber"><p><strong>S 的定义与参考脚本一致：</strong>对带 offset 的整个 U/V 数值乘增益。中性输入的 U/V=0.5，在 Ks=1.25 时会变成 0.625，因此可能改变中性灰的色度。围绕固定色度中心的公式 <code>(UV−0.5)·Ks+0.5</code> 属于另一种处理定义，不能直接套用本文的 offset 公式。</p></div>
+  <h3>4.2 Enable：RGB → YUV 的简单推导</h3>
+  <p>原始 CSC 为 <code>y=M·(x−p)+q</code>，加入 B、C、S：</p>
+  <div class="formula">x<sub>bc</sub> = C·(x+b)<br>y = S·[M·(C·(x+b) − p) + q]<br>&nbsp; = S·M·C·(x+b) + S·(q − M·p)</div>
+  <p>令最终表达式仍为 <code>y=A·(x−a)+t</code>，得到：</p>
+  <div class="formula result"><span class="result">A = S·M·C<br>a = −b<br>t = S·(q − M·p)</span></div>
+  <p>实现时，<code>Kc</code> 乘对应的矩阵列，<code>Ks</code> 乘 U/V 对应的矩阵行；<strong>S 必须乘整个 <code>q−M·p</code></strong>。只缩放 q、漏掉 <code>−M·p</code> 的缩放，会在非零 CSC preoffset 下得到错误结果。</p>
+  <p>采用 <code>a=−b</code> 不需要除以 Kc，因而 Kc=0 仍能正确融合。新 preoffset 与原 CSC preoffset 的数值不同，原 p 已被吸收到 t 中，最终输出与逐步计算等价。</p>
+  <h3>4.3 Disable：RGB → RGB 的简单推导</h3>
+  <p>Disable 的输入基矩阵必须是 I，输入 pre/post 必须全为 0。接口内部固定生成 BT709 F2F R2Y 参数，以下记为 T、p<sub>0</sub>、q<sub>0</sub>。其中 p<sub>0</sub>=0，q<sub>0</sub>=(0,0.5,0.5)ᵀ。它们用于 RGB→YUV→RGB 的内部往返，<strong>不取传入的单位矩阵作 R2Y 色域基准</strong>。</p>
+  <p>先计算经 S 调整的 YUV，再追加同一 CSC 的逆仿射变换：</p>
+  <div class="formula">y = S·[T·(C·(x+b) − p<sub>0</sub>) + q<sub>0</sub>]<br>r = T<sup>−1</sup>·(y−q<sub>0</sub>) + p<sub>0</sub><br>&nbsp; = T<sup>−1</sup>·S·T·C·(x+b)<br>&nbsp;&nbsp;&nbsp;+ T<sup>−1</sup>·[S·(q<sub>0</sub>−T·p<sub>0</sub>)−q<sub>0</sub>] + p<sub>0</sub></div>
+  <div class="formula"><span class="result">A = T<sup>−1</sup>·S·T·C<br>a = −b<br>t = T<sup>−1</sup>·[S·(q<sub>0</sub>−T·p<sub>0</sub>)−q<sub>0</sub>] + p<sub>0</sub></span><br><br>BT709 F2F 下可简化为：<br>t = T<sup>−1</sup>·(0, (Ks1−1)/2, (Ks2−1)/2)ᵀ</div>
+  <p>因此 Disable 仍然调整 B/C/S，只是最终输出保持 RGB。当 Ks1=Ks2=1 时，上式退化为 <code>r=C·(x+b)</code>；再令 Kb=0、Kc=1，则为单位变换，允许存在正常的浮点舍入误差。</p>
+  <h3>4.4 为什么融合后只需一次矩阵运算</h3>
+  <p>亮度是平移，对比度和此处的 S 是对角矩阵，CSC 是仿射变换。它们的组合仍然是仿射变换，因此可提前合成为一组 A、a、t。中间若插入裁剪、非线性曲线、色度采样等操作，则一般不能再用同一组矩阵完整等价地表示。</p>
+</section>
+
+<section class="section" id="api">
+  <h2><span class="section-no">05</span>接口定义与返回值</h2>
+  <h3>5.1 生成基础 CSC 参数</h3>
+  <pre><code>int initparams_CSC(CSC_Convert convert, CSC_Gamut gamut, CSC_Mode mode,
+                   float matrix[3][3], float preoffset[3],
+                   float postoffset[3]);</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>输入</th><th>可选值</th><th>说明</th></tr></thead><tbody>
+    <tr><td>convert</td><td>CSC_Y2R=0 / CSC_R2Y=1</td><td>YUV→RGB / RGB→YUV；BSC Enable 应使用 CSC_R2Y</td></tr>
+    <tr><td>gamut</td><td>CSC_BT601=0 / CSC_BT709=1 / CSC_BT2020=2 / CSC_P3_D65=3</td><td>选择三基色与白点参数</td></tr>
+    <tr><td>mode</td><td>CSC_L2L=0 / CSC_L2F=1 / CSC_F2L=2 / CSC_F2F=3</td><td>L=Limited，F=Full，顺序为输入→输出</td></tr>
+  </tbody></table></div>
+  <p>输出均为归一化浮点值；无定点量化、无像素裁剪。三组输出必须非空且互不重叠。非法枚举或空指针返回 −1，矩阵求逆失败返回 −2；失败时不改写输出。</p>
+  <h3>5.2 融合 BSC</h3>
+  <pre><code>int CSC_BSC_Coeff(const float matrix[3][3], const float preoffset[3],
+                  const float postoffset[3],
+                  float kb1, float kb2, float kb3,
+                  float kc1, float kc2, float kc3,
+                  float ks1, float ks2, int r2y_enable,
+                  float new_matrix[3][3], float new_preoffset[3],
+                  float new_postoffset[3]);</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>参数</th><th>含义与约束</th></tr></thead><tbody>
+    <tr><td>matrix / preoffset / postoffset</td><td>Enable：语义上必须是 R2Y CSC 参数，推荐由 initparams_CSC 生成。接口不会从数值判断其是否真为 R2Y。<br>Disable：必须逐项为单位矩阵 / 全零 pre / 全零 post，采用精确数值检查。</td></tr>
+    <tr><td>kb1～kb3 / kc1～kc3</td><td>RGB 三通道的亮度与对比度系数。每项 Kb 可用范围 <strong>[−0.5, 0.5]</strong>，使用归一化单位；每项 Kc 可用范围 <strong>[0, 2]</strong>，含端点。</td></tr>
+    <tr><td>ks1 / ks2</td><td>分别乘 U/V，每项可用范围 <strong>[0.5, 1.25]</strong>，含端点。只有两个 Ks，Y 增益固定为 1。</td></tr>
+    <tr><td>r2y_enable</td><td>只能为 1 或 0：1 输出 YUV；0 输出 RGB，内部固定使用 BT709 F2F。</td></tr>
+    <tr><td>new_matrix / new_preoffset / new_postoffset</td><td>最终单次仿射变换参数。可与各自对应的输入数组原地复用；三组输出互不重叠。</td></tr>
+  </tbody></table></div>
+  <p>所有输入浮点值必须有限，不能包含 NaN/Inf。参数验证或数值计算失败时不改写输出；接口内部使用 double 计算中间量，公开输出仍为 float。</p>
+  <h3>5.3 转换为定点参数</h3>
+  <pre><code>int CSC_ParamsToFixed(const float matrix[3][3], const float preoffset[3],
+                      const float postoffset[3], unsigned int data_bitwidth,
+                      int32_t matrix_fixed[3][3], int32_t preoffset_fixed[3],
+                      int32_t postoffset_fixed[3]);</code></pre>
+  <p>输入为归一化浮点参数，可来自基础 CSC 或 BSC 融合接口。<code>data_bitwidth</code> 为样本位宽，合法范围 8～16；输出与输入以及各输出之间均不得重叠。合法位宽不意味着该位宽下所有 offset 均可表示，应检查返回值。</p>
+  <div class="table-wrap"><table><thead><tr><th>返回值</th><th>符号</th><th>含义 / 输出行为</th></tr></thead><tbody>
+    <tr><td>0</td><td>CSC_SUCCESS</td><td>成功；定点接口中表示所有参数均未越界</td></tr>
+    <tr><td>−1</td><td>CSC_ERROR_INVALID_ARGUMENT</td><td>非法输入、模式、范围、NaN/Inf 或空指针等；不改写输出</td></tr>
+    <tr><td>−2</td><td>CSC_ERROR_SINGULAR_MATRIX</td><td>涉及的矩阵无法求逆；不改写输出</td></tr>
+    <tr><td>−3</td><td>CSC_BSC_ERROR_NUMERIC_RANGE</td><td>BSC 融合结果超出 float 可表示范围；不改写输出</td></tr>
+    <tr><td>1 / 2 / 4 及其按位或</td><td>CSC_FIXED_OVERFLOW_MATRIX / PREOFFSET / POSTOFFSET</td><td>仅定点接口：对应参数在舍入后越界，输出已饱和到边界；例如 5 表示 matrix 和 postoffset 越界</td></tr>
+  </tbody></table></div>
+  <div class="callout"><p><strong>定点接口应判断 <code>ret == 0</code>。</strong><code>ret &lt; 0</code> 是调用错误；<code>ret &gt; 0</code> 是已经发生参数饱和，不能仅以“非负”判定为无损成功。</p></div>
+  <h3 id="packed-api">5.4 两个配置入口与 User Config</h3>
+  <p><strong>两个入口均使用 const User Config 输入指针和 SW Config 输出指针。</strong>B/C/S 数组、R2Y enable 与 BSC_enable 都在输入 <code>R2Y_User_Config</code> 中；输出 <code>R2Y_SW_Config</code> 的字段、类型和顺序不变，大小仍为 68 字节。</p>
+  <div class="table-wrap"><table><thead><tr><th>入口</th><th>输入</th><th>功能</th></tr></thead><tbody>
+    <tr><td>Set_R2Y_Config</td><td>Mode、Gamut、CSV 路径和 Bitwidth 为输入，SW Config 为输出，返回 void</td><td>构造 BSC_enable=0、kb={0,0,0}、kc={1,1,1}、ks={1,1} 的局部 User Config，再调用 Set_R2Y_BSC_Config。入口和输出与旧版本保持一致。</td></tr>
+    <tr><td>Set_R2Y_BSC_Config</td><td>const User Config 为输入，SW Config 为输出，返回 int</td><td>执行完整功能，包括 B/C/S 融合、R2Y Enable/Disable 和位宽量化。调整数组、R2Y_Enable 和 BSC_enable 都从 User Config 读取，返回状态用于检查输入错误和定点饱和。</td></tr>
+  </tbody></table></div>
+  <pre><code>API_EXPORT void Set_R2Y_Config(uint32_t R2Y_Mode, uint32_t R2Y_Gamut,
+                              const char *R2Y_Programmable, uint32_t R2Y_Bitwidth,
+                              R2Y_SW_Config *R2Y_Config);
+
+API_EXPORT int Set_R2Y_BSC_Config(const R2Y_User_Config *user_config,
+                                 R2Y_SW_Config *sw_config);</code></pre>
+  <p>两个入口共用一条完整计算路径。Set_R2Y_Config 在局部副本上设置 BSC_enable=0 并使用中性 BSC；Set_R2Y_BSC_Config 按 BSC_enable 选择是否使用输入的调整数组。BSC_enable=1 时只把输出 RGBToYUVMode 设为 R2Y_Mode_PROGRAMMABLE，User.R2Y_Mode 保持原值并继续用于软件矩阵计算；BSC_enable=0 时输出仍为输入的 R2Y_Mode，B/C/S 按中性处理。标准模式的默认 BSC 也经过融合公式，基础 CSC 的 preoffset 会吸收到融合后的 postoffset 中。CSV 的中性 BSC 路径直接保留文件中的整数 offset。</p>
+  <pre><code>typedef struct {
+    uint32_t R2Y_Mode;
+    uint32_t R2Y_Gamut;
+    const char *R2Y_Programmable;
+    uint32_t R2Y_Bitwidth;
+    float kb[3];          /* each: [-0.5, 0.5], normalized */
+    float kc[3];          /* each: [0, 2] */
+    float ks[2];          /* each: [0.5, 1.25], U/V */
+    uint32_t R2Y_Enable;
+    uint32_t BSC_enable;
+} R2Y_User_Config;</code></pre>
+  <p><code>kb[3]</code>、<code>kc[3]</code> 分别对应 R/G/B；<code>ks[2]</code> 对应 U/V。中性值为 <code>kb={0,0,0}, kc={1,1,1}, ks={1,1}</code>。新增字段必须显式初始化；全零结构里的 ks=0 不在合法范围内。BSC_enable=0 时不使用 kb/kc/ks；BSC_enable=1 时使用这些调整值，并只把输出 R2Y_SW_Config.RGBToYUVMode 写为 Programmable，R2Y_Mode 保持不变。</p>
+  <div class="callout"><p><strong>B/C/S 可用范围（本次范围验证采用的调整区间，均含端点）</strong></p>
+    <div class="table-wrap"><table><thead><tr><th>User Config 字段</th><th>每个元素的可用范围</th><th>通道 / 单位</th><th>中性值</th></tr></thead><tbody>
+      <tr><td><code>kb[3]</code></td><td><strong>[−0.5, 0.5]</strong></td><td>R/G/B 亮度；归一化单位，CSV 模式下也不改成整数码值</td><td>0</td></tr>
+      <tr><td><code>kc[3]</code></td><td><strong>[0, 2]</strong></td><td>R/G/B 对比度增益</td><td>1</td></tr>
+      <tr><td><code>ks[2]</code></td><td><strong>[0.5, 1.25]</strong></td><td>U/V 增益；Y 保持 1</td><td>1</td></tr>
+    </tbody></table></div>
+    <p>所有元素必须是有限数值，不能含 NaN/Inf；超出以上区间会被参数校验拒绝。此前 10/12 位参数不越界的验证结论以这些区间及第 8 节所列 CSC 配置为前提，自定义 CSV 矩阵仍需单独检查定点范围。</p>
+  </div>
+  <div class="table-wrap"><table><thead><tr><th>输入字段</th><th>用途</th></tr></thead><tbody>
+    <tr><td>R2Y_Mode</td><td>复用原 enum _R2Y_Mode。Programmable=0，L2L=1，L2F=2，F2L=3，F2F=4。封装内部映射至 CSC_Mode，并始终用该值计算软件矩阵。BSC_enable=1 时只把输出 RGBToYUVMode 写为 Programmable，R2Y_Mode 本身不变。</td></tr>
+    <tr><td>R2Y_Gamut</td><td>复用原 enum R2Y_Gamut。Rec601=0，Rec709=1，Rec2020=2，P3=3，sRGB=4。sRGB 的 CSC 基色与白点采用 BT709 参数。Programmable 使用 CSV 矩阵，Disable 内部采用 BT709 F2F，SW 保留输入枚举值。</td></tr>
+    <tr><td>R2Y_Programmable</td><td>R2Y_Enable=1 且模式为 Programmable 时，表示系数 CSV 路径，不能为空。其他模式不读取该路径。</td></tr>
+    <tr><td>R2Y_Bitwidth</td><td>样本位宽 8～16。标准路径将归一化 offset 乘 2^位宽；CSV offset 已经是该位宽的整数码值，不能再次缩放。</td></tr>
+    <tr><td>R2Y_Enable</td><td>1：RGB→YUV；0：RGB→RGB BSC，内部使用单位矩阵/零 offset 和 BT709 基准。Disable 时不打开 CSV。</td></tr>
+    <tr><td>BSC_enable</td><td>1：使用 kb/kc/ks，仅把输出 R2Y_SW_Config.RGBToYUVMode 写为 R2Y_Mode_PROGRAMMABLE，R2Y_User_Config.R2Y_Mode 保持不变；0：BSC 关闭，kb/kc/ks 按中性值处理，RGBToYUVMode 保持 R2Y_Mode。旧 JSON 缺少该字段时默认 0。</td></tr>
+  </tbody></table></div>
+  <h3>原 R2Y 枚举与内部 CSC 枚举映射</h3>
+  <div class="table-wrap"><table><thead><tr><th>原模式枚举</th><th>数值</th><th>内部计算</th></tr></thead><tbody>
+    <tr><td>R2Y_Mode_PROGRAMMABLE</td><td>0</td><td>读取 CSV 系数</td></tr>
+    <tr><td>R2Y_Mode_L2L</td><td>1</td><td>CSC_L2L=0</td></tr>
+    <tr><td>R2Y_Mode_L2F</td><td>2</td><td>CSC_L2F=1</td></tr>
+    <tr><td>R2Y_Mode_F2L</td><td>3</td><td>CSC_F2L=2</td></tr>
+    <tr><td>R2Y_Mode_F2F</td><td>4</td><td>CSC_F2F=3</td></tr>
+    <tr><td>R2Y_Mode_END</td><td>5</td><td>边界标记，参数校验拒绝</td></tr>
+  </tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>原色域枚举</th><th>数值</th><th>内部计算</th></tr></thead><tbody>
+    <tr><td>R2Y_Gamut_Rec601</td><td>0</td><td>CSC_BT601</td></tr>
+    <tr><td>R2Y_Gamut_Rec709</td><td>1</td><td>CSC_BT709</td></tr>
+    <tr><td>R2Y_Gamut_Rec2020</td><td>2</td><td>CSC_BT2020</td></tr>
+    <tr><td>R2Y_Gamut_P3</td><td>3</td><td>CSC_P3_D65</td></tr>
+    <tr><td>R2Y_Gamut_sRGB</td><td>4</td><td>CSC_BT709，仅进行本接口定义的 CSC 矩阵计算</td></tr>
+    <tr><td>R2Y_Gamut_END</td><td>5</td><td>边界标记，参数校验拒绝</td></tr>
+  </tbody></table></div>
+  <h3>5.5 Programmable CSV 格式与单位</h3>
+  <pre><code>Matrix,0.21264,0.7315,0.07384,-0.11459,-0.3942,0.5114,0.5,-0.4645,-0.04689
+Preoffset,64,64,64
+Postoffset,64,512,512</code></pre>
+  <p>Matrix 行是 9 个按行展开的浮点系数，矩阵按 R2Y_Bitwidth 取 N 位小数，乘 2<sup>N</sup> 并舍入；Preoffset/Postoffset 行是已量化的整数码值，要求在 S(N+1) 范围 [−2<sup>N</sup>,2<sup>N</sup>−1] 内，N=R2Y_Bitwidth。中性 BSC 下直接保留 CSV 的前后 offset，例如 64、512 不会再次乘 1024 或 4096。CSV 不记录位宽，调用方应保证文件与 R2Y_Bitwidth 一致。</p>
+  <p>非中性 BSC 的自定义参数在整数样本单位下融合：<code>A=S*M*C</code>，<code>a_code=−Kb*2^位宽</code>，<code>t_code=S*(q_code−M*p_code)</code>。原 CSV offset 不重复定点化；融合后新产生的小数码值仅舍入为整数，并按 S(N+1) 范围检查饱和。Kb 仍采用归一化单位。中性配置直接保留原始 p/q，不做多余重分解。</p>
+  <p>支持 UTF-8 BOM、CRLF/LF、大小写不敏感的行名、带引号字段、空行、任意三行顺序及 Excel 导出的尾部空列。每行最多 4095 字节；必须且只能包含 Matrix、Preoffset、Postoffset 各一条有效记录。缺项、重复、额外非空数据、非有限数或非整数 offset 均视为格式错误。</p>
+  <div class="table-wrap"><table><thead><tr><th>SW 输出字段</th><th>赋值规则</th></tr></thead><tbody>
+    <tr><td>RGBToYUVMode / RGBToYUVGamut</td><td>Gamut 始终复制 User 值；BSC_enable=0 时 Mode 复制 User.R2Y_Mode，BSC_enable=1 时 Mode 写为 Programmable。User.R2Y_Mode 始终不变并用于软件矩阵计算。</td></tr>
+    <tr><td>RGBToYUVCoeff[9]</td><td>最终 QN 矩阵，N=R2Y_Bitwidth，索引 row*3+col，S7.N 有符号值存于 int32_t。</td></tr>
+    <tr><td>RGBToYUVCoeffP[3]</td><td>矩阵乘法前需要减去的 preoffset，S(N+1) 有符号值存于 int32_t。</td></tr>
+    <tr><td>RGBToYUVCoeffD[3]</td><td>矩阵乘法并除以 2<sup>R2Y_Bitwidth</sup> 后相加的 postoffset，S(N+1) 有符号值存于 int32_t。</td></tr>
+  </tbody></table></div>
+  <p>Set_R2Y_BSC_Config 返回 0 表示成功，正数为定点饱和位掩码，输出为已饱和参数，负数为失败，输出保留调用前内容。−1 为非法参数，−2 为逆矩阵错误，−3 为浮点数值范围错误，−4 为 CSV 打开/读取错误，−5 为 CSV 格式错误。Set_R2Y_Config 调用该完整入口并忽略状态返回，其输出提交规则与完整入口一致。</p>
+  <p>宿主工程已有同名结构体时，请沿用原定义并在 User Config 尾部追加字段、合并声明；不要重复 typedef。由于 User 结构新增字段，调用方应同步采用更新后的 User Config 定义。</p>
+  <div class="code-header"><span class="pill">原双参数入口 · 完整 C99 示例</span><button class="btn" type="button" data-copy="packed-example-source">复制封装示例</button></div>
+  <pre><code id="packed-example-source">#include &lt;stdio.h&gt;
+#include &quot;R2Y_Config.h&quot;
+
+int main(void)
+{
+    R2Y_User_Config user = {
+        R2Y_Mode_F2L, R2Y_Gamut_Rec709, NULL, 12,
+        {0.10f, -0.05f, 0.00f},  /* kb[3]: RGB, each [-0.5, 0.5] */
+        {1.20f, 1.00f, 0.80f},   /* kc[3]: RGB, each [0, 2] */
+        {1.10f, 0.90f},          /* ks[2]: U/V, each [0.5, 1.25] */
+        1,                       /* R2Y_Enable */
+        1                        /* BSC_enable */
+    };
+    R2Y_SW_Config sw = {0};
+    int i;
+
+    /* R2Y only: generate parameters without BSC adjustment. */
+    Set_R2Y_Config(user.R2Y_Mode, user.R2Y_Gamut,
+                   user.R2Y_Programmable, user.R2Y_Bitwidth, &amp;sw);
+    printf("R2Y only: M00=%ld P0=%ld D0=%ld\n",
+           (long)sw.RGBToYUVCoeff[0],
+           (long)sw.RGBToYUVCoeffP[0], (long)sw.RGBToYUVCoeffD[0]);
+
+    /* Full interface: returns status, applies the supplied BSC controls. */
+    if (Set_R2Y_BSC_Config(&amp;user, &amp;sw) != 0) return 1;
+    printf(&quot;Generated: M00=%ld P0=%ld D0=%ld\n&quot;,
+           (long)sw.RGBToYUVCoeff[0],
+           (long)sw.RGBToYUVCoeffP[0], (long)sw.RGBToYUVCoeffD[0]);
+
+    /* Programmable: CSV offsets already use 10-bit sample-code units. */
+    user.R2Y_Mode = R2Y_Mode_PROGRAMMABLE;
+    user.R2Y_Programmable = &quot;r2y_programmable_example.csv&quot;;
+    user.R2Y_Bitwidth = 10;
+    for (i = 0; i &lt; 3; ++i) { user.kb[i] = 0; user.kc[i] = 1; }
+    user.ks[0] = user.ks[1] = 1;
+    Set_R2Y_BSC_Config(&amp;user, &amp;sw);
+    printf(&quot;CSV: P0=%ld D1=%ld D2=%ld\n&quot;,
+           (long)sw.RGBToYUVCoeffP[0],
+           (long)sw.RGBToYUVCoeffD[1], (long)sw.RGBToYUVCoeffD[2]);
+
+    return 0;
+}</code></pre>
+  <p>示例中的 CSV 文件名用于说明调用方式，实际通过 R2Y_Programmable 传入项目配置的系数文件路径。接口集成验证覆盖默认 BSC 封装的 360 组 8～16 位配置、完整入口的 600 组标准配置、两个 const 输入双参数入口、CSV offset 不重复缩放、CSV 读取错误和失败不改写输出等情形。</p>
+</section>
+
+<section class="section" id="fixed">
+  <h2><span class="section-no">06</span>定点格式与像素运算</h2>
+  <h3>6.1 格式与缩放</h3>
+  <div class="table-wrap"><table><thead><tr><th>参数</th><th>硬件格式</th><th>转换</th><th>有符号整数范围</th><th>C 存储类型</th></tr></thead><tbody>
+    <tr><td>matrix</td><td>S7.N，共 N+7 位，1 符号 + 6 整数 + N 小数</td><td>round(M·2<sup>N</sup>)</td><td>−2<sup>N+6</sup> ～ 2<sup>N+6</sup>−1</td><td>int32_t</td></tr>
+    <tr><td>pre/post offset</td><td>S(N+1)，1 符号 + N 整数，共 N+1 位</td><td>round(offset·2<sup>N</sup>)</td><td>−2<sup>N</sup> ～ 2<sup>N</sup>−1</td><td>int32_t</td></tr>
+  </tbody></table></div>
+  <p>矩阵实数范围为 [−64,64−2<sup>−N</sup>]，offset 归一化实数范围为 [−1,1−2<sup>−N</sup>]。N 控制量化比例、小数位数、总位数和整数上下限。所有定点输出数组使用 int32_t，以容纳 N=16 时的 S7.16 矩阵和 S17 offset。</p>
+  <div class="formula">M<sub>i</sub> = round(M · 2<sup>N</sup>)<br>p<sub>i</sub> = round(p · 2<sup>N</sup>)，q<sub>i</sub> = round(q · 2<sup>N</sup>)<br>round 的中点规则：远离零，例如 +0.5→+1，−0.5→−1</div>
+  <p><strong>R2Y_Bitwidth 同时控制矩阵小数位数和归一化 offset 的码值单位。</strong>10 位时均乘 1024，12 位时均乘 4096。浮点矩阵随量化比例转换为对应整数系数。比如浮点系数 +0.5/−0.5，10 位量化为 +512/−512，12 位量化为 +2048/−2048。</p>
+  <div class="table-wrap"><table><thead><tr><th>N</th><th>矩阵格式</th><th>矩阵整数范围</th><th>offset 格式</th><th>offset 整数范围</th></tr></thead><tbody>
+    <tr><td>8</td><td>S7.8</td><td>[−16384,16383]</td><td>S9</td><td>[−256,255]</td></tr>
+    <tr><td>10</td><td>S7.10</td><td>[−65536,65535]</td><td>S11</td><td>[−1024,1023]</td></tr>
+    <tr><td>12</td><td>S7.12</td><td>[−262144,262143]</td><td>S13</td><td>[−4096,4095]</td></tr>
+  </tbody></table></div>
+  <h3>6.2 推导整数像素应用方式</h3>
+  <p>把 <code>x=X/P</code> 代入浮点式并将输出乘 P，有 <code>Y=M·(X−Pp)+Pq</code>。因此定点系数应用于整数样本时：</p>
+  <div class="formula">acc[r] = Σ<sub>c</sub> M<sub>i</sub>[r][c] · (X[c] − p<sub>i</sub>[c])<br>Y[r] = round(acc[r] / 2<sup>N</sup>) + q<sub>i</sub>[r]</div>
+  <p>先将样本与 offset 扩展到 <code>int64_t</code> 再相减、相乘和累加。负数的右移及简单的 <code>(acc+2048)&gt;&gt;12</code> 不等价于这里统一采用的中点远离零规则；第 7 节提供了同时处理正负值的整数除法实现。最终像素是否裁剪到 [0,P−1]、是否另按 Limited 范围裁剪，由调用方决定。</p>
+  <h3>6.3 寄存器打包</h3>
+  <p><strong>写入这些矩阵/offset 字段时，必须同时确保硬件 R2Y_MODE 采用 Programmable 模式。</strong>否则硬件会使用其他模式的内置参数，本节打包的自定义系数无法按预期生效。该选择由驱动负责，独立于 User Config 的计算模式。</p>
+  <pre><code>unsigned int n = user.R2Y_Bitwidth;
+uint32_t matrix_mask = (1u &lt;&lt; (n + 7)) - 1u;
+uint32_t offset_mask = (1u &lt;&lt; (n + 1)) - 1u;
+uint32_t matrix_reg = (uint32_t)matrix_fixed[r][c] &amp; matrix_mask;
+uint32_t pre_reg = (uint32_t)preoffset_fixed[c] &amp; offset_mask;
+uint32_t post_reg = (uint32_t)postoffset_fixed[r] &amp; offset_mask;</code></pre>
+  <p class="subtle">矩阵字段按 N+7 位、offset 字段按 N+1 位生成补码掩码。实际寄存器地址、字段布局及更新时序由项目驱动定义。软件像素运算使用有符号整数，从字段读回时按对应总位数符号扩展。</p>
+</section>
+
+<section class="section" id="example">
+  <h2><span class="section-no">07</span>完整调用示例</h2>
+  <p>下面的 C 调用示例同时演示 Enable 与 Disable、定点化状态检查、负数舍入和最终像素裁剪。示例处理 12 位 RGB 样本，也可将 <code>bits</code> 改为 10 并输入相应码值。</p>
+  <div class="code-header"><span class="pill">C99 · 完整程序</span><div><button class="btn" type="button" data-copy="example-source">复制示例</button> <button class="btn" type="button" id="download-example">下载示例 .c</button></div></div>
+  <pre><code id="example-source">#include &lt;stdint.h&gt;
+#include &lt;stdio.h&gt;
+#include "CSC_BSC.h"
+
+/* Round x / 2^bits halfway away from zero, including negative x. */
+static int64_t round_scaled(int64_t x, unsigned int bits)
+{
+    const int64_t scale = (int64_t)1 &lt;&lt; bits;
+    const int64_t half = scale / 2;
+    int64_t whole = x / scale;
+    int64_t rem = x % scale;
+    if (rem &gt;= half) {
+        ++whole;
+    } else if (rem &lt;= -half) {
+        --whole;
+    }
+    return whole;
+}
+
+static void apply_fixed(const int32_t m[3][3], const int32_t pre[3],
+                        const int32_t post[3], const uint16_t input[3],
+                        unsigned int bits, uint16_t output[3])
+{
+    int row, col;
+    int64_t max_code = ((int64_t)1 &lt;&lt; bits) - 1;
+    for (row = 0; row &lt; 3; ++row) {
+        int64_t acc = 0;
+        for (col = 0; col &lt; 3; ++col) {
+            int64_t delta = (int64_t)input[col] - pre[col];
+            acc += (int64_t)m[row][col] * delta;
+        }
+        int64_t value = round_scaled(acc, bits) + post[row];
+        if (value &lt; 0) value = 0;
+        if (value &gt; max_code) value = max_code;
+        output[row] = (uint16_t)value;
+    }
+}
+
+static int run_demo(int enabled)
+{
+    const unsigned int bits = 12;
+    float m[3][3] = {{1,0,0}, {0,1,0}, {0,0,1}};
+    float pre[3] = {0,0,0}, post[3] = {0,0,0};
+    float fused[3][3], fused_pre[3], fused_post[3];
+    int32_t fixed[3][3];
+    int32_t fixed_pre[3], fixed_post[3];
+    uint16_t input[3] = {1024,2048,3072};
+    uint16_t output[3];
+    int ret;
+
+    if (enabled) {
+        ret = initparams_CSC(CSC_R2Y, CSC_BT709, CSC_F2L,
+                            m, pre, post);
+        if (ret != CSC_SUCCESS) {
+            fprintf(stderr, "initparams_CSC failed: %d\n", ret);
+            return 1;
+        }
+    }
+    /* Disable retains identity/zero above; BT709 F2F is internal. */
+    ret = CSC_BSC_Coeff(m, pre, post,
+                        0.10f, -0.05f, 0.00f, /* Kb: R/G/B */
+                        1.20f, 1.00f, 0.80f,  /* Kc: R/G/B */
+                        1.10f, 0.90f,         /* Ks: U/V */
+                        enabled, fused, fused_pre, fused_post);
+    if (ret != CSC_SUCCESS) {
+        fprintf(stderr, "CSC_BSC_Coeff failed: %d\n", ret);
+        return 1;
+    }
+    ret = CSC_ParamsToFixed(fused, fused_pre, fused_post, bits,
+                            fixed, fixed_pre, fixed_post);
+    if (ret &lt; 0) {
+        fprintf(stderr, "CSC_ParamsToFixed invalid input: %d\n", ret);
+        return 1;
+    }
+    if (ret != 0) {
+        /* Outputs are saturated; this example rejects that configuration. */
+        fprintf(stderr, "Fixed parameters saturated: mask=%d\n", ret);
+        if (ret &amp; CSC_FIXED_OVERFLOW_MATRIX)
+            fprintf(stderr, "  matrix overflow\n");
+        if (ret &amp; CSC_FIXED_OVERFLOW_PREOFFSET)
+            fprintf(stderr, "  preoffset overflow\n");
+        if (ret &amp; CSC_FIXED_OVERFLOW_POSTOFFSET)
+            fprintf(stderr, "  postoffset overflow\n");
+        return 1;
+    }
+    apply_fixed(fixed, fixed_pre, fixed_post, input, bits, output);
+    printf("%s: RGB=(%u,%u,%u) -&gt; %s=(%u,%u,%u)\n",
+           enabled ? "Enable" : "Disable",
+           (unsigned)input[0], (unsigned)input[1], (unsigned)input[2],
+           enabled ? "YUV" : "RGB",
+           (unsigned)output[0], (unsigned)output[1], (unsigned)output[2]);
+    return 0;
+}
+
+int main(void)
+{
+    if (run_demo(1) != 0) return 1;
+    return run_demo(0);
+}</code></pre>
+  <p class="subtle">本示例的 <code>apply_fixed</code> 是调用方像素处理示例，不是库导出接口；库只负责生成参数。它对输出做整型码值范围裁剪，未额外限制 Limited 的名义范围。</p>
+  <h3>参考运行结果</h3>
+  <pre><code id="example-output">Enable: RGB=(1024,2048,3072) -&gt; YUV=(1848,2563,1773)
+Disable: RGB=(1024,2048,3072) -&gt; RGB=(1412,1891,2897)</code></pre>
+  <p class="subtle">此处为随文示例和当前交付代码的实测结果。目标项目的浮点精度与舍入策略可能影响接近舍入边界的最终整数。</p>
+</section>
+
+<section class="section" id="verification">
+  <h2><span class="section-no">08</span>范围验证结果</h2>
+  <div class="cards"><div class="card"><strong>17 种配置</strong><span>16 种 R2Y Enable + 1 种 BT709 Disable</span></div><div class="card"><strong>4,352 组顶点</strong><span>每种配置 2⁸ = 256 个 B/C/S 范围端点</span></div><div class="card"><strong>13,056 次定点化</strong><span>分别检查 8 位、10 位、12 位数据</span></div></div>
+  <p>Enable 覆盖 4 个色域 × 4 个范围模式。Disable 的输入固定为单位矩阵、零 offset，内部使用 BT709 F2F。范围为 <code>Kb∈[−0.5,0.5]</code>、<code>Kc∈[0,2]</code>、<code>Ks∈[0.5,1.25]</code>，共 8 个独立调整量。</p>
+  <p>每个输出参数对任一独立调整量都是仿射函数，矩阵中包含 Kc、Ks 的双线性项，因此连续区间的极值可在这些顶点取得。另验证了 272 个随机内部点、原地调用、非法输入、Kc=0、舍入边界、饱和与越界标志。基础 CSC 的全部 32 种 R2Y/Y2R 参数也均在 8/10/12 位下单独验证了定点化。</p>
+  <div class="table-wrap"><table><caption>以下为舍入后、饱和前的实际有符号整数范围</caption><thead><tr><th>模式</th><th>数据位宽</th><th>matrix，QN</th><th>preoffset</th><th>postoffset</th><th>参数越界</th></tr></thead><tbody>
+    <tr><td>Enable</td><td>8</td><td>[−344,428]</td><td>[−128,128]</td><td>[−19,160]</td><td>无</td></tr>
+    <tr><td>Enable</td><td>10</td><td>[−1376,1712]</td><td>[−512,512]</td><td>[−75,640]</td><td>无</td></tr>
+    <tr><td>Enable</td><td>12</td><td>[−5504,6848]</td><td>[−2048,2048]</td><td>[−299,2560]</td><td>无</td></tr>
+    <tr><td>Disable</td><td>8</td><td>[−92,631]</td><td>[−128,128]</td><td>[−119,59]</td><td>无</td></tr>
+    <tr><td>Disable</td><td>10</td><td>[−366,2523]</td><td>[−512,512]</td><td>[−475,238]</td><td>无</td></tr>
+    <tr><td>Disable</td><td>12</td><td>[−1465,10092]</td><td>[−2048,2048]</td><td>[−1900,950]</td><td>无</td></tr>
+</tbody></table></div>
+  <div class="callout"><p><strong>结论：</strong>在上述输入模式、CSC 配置和 B/C/S 范围内，8/10/12 位数据的融合矩阵均在对应 S7.N 范围内，preoffset、postoffset 均在对应 S(N+1) 范围内。</p></div>
+  <div class="table-wrap"><table><thead><tr><th>模式</th><th>浮点 matrix 全局范围</th><th>浮点 preoffset 范围</th><th>浮点 postoffset 范围</th></tr></thead><tbody>
+    <tr><td>Enable</td><td>[−1.343663,1.671993]</td><td>[−0.5,0.5]</td><td>[−0.073059,0.625]</td></tr>
+    <tr><td>Disable</td><td>[−0.357584,2.463904]</td><td>[−0.5,0.5]</td><td>[−0.463904,0.231952]</td></tr>
+  </tbody></table></div>
+  <p class="subtle">当前测试中，C 融合输出与独立逐步计算的最大绝对误差为 1.5411×10⁻⁷；C/Python 融合参数最大绝对误差为 1.0134×10⁻⁷。这是已测数据的误差记录，不是任意自定义输入的误差上界。参数不越界也不保证所有调整后像素都在输出范围内；最终裁剪单独处理。</p>
+  <p class="subtle">详细记录由 <code>test_csc_bsc.py</code> 生成在 <code>csc_bsc_range_report.md</code> 和 <code>csc_bsc_range_report.json</code> 中。本 HTML 已包含接入所需的结论，无需这些文件也可阅读。</p>
+</section>
+
+<section class="section" id="integration">
+  <h2><span class="section-no">09</span>接入要点</h2>
+  <ol>
+    <li><strong>硬件 R2Y_MODE 必须设为 Programmable。</strong>本接口计算的是硬件自定义系数寄存器值；其他硬件模式使用内置参数。User.R2Y_Mode 只选择软算法输入来源；BSC_enable=0 时 SW.RGBToYUVMode 复制该模式，BSC_enable=1 时接口仅把 SW.RGBToYUVMode 写为 Programmable，不能反向修改 User.R2Y_Mode。</li>
+    <li><strong>先确认输出格式。</strong>Enable 输入 R2Y 参数、输出 YUV；Disable 输入单位矩阵和零 offset、输出 RGB，BSC 仍生效。</li>
+    <li><strong>区分归一化 offset 与 CSV 码值 offset。</strong>标准路径由 <code>CSC_ParamsToFixed</code> 按样本位宽转换归一化 offset；CSV 中的 offset 已是量化后的码值，不重复乘 1024/4096。</li>
+    <li><strong>应用时减去 preoffset。</strong>融合后的负 preoffset 表示加亮度，不能再取反或改为加号。</li>
+    <li><strong>保持运算顺序。</strong>B→C→R2Y→S；Disable 再追加 Y2R。中间插入量化或裁剪会改变结果。</li>
+    <li><strong>按同一位宽应用矩阵系数。</strong>矩阵取 N=R2Y_Bitwidth 位小数，像素矩阵乘积除以 2<sup>N</sup> 后加上整数码值 offset。</li>
+    <li><strong>需要检查状态时调用 Set_R2Y_BSC_Config。</strong>该完整入口和定点接口返回 0 表示成功，正数表示参数饱和，负数表示调用或读取失败。Set_R2Y_Config 设置默认 BSC 后复用完整入口，返回 void。</li>
+    <li><strong>按有符号数运算。</strong>采用足够宽的累加器，并核对硬件的负数舍入、补码符号扩展和最终裁剪规则。</li>
+    <li><strong>只在参数变化时重新融合。</strong>逐像素阶段无需重复计算 BT709 的逆矩阵或再次调用参数接口。</li>
+  </ol>
+</section>
+<footer class="foot">CSC / BSC C 接口集成说明 · 2026-11-09 · 适用于本文列出的 CSC.c / CSC_BSC.c / R2Y_Config.c 接口与数据约定<br>本文件内嵌全部样式与示例，无需联网。源代码或处理定义发生变化时，请重新验证并同步文档。</footer>
+</main>
+</div>
+<div id="copy-status" class="sr-only" role="status" aria-live="polite"></div>
+<script>
+document.querySelectorAll('[data-copy]').forEach(function(button){
+  button.addEventListener('click',async function(){
+    const text=document.getElementById(button.dataset.copy).textContent;
+    let ok=false;
+    try {await navigator.clipboard.writeText(text);ok=true;} catch(e) {
+      const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();
+      try {ok=document.execCommand('copy');} catch(ignored) {} area.remove();
+    }
+    const label=button.textContent;button.textContent=ok?'已复制':'请选中代码复制';
+    document.getElementById('copy-status').textContent=ok?'示例代码已复制':'复制失败，请直接选中代码复制';
+    setTimeout(function(){button.textContent=label;},2000);
+  });
+});
+document.getElementById('download-example').addEventListener('click',function(){
+  const text=document.getElementById('example-source').textContent+'\n';
+  const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));
+  const a=document.createElement('a');a.href=url;a.download='example_csc_bsc.c';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);
+});
+</script>
+</body>
+</html>
